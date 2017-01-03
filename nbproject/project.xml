@@ -4,6 +4,10 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
             <name>DORN</name>
+<<<<<<< HEAD
+=======
+            <explicit-platform explicit-source-supported="true"/>
+>>>>>>> 3e750050522470ff8109bf4b30129bf3b0e3212f
             <source-roots>
                 <root id="src.dir"/>
             </source-roots>
