@@ -5,10 +5,18 @@
  */
 package com.dorn.view;
 
+import com.dorn.controller.Principal;
 import com.dorn.model.Jugador;
 import com.dorn.model.power.Habilidad;
 import com.dorn.model.heroe.Heroe;
+import com.dorn.model.heroe.Zorkal;
+import com.dorn.model.map.Casilla;
+import com.dorn.model.map.Ficha;
+import com.dorn.model.map.Mapa;
+import com.dorn.model.monster.Criatura;
+import com.dorn.model.ritual.Ritual;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,16 +33,40 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import sun.swing.PrintColorUIResource;
 
 /**
  *
  * @author t30r3m4
  */
 public class Tablero extends javax.swing.JFrame {
-
+    Principal principal;
     int widthScreen,heightScreen;
+    Double factorEscaladoX,factorEscaladoY;
+    ArrayList<Jugador> jugadores;
+    private int jugadorActual;
+    Mapa mapa;
+    boolean esEscalado;
+    
+    ImageIcon icMapaOriginal,icMapaEscalado;
+
+    JButton br_4 ;
+    JButton br_up ;
+    JButton br_1 ;               
+    //-----Parte central
+    JButton br_left ;
+    JButton br_0 ;
+    JButton br_right;      
+    //-----Parte inferior        
+    JButton br_3 ;
+    JButton br_down;
+    JButton br_2 ;
+  
+    
+    
     
     public Tablero() {
+        //this.principal=pp;
         initComponents();
         ajustarPantalla();
         //dibujarTablero("");
@@ -51,11 +83,12 @@ public class Tablero extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblMapa = new javax.swing.JLabel();
         jpPrincipal = new javax.swing.JPanel();
         jpIzquierda = new javax.swing.JPanel();
         jpSecuencia0 = new javax.swing.JPanel();
-        jpMapa = new javax.swing.JPanel();
-        lblMapa = new javax.swing.JLabel();
+        jsMapa = new javax.swing.JScrollPane();
+        jpMapa = new javax.swing.JLayeredPane();
         jpSecuencia1 = new javax.swing.JPanel();
         jpSecuencia2 = new javax.swing.JPanel();
         jpSecuencia3 = new javax.swing.JPanel();
@@ -68,11 +101,12 @@ public class Tablero extends javax.swing.JFrame {
         jpPuntosExperiencia = new javax.swing.JPanel();
         jpMovimiento = new javax.swing.JPanel();
         jpAtaque = new javax.swing.JPanel();
-        jpHabilidad = new javax.swing.JPanel();
-        jpHabilidadActiva = new javax.swing.JPanel();
-        jpHabilidadPasiva = new javax.swing.JPanel();
-        jpMover = new javax.swing.JPanel();
         jpAccion = new javax.swing.JPanel();
+        jpBoton = new javax.swing.JPanel();
+
+        lblMapa.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblMapa.setAlignmentY(0.0F);
+        lblMapa.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,34 +118,43 @@ public class Tablero extends javax.swing.JFrame {
         jpSecuencia0.setLayout(jpSecuencia0Layout);
         jpSecuencia0Layout.setHorizontalGroup(
             jpSecuencia0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jpSecuencia0Layout.setVerticalGroup(
             jpSecuencia0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 44, Short.MAX_VALUE)
+            .addGap(0, 32, Short.MAX_VALUE)
         );
 
         jpIzquierda.add(jpSecuencia0);
 
-        jpMapa.setLayout(null);
+        jpMapa.setBackground(new java.awt.Color(1, 1, 1));
+        jpMapa.setAutoscrolls(true);
+        jpMapa.setOpaque(true);
 
-        lblMapa.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        lblMapa.setAlignmentY(0.0F);
-        lblMapa.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jpMapa.add(lblMapa);
-        lblMapa.setBounds(0, 12, 72, 60);
+        javax.swing.GroupLayout jpMapaLayout = new javax.swing.GroupLayout(jpMapa);
+        jpMapa.setLayout(jpMapaLayout);
+        jpMapaLayout.setHorizontalGroup(
+            jpMapaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 57, Short.MAX_VALUE)
+        );
+        jpMapaLayout.setVerticalGroup(
+            jpMapaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 74, Short.MAX_VALUE)
+        );
 
-        jpIzquierda.add(jpMapa);
+        jsMapa.setViewportView(jpMapa);
+
+        jpIzquierda.add(jsMapa);
 
         javax.swing.GroupLayout jpSecuencia1Layout = new javax.swing.GroupLayout(jpSecuencia1);
         jpSecuencia1.setLayout(jpSecuencia1Layout);
         jpSecuencia1Layout.setHorizontalGroup(
             jpSecuencia1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jpSecuencia1Layout.setVerticalGroup(
             jpSecuencia1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 138, Short.MAX_VALUE)
+            .addGap(0, 102, Short.MAX_VALUE)
         );
 
         jpIzquierda.add(jpSecuencia1);
@@ -120,11 +163,11 @@ public class Tablero extends javax.swing.JFrame {
         jpSecuencia2.setLayout(jpSecuencia2Layout);
         jpSecuencia2Layout.setHorizontalGroup(
             jpSecuencia2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jpSecuencia2Layout.setVerticalGroup(
             jpSecuencia2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 49, Short.MAX_VALUE)
+            .addGap(0, 36, Short.MAX_VALUE)
         );
 
         jpIzquierda.add(jpSecuencia2);
@@ -133,11 +176,11 @@ public class Tablero extends javax.swing.JFrame {
         jpSecuencia3.setLayout(jpSecuencia3Layout);
         jpSecuencia3Layout.setHorizontalGroup(
             jpSecuencia3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jpSecuencia3Layout.setVerticalGroup(
             jpSecuencia3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 65, Short.MAX_VALUE)
+            .addGap(0, 48, Short.MAX_VALUE)
         );
 
         jpIzquierda.add(jpSecuencia3);
@@ -161,7 +204,7 @@ public class Tablero extends javax.swing.JFrame {
         jpPuntosVida.setLayout(jpPuntosVidaLayout);
         jpPuntosVidaLayout.setHorizontalGroup(
             jpPuntosVidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 387, Short.MAX_VALUE)
+            .addGap(0, 326, Short.MAX_VALUE)
         );
         jpPuntosVidaLayout.setVerticalGroup(
             jpPuntosVidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,11 +223,11 @@ public class Tablero extends javax.swing.JFrame {
         jpPuntosExperiencia.setLayout(jpPuntosExperienciaLayout);
         jpPuntosExperienciaLayout.setHorizontalGroup(
             jpPuntosExperienciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 387, Short.MAX_VALUE)
+            .addGap(0, 326, Short.MAX_VALUE)
         );
         jpPuntosExperienciaLayout.setVerticalGroup(
             jpPuntosExperienciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 47, Short.MAX_VALUE)
+            .addGap(0, 124, Short.MAX_VALUE)
         );
 
         jpExperiencia.add(jpPuntosExperiencia);
@@ -212,42 +255,30 @@ public class Tablero extends javax.swing.JFrame {
         jpAtaque.setLayout(jpAtaqueLayout);
         jpAtaqueLayout.setHorizontalGroup(
             jpAtaqueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 387, Short.MAX_VALUE)
+            .addGap(0, 326, Short.MAX_VALUE)
         );
         jpAtaqueLayout.setVerticalGroup(
             jpAtaqueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 76, Short.MAX_VALUE)
+            .addGap(0, 48, Short.MAX_VALUE)
         );
 
         jpDerecha.add(jpAtaque);
-
-        jpHabilidad.setLayout(new java.awt.GridLayout(1, 2));
-
-        jpHabilidadActiva.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Activas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Bitstream Charter", 1, 18))); // NOI18N
-        jpHabilidadActiva.setLayout(new javax.swing.BoxLayout(jpHabilidadActiva, javax.swing.BoxLayout.Y_AXIS));
-        jpHabilidad.add(jpHabilidadActiva);
-
-        jpHabilidadPasiva.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pasivas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Bitstream Charter", 1, 18))); // NOI18N
-        jpHabilidadPasiva.setLayout(new javax.swing.BoxLayout(jpHabilidadPasiva, javax.swing.BoxLayout.Y_AXIS));
-        jpHabilidad.add(jpHabilidadPasiva);
-
-        jpDerecha.add(jpHabilidad);
-
-        jpMover.setLayout(new java.awt.GridLayout(3, 3));
-        jpDerecha.add(jpMover);
 
         javax.swing.GroupLayout jpAccionLayout = new javax.swing.GroupLayout(jpAccion);
         jpAccion.setLayout(jpAccionLayout);
         jpAccionLayout.setHorizontalGroup(
             jpAccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 399, Short.MAX_VALUE)
+            .addGap(0, 338, Short.MAX_VALUE)
         );
         jpAccionLayout.setVerticalGroup(
             jpAccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 24, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
         jpDerecha.add(jpAccion);
+
+        jpBoton.setLayout(new javax.swing.BoxLayout(jpBoton, javax.swing.BoxLayout.X_AXIS));
+        jpDerecha.add(jpBoton);
 
         jpPrincipal.add(jpDerecha);
 
@@ -270,15 +301,12 @@ public class Tablero extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jpAccion;
     private javax.swing.JPanel jpAtaque;
+    private javax.swing.JPanel jpBoton;
     private javax.swing.JPanel jpDerecha;
     private javax.swing.JPanel jpExperiencia;
-    private javax.swing.JPanel jpHabilidad;
-    private javax.swing.JPanel jpHabilidadActiva;
-    private javax.swing.JPanel jpHabilidadPasiva;
     private javax.swing.JPanel jpImagenHeroe;
     private javax.swing.JPanel jpIzquierda;
-    private javax.swing.JPanel jpMapa;
-    private javax.swing.JPanel jpMover;
+    private javax.swing.JLayeredPane jpMapa;
     private javax.swing.JPanel jpMovimiento;
     private javax.swing.JPanel jpPrincipal;
     private javax.swing.JPanel jpPuntosExperiencia;
@@ -288,10 +316,14 @@ public class Tablero extends javax.swing.JFrame {
     private javax.swing.JPanel jpSecuencia2;
     private javax.swing.JPanel jpSecuencia3;
     private javax.swing.JPanel jpVida;
+    private javax.swing.JScrollPane jsMapa;
     private javax.swing.JLabel lblImagenHeroe;
     private javax.swing.JLabel lblMapa;
     // End of variables declaration//GEN-END:variables
 
+    public void setParent(Principal pp){
+        this.principal=pp;
+    }
     private void ajustarPantalla() {
         int w,h;
         widthScreen = Toolkit.getDefaultToolkit().getScreenSize().width;
@@ -310,8 +342,7 @@ public class Tablero extends javax.swing.JFrame {
         //-------------------------
         w = (int)((widthScreen*5)/20);
         h = (int)((heightScreen*10)/12);
-          
-        jpDerecha.setBackground(java.awt.Color.red);
+        jpDerecha.setBackground(java.awt.Color.BLACK);
         jpDerecha.setPreferredSize(new Dimension(w, h));  
         
         
@@ -327,49 +358,108 @@ public class Tablero extends javax.swing.JFrame {
         //-------------------------
         //Tablero
         //-------------------------
-        w = (int)((widthScreen*14)/20);
-        h = (int)((heightScreen*9)/12);                
-        //lblMapa.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        //lblMapa.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        lblMapa.setIcon(this.escalarImagen(w, h, "./assets/map/mapa_escalado.jpg"));
+        w = (int)((widthScreen*14)/20);       
+        h = (int)((heightScreen*9)/12);
+        
+        Double tempX,tempY;
+        
+
+
+
+      
+        icMapaOriginal = new ImageIcon("./assets/map/mapa_escalado.jpg");
+        icMapaEscalado= this.escalarImagen(w, h, "./assets/map/mapa_escalado.jpg");
+        //lblMapa.setIcon();
+        lblMapa.setIcon(icMapaEscalado);
+        //lblMapa.getIcon().getIconWidth()
+        factorEscaladoX= ((Double.parseDouble(Integer.toString(icMapaOriginal.getIconWidth())))/(Double.parseDouble(Integer.toString(lblMapa.getIcon().getIconWidth()))));
+        factorEscaladoY = ((Double.parseDouble(Integer.toString(icMapaOriginal.getIconHeight())))/(Double.parseDouble(Integer.toString(lblMapa.getIcon().getIconHeight()))));        
+        System.out.println("----------");
+        System.out.println("FactorEscalaX: "+factorEscaladoX+"   FactorEscalaY: "+factorEscaladoY);
+        System.out.println("----------");        
         lblMapa.setSize(w, h);
-        //lblMapa.setLocation(100, 100);
-        //lblMapa.setPreferredSize(new Dimension(w, h));
+        
         
         jpMapa.setPreferredSize(new Dimension(w, h));
         jpMapa.setSize(w, h);
-        jpMapa.setBackground(java.awt.Color.BLACK);   
+        jpMapa.setBackground(java.awt.Color.BLACK); 
+        jpMapa.add(lblMapa,0);
        
     }
     public void dibujarSecuencia(ArrayList<Jugador> jugadores){
+        this.jugadores=jugadores;
         jpSecuencia0.setLayout(new GridLayout(1, 2));
         jpSecuencia1.setLayout(new GridLayout(1, 2));
         jpSecuencia2.setLayout(new GridLayout(1, 4));
         jpSecuencia3.setLayout(new GridLayout(1, 5));
-        
-        jpSecuencia0.add(crearLabel("DÍA"));
+        JLabel jlDia =crearLabel("DÍA");
+        jlDia.setBackground(Color.BLACK);
+        jlDia.setForeground(Color.RED);
+        jpSecuencia0.add(jlDia);
         jpSecuencia0.add(crearLabel("NOCHE"));        
         
-        jpSecuencia1.add(crearLabel("ZORKAL"));
-        jpSecuencia1.add(crearLabel("HEROES"));
+
         
-        jpSecuencia2.add(crearLabel("BENDICIÓN"));
+        dibujarSecuenciaZorkal();
+
+        
+        //JButton jbTemp = new JButton(jugadores.get(0).getHeroe().getNombre()+" ("+jugadores.get(0).getNombre()+")");
+        
+        for(int i=0;i<jugadores.size();i++){
+            JButton jbTemp = new JButton(jugadores.get(i).getHeroe().getNombre()+" ("+jugadores.get(i).getNombre()+")");
+            jbTemp.setName("botonHeroe"+i);
+            jbTemp.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    botonHeroe_ActionPerformed(evt);
+                }
+
+            });
+            jpSecuencia3.add(jbTemp);
+            //jpSecuencia3.add(crearLabel(jugadores.get(i).getHeroe().getNombre()+" ("+jugadores.get(i).getNombre()+")"));
+        }
+    }
+    public void dibujarSecuenciaHeroes() {
+        //Secuencia 1
+        jpSecuencia1.removeAll();
+        jpSecuencia1.add(crearLabel("TURNO ZORKAL"));          
+        JLabel jlHeroes =crearLabel("TURNO HEROES");
+        jlHeroes.setBackground(Color.BLACK);
+        jlHeroes.setForeground(Color.RED);        
+        jpSecuencia1.add(jlHeroes);
+        
+        //Secuencia 2
+        jpSecuencia2.removeAll();
+        JLabel jlFase =crearLabel("BENDICIÓN"); 
+        jlFase.setBackground(Color.BLACK);
+        jlFase.setForeground(Color.RED);         
+        jpSecuencia2.add(jlFase);        
         jpSecuencia2.add(crearLabel("MOVER"));
         jpSecuencia2.add(crearLabel("ATACAR"));
         jpSecuencia2.add(crearLabel("CURAR"));
+        this.show();        
+    }  
+    public void dibujarSecuenciaZorkal() {
+        //Secuencia 1
+        jpSecuencia1.removeAll();
+        JLabel jlZorkal =crearLabel("TURNO ZORKAL");
+        jlZorkal.setBackground(Color.BLACK);
+        jlZorkal.setForeground(Color.RED);        
+        jpSecuencia1.add(jlZorkal);
+        jpSecuencia1.add(crearLabel("TURNO HEROES"));  
         
-        for(int i=1;i<jugadores.size();i++){
-            jpSecuencia3.add(crearLabel(jugadores.get(i).getNombre()));
-        }
-        /*
-        jpSecuencia3.add(crearLabel("ALMANOR"));
-        jpSecuencia3.add(crearLabel("CHOROS"));
-        jpSecuencia3.add(crearLabel("KAERDRAK"));
-        jpSecuencia3.add(crearLabel("GUELIN"));
-        jpSecuencia3.add(crearLabel("VARGEN")); 
-        */
-    }
-    public void dibujarHeroe(Heroe heroe){
+        //Secuencia 2        
+        jpSecuencia2.removeAll();
+        JLabel jlFase =crearLabel("RITUAL"); 
+        jlFase.setBackground(Color.BLACK);
+        jlFase.setForeground(Color.RED);         
+        jpSecuencia2.add(jlFase);
+        jpSecuencia2.add(crearLabel("INVOCAR"));
+        jpSecuencia2.add(crearLabel("MOVER"));
+        jpSecuencia2.add(crearLabel("ATACAR"));
+        this.show();        
+    }    
+    public void dibujarHeroe(){
+        Heroe heroe = jugadores.get(this.jugadorActual).getHeroe();
         int w,h;
         cambiarNombreHeroe(heroe.getNombre(),String.valueOf(heroe.getNivel()));
         //-------------------------
@@ -378,7 +468,7 @@ public class Tablero extends javax.swing.JFrame {
         w = (int)((widthScreen*4)/20);
         h = (int)((heightScreen*4)/12);
         //lblImagenHeroe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblImagenHeroe.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/almanor.png"));
+        lblImagenHeroe.setIcon(this.escalarImagen(w, h, heroe.getRutaImagen()));        
         lblImagenHeroe.setSize(w, h);
         lblImagenHeroe.setBounds(((int)((heightScreen*2)/100)), ((int)((heightScreen*3)/100)), w, h);
         jpImagenHeroe.setPreferredSize(new Dimension(w, h));
@@ -390,12 +480,14 @@ public class Tablero extends javax.swing.JFrame {
         //-------------------------
         //Vida
         //-------------------------
+        jpPuntosVida.removeAll();
         jpVida.setBackground(Color.BLACK);
         jpPuntosVida.setBackground(Color.BLACK);
 
         
         w = (int)((widthScreen*4)/100);
         h = (int)((heightScreen*4)/100);
+        
         jpPuntosVida.setLayout(new GridLayout(1, heroe.getVidaMax()));
 
         //Sangre disponible
@@ -414,6 +506,7 @@ public class Tablero extends javax.swing.JFrame {
         //-------------------------
         //Experiencia
         //-------------------------
+        jpExperiencia.removeAll();
         jpExperiencia.setBackground(Color.BLACK);
         jpPuntosExperiencia.setBackground(Color.BLACK);
 
@@ -443,7 +536,8 @@ public class Tablero extends javax.swing.JFrame {
         }
         //-------------------------
         //Movimiento
-        //-------------------------        
+        //-------------------------   
+        jpMovimiento.removeAll();
         jpMovimiento.setBackground(Color.BLACK);
         jpMovimiento.setLayout(new GridLayout(1, heroe.getMovimientoMax()));
         for(int i=0;i<heroe.getMovimiento();i++){
@@ -459,7 +553,7 @@ public class Tablero extends javax.swing.JFrame {
         //-------------------------
         //Ataque
         //-------------------------     
-        
+        jpAtaque.removeAll();
         jpAtaque.setBackground(Color.BLACK);
         jpAtaque.setLayout(new GridLayout(1, heroe.getAtaqueMax()));
         if(heroe.isAtaqueFisico()){//Ataque Físico
@@ -487,54 +581,342 @@ public class Tablero extends javax.swing.JFrame {
                 jpAtaque.add(s); 
             }    
         }
-        //-------------------------
-        //Habilidad
-        //-------------------------
-        for(Habilidad hab:heroe.getHabilidad()){
-            
-            if(hab.isCuestaAtaque()){//Activa
-                JButton boton = new JButton(hab.getNombre());                
-                jpHabilidadActiva.add(boton);                
-            }else{//Pasiva
-                JButton boton = new JButton(hab.getNombre());
-                jpHabilidadPasiva.add(boton);
-            }
+    }    
+    public void actualizarMovimientoHeroe(){
+        Heroe heroe = jugadores.get(jugadorActual).getHeroe();
+        int w = (int)((widthScreen*4)/100);
+        int h = (int)((heightScreen*4)/100);
+        //Remover elementos anteriores
+        jpMovimiento.removeAll();
+        
+        jpMovimiento.setLayout(new GridLayout(1, heroe.getMovimientoMax()));
+        for(int i=0;i<heroe.getMovimiento();i++){
+           JLabel s = new JLabel();
+            s.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/m_ok.png"));
+            jpMovimiento.add(s); 
+        }    
+        for(int i=0;i<(heroe.getMovimientoMax()-heroe.getMovimiento());i++){
+           JLabel s = new JLabel();
+            s.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/m_no.png"));
+            jpMovimiento.add(s); 
+        }
+    }
+    public ImageIcon escalarImagen(int w,int h, String url){
+        ImageIcon ic = new ImageIcon(url);
+        Image icRes = ic.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+        ic = new ImageIcon(icRes);
+        return ic;
+    }  
+    private JLabel crearLabel(String texto){
+         JLabel j = new JLabel(texto);
+         j.setFont(new java.awt.Font("Bitstream Charter", 3, 14));
+         j.setForeground(Color.BLACK);
+         j.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+         j.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+         return j;
+    }    
+    /*private void dibujarFicha(String urlFicha){
+        int w,h;
+        
+    }*/
+    //Programar el movimiento
+    private void br_1ActionPerformed(ActionEvent evt) {
+        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
+        Casilla oldCasilla = heroe.getCasilla();
+        if(!oldCasilla.getC1().esOcupada()){
+            oldCasilla.desocupar();
+            oldCasilla.getC1().ocupar(heroe);
+            heroe.mover();
         }
         
+        efectuarMovimiento();
+    }      
+    private void br_2ActionPerformed(ActionEvent evt) {
+        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
+        Casilla oldCasilla = heroe.getCasilla();
+        if(!oldCasilla.getC2().esOcupada()){
+            oldCasilla.desocupar();
+            oldCasilla.getC2().ocupar(heroe);
+            heroe.mover();
+        }
+        
+         efectuarMovimiento();
+    }      
+    private void br_3ActionPerformed(ActionEvent evt) {
+        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
+        Casilla oldCasilla = heroe.getCasilla();
+        if(!oldCasilla.getC3().esOcupada()){
+            oldCasilla.desocupar();
+            oldCasilla.getC3().ocupar(heroe);
+            heroe.mover();
+        }
+        
+         efectuarMovimiento();
+    }      
+    private void br_4ActionPerformed(ActionEvent evt) {
+        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
+        Casilla oldCasilla = heroe.getCasilla();
+        if(!oldCasilla.getC4().esOcupada()){
+            oldCasilla.desocupar();
+            oldCasilla.getC4().ocupar(heroe);
+            heroe.mover();
+        }
+        
+         efectuarMovimiento();
+    }   
+    private void br_upActionPerformed(ActionEvent evt) {
+        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
+        Casilla oldCasilla = heroe.getCasilla();
+        if(!oldCasilla.getArriba().esOcupada()){
+            oldCasilla.desocupar();
+            oldCasilla.getArriba().ocupar(heroe);
+            heroe.mover();
+        }
+        
+         efectuarMovimiento();
+    }  
+    private void br_rightActionPerformed(ActionEvent evt) {
+        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
+        Casilla oldCasilla = heroe.getCasilla();
+        if(!oldCasilla.getDerecha().esOcupada()){
+            oldCasilla.desocupar();
+            oldCasilla.getDerecha().ocupar(heroe);
+            heroe.mover();
+        }
+        
+         efectuarMovimiento();
+    }     
+    private void br_downActionPerformed(ActionEvent evt) {
+        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
+        Casilla oldCasilla = heroe.getCasilla();
+        if(!oldCasilla.getAbajo().esOcupada()){
+            oldCasilla.desocupar();
+            oldCasilla.getAbajo().ocupar(heroe);
+            heroe.mover();
+        }
+
+        
+         efectuarMovimiento();
+    }    
+    private void br_leftActionPerformed(ActionEvent evt) {
+        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
+        Casilla oldCasilla = heroe.getCasilla();
+        if(!oldCasilla.getIzquierda().esOcupada()){
+            oldCasilla.desocupar();
+            oldCasilla.getIzquierda().ocupar(heroe);
+            heroe.mover();
+        }
+        
+         efectuarMovimiento();
+    }  
+    public void efectuarMovimiento(){
+        Heroe heroe = jugadores.get(jugadorActual).getHeroe();
+        ((Ficha)heroe.getFicha()).setCasilla(heroe.getCasilla());
+        if(esEscalado){
+            dibujarFichaEnTablero((JLabel)(((Ficha)heroe.getFicha()).getFiguraEscalada()), heroe.getCasilla().getX(), heroe.getCasilla().getY());
+        }else{
+            
+            dibujarFichaEnTablero((JLabel)(((Ficha)heroe.getFicha()).getFiguraOriginal()), heroe.getCasilla().getX(), heroe.getCasilla().getY());
+            posicionarCamara(heroe.getFicha());
+        }        
+        actualizarMovimientoHeroe();
+        dibujarMoverZorkal();
+
+        
+        
+        this.show();        
+    }
+
+    private void cambiarNombreHeroe(String nombre,String nivel) {
+        jpImagenHeroe.setBorder(javax.swing.BorderFactory.createTitledBorder(null, nombre+" - nivel:"+nivel, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 24), new java.awt.Color(254, 254, 254))); // NOI18N
+        
+    }
+    private void cambiarTipoAtaque(String nombre){
+        jpAtaque.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ataque "+nombre, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N
+    }
+    
+
+
+    public void dibujarFichasHeroes(Mapa m) {
+        this.mapa=m;
+        Casilla[] argos = mapa.getArgos();
+        
+        for(int i=1;i<jugadores.size();i++){   
+                Ficha fichaHeroe = new Ficha();
+                argos[i-1].ocupar(jugadores.get(i).getHeroe());
+                
+                JLabel jl = new JLabel();
+                JLabel jlOriginal = new JLabel();
+                jl.setIcon(escalarImagen(((widthScreen*2)/100), ((heightScreen*4)/100), jugadores.get(i).getHeroe().getRutaSprite()));  
+                ImageIcon icSprite = new ImageIcon(jugadores.get(i).getHeroe().getRutaRostro());
+                jlOriginal.setIcon(escalarImagen((icSprite.getIconWidth()*5)/10,(icSprite.getIconHeight()*6)/10,jugadores.get(i).getHeroe().getRutaSprite()));
+                //principal.addFichasOriginales(jlOriginal);
+                //principal.addFichasEscaladas(jl);
+                fichaHeroe.setCasilla(argos[i-1]);
+                fichaHeroe.setFiguraOriginal(jlOriginal);
+                fichaHeroe.setFiguraEscalada(jl);
+                
+                jugadores.get(i).getHeroe().setFicha(fichaHeroe);
+                principal.addFicha(fichaHeroe);
+                //dibujarFichaEnTablero(jl, argos[i-1].getX(), argos[i-1].getY());
+                /*jl.setBounds(argos[i-1].getX(), argos[i-1].getY(),
+                    jl.getIcon().getIconWidth(),
+                    jl.getIcon().getIconHeight());*/
+                //jpMapa.add(jl,1,0);
+        }
+        
+    }
+    
+    public void dibujarFichaZorkal() {
+        //----------
+        Ficha fichaHeroe = new Ficha();
+        Casilla[] trono=mapa.getTrono();
+        trono[6].ocupar(jugadores.get(0).getHeroe());        
+                                
+        JLabel jl = new JLabel();
+        JLabel jlOriginal = new JLabel();
+        jl.setIcon(escalarImagen(((widthScreen*2)/100), ((heightScreen*4)/100), jugadores.get(0).getHeroe().getRutaSprite()));                                
+        jlOriginal.setIcon(new ImageIcon(jugadores.get(0).getHeroe().getRutaSprite()));
+        //principal.addFichasOriginales(jlOriginal);
+        //principal.addFichasEscaladas(jl);
+        fichaHeroe.setCasilla(trono[6]);
+        fichaHeroe.setFiguraOriginal(jlOriginal);
+        fichaHeroe.setFiguraEscalada(jl);
+
+        jugadores.get(0).getHeroe().setFicha(fichaHeroe);
+        principal.addFicha(fichaHeroe);        
+    }
+    
+    public double getFactorEscaladoX() {
+        return factorEscaladoX;
+    }
+
+    public double getFactorEscaladoY() {
+        return factorEscaladoY;
+    }    
+
+    
+    private void botonHeroe_ActionPerformed(ActionEvent evt) {
+        String nombreHeroe =((JButton)evt.getSource()).getName();
+        nombreHeroe=nombreHeroe.substring(10);  
+        String rutaImagen =jugadores.get(Integer.parseInt(nombreHeroe)).getHeroe().getRutaCarta();
+        Carta carta = new Carta(this, rutaImagen);
+        carta.setTitle(jugadores.get(Integer.parseInt(nombreHeroe)).getNombre());
+        carta.setVisible(true);
+    }   
+
+    public int getJugadorActual() {
+        return jugadorActual;
+    }
+
+    public void setJugadorActual(int jugadorActual) {
+        //Activar jugador
+        jpSecuencia3.getComponent(jugadorActual).setBackground(Color.BLACK);
+        jpSecuencia3.getComponent(jugadorActual).setForeground(Color.red);
+        //Desactivar
+        if(jugadorActual==0){
+            jpSecuencia3.getComponent(jugadores.size()-1).setBackground(new javax.swing.plaf.ColorUIResource(238, 238, 238));
+            jpSecuencia3.getComponent(jugadores.size()-1).setForeground(new javax.swing.plaf.ColorUIResource(51, 51, 51));            
+        }else if(jugadorActual==1){
+            jpSecuencia3.getComponent(0).setBackground(new javax.swing.plaf.ColorUIResource(238, 238, 238));
+            jpSecuencia3.getComponent(0).setForeground(new javax.swing.plaf.ColorUIResource(51, 51, 51));            
+            
+            jpSecuencia3.getComponent(jugadores.size()-1).setBackground(new javax.swing.plaf.ColorUIResource(238, 238, 238));
+            jpSecuencia3.getComponent(jugadores.size()-1).setForeground(new javax.swing.plaf.ColorUIResource(51, 51, 51)); 
+        }else{
+            jpSecuencia3.getComponent(jugadorActual-1).setBackground(new javax.swing.plaf.ColorUIResource(238, 238, 238));
+            jpSecuencia3.getComponent(jugadorActual-1).setForeground(new javax.swing.plaf.ColorUIResource(51, 51, 51)); 
+        }
+        
+        this.jugadorActual = jugadorActual;
+    }
+
+    public void dibujarRitual(){
+        Zorkal zorkal = (Zorkal)jugadores.get(jugadorActual).getHeroe();
+        limpiarContenedores();
+        jpAccion.setLayout(new GridLayout(3, 2));
+        for(Ritual ritual: zorkal.getRituales()){
+            JButton jr = new JButton(ritual.getNombre());
+            jpAccion.add(jr);
+        }
+        JButton jboton = new JButton("Finalizar");
+        jboton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jugarInvocarctionPerformed(evt);
+            }
+        });
+        jpBoton.add(jboton);
+        jpAccion.setBackground(Color.BLACK);
+        jpAccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rituales", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N
+        this.show();
+    }    
+    public void dibujarInvocar(){
+        Zorkal zorkal = (Zorkal)jugadores.get(jugadorActual).getHeroe();
+        int numRituales = zorkal.getCriaturas().size();
+        limpiarContenedores();
+        jpAccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Invocar", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N
+        jpAccion.setLayout(new GridLayout((numRituales/2), 2));
+        for(Criatura criatura:zorkal.getCriaturas()){
+            JButton jc = new JButton(criatura.getNombre());
+            jpAccion.add(jc);
+        }
+        JButton jboton = new JButton("Finalizar Invocar");
+        jboton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jugarMoverZorkalActionPerformed(evt);
+            }
+        });
+        jpBoton.add(jboton);  
+        
+        //----------Pasar secuencia a invocar
+        desactivarElementoSecuencia((JLabel)jpSecuencia2.getComponent(0));
+        activarElementoSecuencia((JLabel)jpSecuencia2.getComponent(1));
+
+        
+        this.show();
+        
+    }   
+    
+    public void dibujarMover(){
+        int w = (int)((widthScreen*4)/100);
+        int h = (int)((heightScreen*4)/100);
+        limpiarContenedores();
+        jpAccion.setLayout(new GridLayout(3, 3));
+        jpAccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mover", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N
         //-------------------------
         //Mover
         //------------------------- 
         
         //-----Parte superior
-        JButton br_4 = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_4.png"));
-        jpMover.add(br_4);
+        br_4 = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_4.png"));
+        jpAccion.add(br_4);
 
-        JButton br_up = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_up.png"));
-        jpMover.add(br_up);
+        br_up = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_up.png"));
+        jpAccion.add(br_up);
 
-        JButton br_1 = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_1.png"));
-        jpMover.add(br_1); 
+        br_1 = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_1.png"));
+        jpAccion.add(br_1); 
         
         //-----Parte central
-        JButton br_left = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_left.png"));
-        jpMover.add(br_left);  
+        br_left = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_left.png"));
+        jpAccion.add(br_left);  
 
-        JButton br_0 = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_0.png"));
+        br_0 = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_0.png"));
         br_0.setEnabled(false);
-        jpMover.add(br_0);  
+        jpAccion.add(br_0);  
 
-        JButton br_right = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_right.png"));
-        jpMover.add(br_right); 
+        br_right = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_right.png"));
+        jpAccion.add(br_right); 
         
         //-----Parte inferior        
-        JButton br_3 = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_3.png"));
-        jpMover.add(br_3); 
+        br_3 = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_3.png"));
+        jpAccion.add(br_3); 
 
-        JButton br_down = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_down.png"));
-        jpMover.add(br_down);          
+        br_down = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_down.png"));
+        jpAccion.add(br_down);          
 
-        JButton br_2 = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_2.png"));
-        jpMover.add(br_2);   
+        br_2 = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_2.png"));
+        jpAccion.add(br_2);   
         
         //---------Se establecen los Listener
         br_1.addActionListener(new java.awt.event.ActionListener() {
@@ -576,59 +958,316 @@ public class Tablero extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 br_leftActionPerformed(evt);
             }
-        });         
+        });
+        verificarCasillas();
         
-}    
-    public ImageIcon escalarImagen(int w,int h, String url){
-        ImageIcon ic = new ImageIcon(url);
-        Image icRes = ic.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
-        ic = new ImageIcon(icRes);
-        return ic;
-    }  
-    private JLabel crearLabel(String texto){
-         JLabel j = new JLabel(texto);
-         j.setFont(new java.awt.Font("Bitstream Charter", 3, 14));
-         j.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-         j.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-         return j;
-    }    
-    /*private void dibujarFicha(String urlFicha){
-        int w,h;
+        JButton jboton = new JButton("Finalizar Mover");
+      
+        jboton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if(jugadorActual==0){
+                    jugarAtacarActionPerformed(evt);
+                }else{
+                    principal.jugarMoverHeroes(jugadorActual+1);
+                }
+                
+            }
+        });
+        jpBoton.add(jboton);   
         
-    }*/
-    //Programar el movimiento
-    private void br_1ActionPerformed(ActionEvent evt) {
-        System.out.println("Presiona br1");
-    }      
-    private void br_2ActionPerformed(ActionEvent evt) {
-        System.out.println("Presiona br2");
-    }      
-    private void br_3ActionPerformed(ActionEvent evt) {
-        System.out.println("Presiona br3");
-    }      
-    private void br_4ActionPerformed(ActionEvent evt) {
-        System.out.println("Presiona br4");
-    }   
-    private void br_upActionPerformed(ActionEvent evt) {
-        System.out.println("Presiona br_up");
-    }  
-    private void br_rightActionPerformed(ActionEvent evt) {
-        System.out.println("Presiona br_right");
-    }     
-    private void br_downActionPerformed(ActionEvent evt) {
-        System.out.println("Presiona br_down");
+        //----------Pasar secuencia a Mover
+        desactivarElementoSecuencia((JLabel)jpSecuencia2.getComponent(1));
+        activarElementoSecuencia((JLabel)jpSecuencia2.getComponent(2));
+        
+        this.show();
+    }
+    public void dibujarMoverZorkal(){
+        dibujarMover();
+        //Funcion para mover criaturas
+    }
+    public void dibujarAtacarZorkal(){
+        dibujarAtacar();
+        //Funcion para atacar criaturas
     }    
-    private void br_leftActionPerformed(ActionEvent evt) {
-        System.out.println("Presiona br_left");
-    }  
+    public void dibujarAtacar(){
+        Heroe heroe = jugadores.get(jugadorActual).getHeroe();
+        limpiarContenedores();
+        jpAccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Habilidades", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N        
+        jpAccion.setLayout(new GridLayout(1, 2));
+        JPanel habActiva = new JPanel();
+        JPanel habPasiva = new JPanel();
+        jpAccion.add(habActiva);
+        jpAccion.add(habPasiva);
+        habActiva.setLayout(new BoxLayout(habActiva,javax.swing.BoxLayout.Y_AXIS ));
+        habPasiva.setLayout(new BoxLayout(habPasiva,javax.swing.BoxLayout.Y_AXIS ));
+        habActiva.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Activas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Bitstream Charter", 1, 18)));
+        habPasiva.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pasivas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Bitstream Charter", 1, 18)));
+        habActiva.setBackground(Color.BLACK);
+        habPasiva.setBackground(Color.BLACK);
+        //-------------------------
+        //Habilidad
+        //-------------------------
+       
+        for(Habilidad hab:heroe.getHabilidad()){
+            
+            if(hab.isCuestaAtaque()){//Activa
+                JButton boton = new JButton(hab.getNombre());                
+                habActiva.add(boton);                
+            }else{//Pasiva
+                JButton boton = new JButton(hab.getNombre());
+                habPasiva.add(boton);
+            }
+        }     
+        
+        JButton jboton = new JButton();
+        if(jugadorActual==0){
+            jboton.setText("Finalizar Turno");
+        }else{
+            jboton.setText("Finalizar Ataque");
+        }
+      
+        jboton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if(jugadorActual==0){
+                    finalizarTurnoZorkalActionPerformed(evt);
+                }else{
+                    principal.jugarAtacarHeroes(jugadorActual+1);
+                }
+                
+            }
+        });
+        jpBoton.add(jboton);   
+        
+        //----------Pasar secuencia a Atacar
+        desactivarElementoSecuencia((JLabel)jpSecuencia2.getComponent(2));
+        activarElementoSecuencia((JLabel)jpSecuencia2.getComponent(3));     
+        
+        this.show();
+    }
+    public void verificarCasillas(){
+        Heroe heroeTemp = jugadores.get(jugadorActual).getHeroe();
+        Casilla casillaTemp = heroeTemp.getCasilla();
+        
+       if(heroeTemp.getMovimiento()==0){//No puede mover
+           br_0.setEnabled(false);
+           br_1.setEnabled(false);
+           br_2.setEnabled(false);
+           br_3.setEnabled(false);
+           br_4.setEnabled(false);
+           br_up.setEnabled(false);
+           br_left.setEnabled(false);
+           br_right.setEnabled(false);
+           br_down.setEnabled(false);
+       }else{ 
+        if((casillaTemp.getArriba() == null) || (casillaTemp.getArriba().esOcupada())){
+            br_up.setEnabled(false);
+        }else{
+            br_up.setEnabled(true);
+        }
+        if(casillaTemp.getDerecha() == null || (casillaTemp.getDerecha().esOcupada())){
+            br_right.setEnabled(false);
+        }else{
+            br_right.setEnabled(true);
+        }  
+        if(casillaTemp.getAbajo() == null || (casillaTemp.getAbajo().esOcupada())){
+            br_down.setEnabled(false);
+        }else{
+            br_down.setEnabled(true);
+        }  
+        if(casillaTemp.getIzquierda()== null || (casillaTemp.getIzquierda().esOcupada())){
+            br_left.setEnabled(false);
+        }else{
+            br_left.setEnabled(true);
+        } 
+        if(casillaTemp.getC1()== null || (casillaTemp.getC1().esOcupada())){
+            br_1.setEnabled(false);
+        }else{
+            br_1.setEnabled(true);
+        }  
+        if(casillaTemp.getC2()== null || (casillaTemp.getC2().esOcupada())){
+            br_2.setEnabled(false);
+        }else{
+            br_2.setEnabled(true);
+        }       
+        if(casillaTemp.getC3()== null || (casillaTemp.getC3().esOcupada())){
+            br_3.setEnabled(false);
+        }else{
+            br_3.setEnabled(true);
+        }   
+        if(casillaTemp.getC4()== null || (casillaTemp.getC4().esOcupada())){
+            br_4.setEnabled(false);
+        }else{
+            br_4.setEnabled(true);
+        }    
+       } 
+    }
+    
+    public void dibujarBendicion() {
+        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
+        limpiarContenedores();
+        jpAccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Bendición", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N        
+        //jpAccion.setLayout(new BoxLayout(jpAccion, javax.swing.BoxLayout.Y_AXIS));
+        jpAccion.setLayout(new GridLayout(1, 1));
+        JButton jr = new JButton(heroe.getBendicion().getNombre());
+        jpAccion.add(jr);
+        
+        JButton jboton = new JButton("Finalizar");
+        jboton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                //jugarMoverHeroesPerformed(evt);
+                principal.jugarBencion(jugadorActual+1);
+            }
+        });        
+        jpBoton.add(jboton);
+        this.show();
+    }
+    
+    
+   
+    private void limpiarContenedores(){
+        //jpAccion.removeAll();
+        for(Component comp:jpAccion.getComponents()){
+            jpAccion.remove(comp);
+        }
+        for(Component comp:jpBoton.getComponents()){
+            jpBoton.remove(comp);
+        }        
+        //jpBoton.removeAll();
+    }
 
-    private void cambiarNombreHeroe(String nombre,String nivel) {
-        jpImagenHeroe.setBorder(javax.swing.BorderFactory.createTitledBorder(null, nombre+" - nivel:"+nivel, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 24), new java.awt.Color(254, 254, 254))); // NOI18N
+    public void iniciarSecuenciaJuego() {
+        principal.jugar();
+    }
+
+    public void alternarDiaNoche(boolean esNoche) {
+       JLabel lblDia = (JLabel)jpSecuencia0.getComponent(0);
+       JLabel lblNoche = (JLabel)jpSecuencia0.getComponent(1);
+       if(esNoche){           
+            //Activar Noche                   
+            activarElementoSecuencia(lblNoche);
+            //Desactivar Dia
+            desactivarElementoSecuencia(lblDia);
+       }else{
+           //Activar Dia
+            activarElementoSecuencia(lblDia);
+           //Desactivar Noche
+           desactivarElementoSecuencia(lblNoche);
+       }
+    }
+
+    private void desactivarElementoSecuencia(JLabel jLabel) {
+        jLabel.setBackground(Color.GRAY);
+        jLabel.setForeground(Color.BLACK);
+    }
+
+    private void activarElementoSecuencia(JLabel jLabel) {
+        jLabel.setBackground(Color.BLACK);
+        jLabel.setForeground(Color.RED);        
+    }
+    
+    //------------------------------------------------------
+    //                          ZORKAL
+    //---------------------------------------------------------    
+    private void jugarInvocarctionPerformed(ActionEvent evt) {
+        principal.jugarInvocar();
+    } 
+    private void jugarMoverZorkalActionPerformed(ActionEvent evt) {
+        principal.jugarMoverZorkal();
+    } 
+    private void jugarAtacarActionPerformed(ActionEvent evt) {
+        principal.jugarAtacarZorkal();
+    }    
+    private void finalizarTurnoZorkalActionPerformed(ActionEvent evt) {
+        principal.finalizarTurnoZorkal();
+    }    
+    //------------------------------------------------------
+    //                          HEROES
+    //---------------------------------------------------------
+    /*private void jugarMoverHeroesPerformed(ActionEvent evt) {
+        principal.jugarMoverHeroes();
+    } */
+    private void finalizarAtaqueActionPerformed(ActionEvent evt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }     
+
+    public void setCamaraGlobal() {
+        this.esEscalado=true;
+        jsMapa.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jsMapa.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER); 
+        jpMapa.removeAll();
         
+        jpMapa.setSize(icMapaEscalado.getIconWidth(),icMapaEscalado.getIconHeight());
+        lblMapa.setSize(icMapaEscalado.getIconWidth(),icMapaEscalado.getIconHeight());
+        jpMapa.setPreferredSize(new Dimension(icMapaEscalado.getIconWidth(), icMapaEscalado.getIconHeight())); 
+        lblMapa.setPreferredSize(new Dimension(icMapaEscalado.getIconWidth(), icMapaEscalado.getIconHeight()));        
+        
+        lblMapa.setIcon(icMapaEscalado);
+        jpMapa.add(lblMapa,0);        
+
+        mapa.escalar(this.getFactorEscaladoX(), this.getFactorEscaladoY(),true);        
+        dibujarFichas(true);
+        show();
     }
-    private void cambiarTipoAtaque(String nombre){
-        jpAtaque.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ataque "+nombre, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N
+
+    public void setCamaraPersonal() {
+        this.esEscalado=false;
+        jsMapa.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jsMapa.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); 
+        jpMapa.removeAll();
+        jpMapa.setSize(icMapaOriginal.getIconWidth(),icMapaOriginal.getIconHeight());
+        lblMapa.setSize(icMapaOriginal.getIconWidth(),icMapaOriginal.getIconHeight());
+        jpMapa.setPreferredSize(new Dimension(icMapaOriginal.getIconWidth(), icMapaOriginal.getIconHeight())); 
+        lblMapa.setPreferredSize(new Dimension(icMapaOriginal.getIconWidth(), icMapaOriginal.getIconHeight()));
+        lblMapa.setIcon(icMapaOriginal);
+        jpMapa.add(lblMapa,0);
+        mapa.escalar(this.getFactorEscaladoX(), this.getFactorEscaladoY(),false);
+        dibujarFichas(false);        
+        show();
     }
+
+    private void dibujarFichas(boolean escaladas) {
+        /*for(Jugador j:jugadores){
+            ImageIcon ic = new ImageIcon(j.getHeroe().getRutaSprite());
+            JLabel jlFicha= ((JLabel)j.getHeroe().getFicha());
+            jlFicha.setIcon(ic);
+            dibujarFichaEnTablero(jlFicha, j.getHeroe().getCasilla().getX(), j.getHeroe().getCasilla().getY());
+            //dibujarFichaEnTablero(jlFicha, 0, 0);
+        }*/
+       // Ficha temp =(Ficha)jugadores.get(1).getHeroe().getFicha();
+        //temp.
+        
+       // System.out.println("Escalada x:"+temp.getCasilla().getX()+"  y:"+temp.getCasilla().getY());
+        //System.out.println("Label x:"+((JLabel)temp.getFiguraEscalada()).getLocation().x+"  y:"+((JLabel)temp.getFiguraEscalada()).getLocation().y);
+        for(Ficha ficha: principal.getFichas()){
+            //ficha.setIsEscalada(escaladas);
+            if(escaladas){
+                dibujarFichaEnTablero((JLabel)ficha.getFiguraEscalada(), ficha.getCasilla().getX(), ficha.getCasilla().getY());
+            }else{
+                dibujarFichaEnTablero((JLabel)ficha.getFiguraOriginal(), ficha.getCasilla().getX(), ficha.getCasilla().getY());
+            }
+            
+        }
+    }
+    public void dibujarFichaEnTablero(JLabel ficha,int x,int y){
+        //Este recalculo se hace con el fin de centrar
+        ficha.setBounds((x-(ficha.getIcon().getIconWidth()/2)), (y-((ficha.getIcon().getIconHeight())/2)),
+        ficha.getIcon().getIconWidth(),
+        ficha.getIcon().getIconHeight());
+        jpMapa.add(ficha,1,0);
+    }    
+
+    public void posicionarCamara(Object ficha) {
+        
+        //System.out.println("Ficha x");
+       jsMapa.getHorizontalScrollBar().setValue(((Ficha)ficha).getCasilla().getX()-(jsMapa.getWidth()/2));
+       jsMapa.getVerticalScrollBar().setValue(((Ficha)ficha).getCasilla().getY()-(jsMapa.getHeight()/2));
+       //jsMapa.getVerticalScrollBar().setEnabled(false);
+    }
+
+
+    
+
+
 
  
         

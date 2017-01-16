@@ -123,10 +123,11 @@ public class Inicio extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         JOptionPane jo = new JOptionPane("Ayuda aún no hay sido implementado.");
         jo.setVisible(true);
-                
+        parent.sonidoClick();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        parent.sonidoClick();
         parent.iniciarSeleccion();
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -188,6 +188,7 @@ public class Seleccion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSiguienteActionPerformed
+        parent.sonidoClick();
         if(numjugador==0){//Zorkal
             //------Crear nuevo Jugador
             Jugador j= new Jugador();
@@ -207,7 +208,7 @@ public class Seleccion extends javax.swing.JFrame {
             
             //-----------------------------
         }else{//Heroes            
-            if(numjugador==1){ 
+            if(numjugador>=1){ 
             //--------Transformación Gráfica
             jbFinalizar.setEnabled(true);
             //--------
@@ -237,10 +238,12 @@ public class Seleccion extends javax.swing.JFrame {
     }//GEN-LAST:event_jbSiguienteActionPerformed
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
+        parent.sonidoClick();
         parent.cancelarSeleccion();
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFinalizarActionPerformed
+        parent.sonidoClick();
         parent.finalizarSeleccion(jugadores);
     }//GEN-LAST:event_jbFinalizarActionPerformed
 
@@ -417,7 +420,9 @@ public class Seleccion extends javax.swing.JFrame {
         }
     }
     private void botonHeroe_ActionPerformed(ActionEvent evt) {
+        parent.sonidoClick();
         jbSiguiente.setEnabled(true);
+        jbFinalizar.setEnabled(false);
         JButton origen = ((JButton)evt.getSource());
         String nombreBoton = origen.getName();        
         indiceHeroe = Integer.parseInt(nombreBoton.substring(1));
@@ -434,12 +439,14 @@ public class Seleccion extends javax.swing.JFrame {
     }
     
     private void botonZorkal_ActionPerformed(ActionEvent evt) {
+        parent.sonidoClick();
         jbSiguiente.setEnabled(true);
         boton[4].setEnabled(false);
     }    
     private void bloquearSeleccion(){
         lblNombre.setVisible(false);
         txtNombre.setVisible(false);
+        jbFinalizar.setEnabled(true);
         for(int i=0;i<9;i++){
             boton[i].setEnabled(false);
         }

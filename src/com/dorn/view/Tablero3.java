@@ -76,13 +76,16 @@ public class Tablero3 extends javax.swing.JFrame{
         h = (int)((heightScreen*9)/12);
         
         
-        JLabel imagenMapa = new JLabel( this.escalarImagen(w, h, rutaMapa) );
+        //JLabel imagenMapa = new JLabel( this.escalarImagen(w, h, rutaMapa) );
+        JLabel imagenMapa = new JLabel();
+        ImageIcon icc = new ImageIcon(rutaMapa);
+        imagenMapa.setIcon(icc);
         JPanel pImagenMapa = new JPanel();
         JScrollPane spImagenMapa = new JScrollPane(pImagenMapa);
-        spImagenMapa.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        spImagenMapa.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);         
+        spImagenMapa.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        spImagenMapa.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);         
         
-        pImagenMapa.setPreferredSize(new Dimension(w, h));
+        pImagenMapa.setPreferredSize(new Dimension(icc.getIconWidth(), icc.getIconHeight()));
         spImagenMapa.setBounds(0, 0, w, h);        
         pImagenMapa.add(imagenMapa);
  

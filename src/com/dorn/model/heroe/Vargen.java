@@ -5,6 +5,7 @@
  */
 package com.dorn.model.heroe;
 
+import com.dorn.model.power.Habilidad;
 import java.util.ArrayList;
 
 /**
@@ -20,5 +21,38 @@ public class Vargen extends Heroe{
         this.setRutaCarta("./assets/heroe/card/vargen.png");
         
         this.setRutaRostro("./assets/heroe/face/vargen.png");
-    }      
+        this.setRutaSprite("./assets/heroe/sprite/vargen1.png");
+    }   
+    @Override
+    public void subirNivelUno() {
+        setNivel(1);
+        
+        this.movimientoMax=7;
+        
+        this.vidaMax=5;
+        this.vida=vidaMax;
+        
+        this.ataqueMax=1;
+        //0:Mágico
+        //1:Contacto
+        //2:Pica
+        //3:Arco        
+        setTipoAtaque(1);        
+        
+        this.experienciaMax=5;
+        this.experiencia=0;
+        //Habilidades
+        //--------------------------------------
+        Habilidad h = new Habilidad();
+        h.setNombre("Garras");
+        h.setTexto("Vargen causa 1 daño a una criatura adyacente.");
+        h.setCuestaAtaque(true);
+        habilidad.add(h);
+        //--------------------------------------
+        h = new Habilidad();
+        h.setNombre("Bocado Fresco");
+        h.setTexto("Si Vargen mata a una Rata Gigante o a un Engendro, recupera 1 punto de vida además de conseguir la experiencia.");
+        h.setUnoPorTurno(true);
+        habilidad.add(h);  
+    }        
 }

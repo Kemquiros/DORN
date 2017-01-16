@@ -6,14 +6,19 @@
 package com.dorn.controller;
 
 
+import com.dorn.game.DORN;
 import com.dorn.model.Jugador;
 import com.dorn.model.bless.*;
 import com.dorn.model.heroe.*;
+import com.dorn.model.map.Ficha;
+import com.dorn.model.map.Mapa;
 import com.dorn.model.monster.*;
 import com.dorn.model.ritual.*;
+import com.dorn.sound.Sound;
 import com.dorn.view.Inicio;
 import com.dorn.view.Seleccion;
 import com.dorn.view.Tablero;
+import com.dorn.view.Tablero3;
 import java.util.ArrayList;
 
 /**
@@ -21,6 +26,7 @@ import java.util.ArrayList;
  * @author t30r3m4
  */
 public class Principal {
+    private Mapa mapa;
     private static Heroe[] heroes;
     private static String rutaMapa="./assets/map/mapa_escalado.jpg";
     private static Tablero tablero;
@@ -29,15 +35,20 @@ public class Principal {
     private static Thread hiloTablero,hiloInicio,hiloSeleccion;
     private static int numeroJugadores;
     private static ArrayList<Jugador> jugadores;
+    private static ArrayList<Ficha> fichas;
     private static boolean esNoche;
     private static boolean juegoTermina=false;
+    
 
 
     
     public Principal(){  
         inicio = new Inicio(this); 
+        mapa = new Mapa();
+        tablero = new Tablero();
+        fichas = new ArrayList<>();
         iniciarHeroes();
-
+        iniciarSonido();
     }
 //-----------------------------------------
 // --------------- MENÚ -------------------
@@ -46,6 +57,9 @@ public class Principal {
         hiloInicio= new Thread(){
              public void run() {
                  inicio.start();                 
+                 /*Tablero3 t3 = new Tablero3();
+                 t3.dibujarTablero(rutaMapa);
+                 t3.setVisible(true);*/
              }
         };
         hiloInicio.start();
@@ -92,29 +106,7 @@ public class Principal {
 
     }    
     
-//-----------------------------------------
-// --------------- TABLERO ----------------
-//-----------------------------------------     
-    public static void iniciaTablero(){
-        hiloTablero= new Thread(){
-        public void run() {
-                tablero= new Tablero(); 
-                tablero.dibujarTablero(rutaMapa);
-                tablero.dibujarSecuencia(jugadores);
-                //tablero.dibujarHeroe(jugador[0].getHeroe());
-                
-                //---Colocar 6 Fichas artefactos
-                
-                //---Colocar 24 Fichas tesoros
-                
-                //---Colocar fichas Héroes en pueblo Argos
-                
-                tablero.pack();
-                tablero.setVisible(true);
-            }        
-        };
-        hiloTablero.start();        
-    }
+
     
 //-----------------------------------------
 // --------------- JUEGO ------------------
@@ -143,24 +135,39 @@ public class Principal {
         //Primer turno de Zorkal es de día
         esNoche=false;
         
-        
-        
-        /*jugador = new Jugador[numJugadores];
-        jugador[0] = new Jugador();
-        jugador[0].setNombre("John");
-        jugador[0].setHeroe(new Almanor());
-        jugador[0].getHeroe().subirNivelUno();
-        jugador[0].getHeroe().subirNivelDos();
-        jugador[0].getHeroe().bajarVida();
-        jugador[0].getHeroe().subirExperiencia();
-        jugador[0].getHeroe().iniciarTurno();
-        jugador[0].getHeroe().mover();
-        jugador[0].getHeroe().mover();
-        */
-        
-
+        this.iniciaTablero();  
+        tablero.setParent(this);
     }
-    public static void jugar(){
+//-----------------------------------------
+// --------------- TABLERO ----------------
+//-----------------------------------------     
+    public void iniciaTablero(){
+        hiloTablero= new Thread(){
+        public void run() {
+            tablero.dibujarTablero(rutaMapa);
+            
+            //mapa.escalar(tablero.getFactorEscaladoX(), tablero.getFactorEscaladoY(),true);
+            tablero.dibujarSecuencia(jugadores);
+
+            //---Colocar 6 Fichas artefactos
+
+            //---Colocar 24 Fichas tesoros
+
+            //---Colocar fichas Héroes en pueblo Argos
+            tablero.dibujarFichasHeroes(mapa);
+
+            //---Colocar ficha Zorkal en pueblo Argos
+            tablero.dibujarFichaZorkal();
+            tablero.pack();
+            tablero.setVisible(true);
+            
+            jugar();
+                
+            }        
+        };
+        hiloTablero.start();        
+    }    
+    public void jugar(){
         /*
         --------------------------
         TURNO ZORKAL
@@ -180,12 +187,90 @@ public class Principal {
         3.Todos los héroes atacan
         4.Se resuelven efectos de curación
         */
-        while(!juegoTermina){
-            //----Turno Zorkal
-            //----Turno Heroes
-            
+        jugarZorkal();  
+    }
+    
+    //------------------------------
+    //--------- TURNO ZORKAL  ------
+    //------------------------------
+    public void jugarZorkal(){
+        tablero.setCamaraGlobal();
+        tablero.dibujarSecuenciaZorkal();
+        iniciarStatsTurno(jugadores.get(0).getHeroe());
+        tablero.setJugadorActual(0);
+        tablero.dibujarHeroe();
+        //Jugar ritual
+        jugarRitual();        
+    }
+    public void jugarRitual(){
+        tablero.dibujarRitual();
+    }
+    public void jugarInvocar(){
+        tablero.dibujarInvocar();
+    }
+    public void jugarMoverZorkal(){
+        tablero.dibujarMoverZorkal();
+    }
+    public void jugarAtacarZorkal(){
+        tablero.dibujarAtacarZorkal();
+    }
+    public void finalizarTurnoZorkal(){
+        alternarDiaNoche();
+        tablero.alternarDiaNoche(esNoche);
+        jugarHeroes();
+       
+    }
+    
+    //------------------------------
+    //--------- TURNO HEROES  ------
+    //------------------------------    
+    public void jugarHeroes(){
+        tablero.setCamaraPersonal();
+        tablero.dibujarSecuenciaHeroes(); 
+        //Iniciar stats turno
+        for(int i=1;i<jugadores.size();i++){
+            iniciarStatsTurno(jugadores.get(i).getHeroe());
+        }
+        jugarBencion(1);
+    }
+    public void jugarBencion(int jugador){
+        if(jugador<jugadores.size()){
+            tablero.setJugadorActual(jugador);
+            tablero.posicionarCamara(jugadores.get(jugador).getHeroe().getFicha());
+            tablero.dibujarHeroe();
+            tablero.dibujarBendicion();
+        }else{//No quedan más jugadores
+            jugarMoverHeroes(1);
+        }
+
+    }
+    public void jugarMoverHeroes(int jugador){
+        if(jugador<jugadores.size()){
+            tablero.setJugadorActual(jugador);
+            tablero.posicionarCamara(jugadores.get(jugador).getHeroe().getFicha());
+            tablero.dibujarHeroe();
+            tablero.dibujarMover();
+        }else{//No quedan más jugadores
+            jugarAtacarHeroes(1);
         }
     }
+    public void jugarAtacarHeroes(int jugador){
+        if(jugador<jugadores.size()){
+            tablero.setJugadorActual(jugador);
+            tablero.posicionarCamara(jugadores.get(jugador).getHeroe().getFicha());
+            tablero.dibujarHeroe();
+            tablero.dibujarAtacar();
+        }else{//No quedan más jugadores
+            jugarCurarHeroes();
+        }        
+    }    
+    public void jugarCurarHeroes(){
+        //Se consideran las posiciones de los héroes
+        //Se cura al que se debe curar
+        
+        //Termina turno
+        jugarZorkal();
+    } 
 
     private void iniciarHeroes() {
         heroes = new Heroe[9];
@@ -325,6 +410,47 @@ public class Principal {
         //Agregar a zorkal
         ((Zorkal)jugadores.get(0).getHeroe()).addCriatura(mayor);        
     }
+    public void iniciarStatsTurno(Heroe heroe){
+        heroe.establecerTodoMovimiento();
+        heroe.establecerTodoAtaque();
+    }
+
+    private void alternarDiaNoche() {
+        if(esNoche){
+            esNoche = false;
+        }else{
+            esNoche=true;
+        }
+    }
+
+    private void iniciarSonido() {
+        Thread sonidoPrincipal= new Thread(){
+             public void run() {
+                Sound s = new Sound();
+                s.playSound("./assets/sound/main.wav");
+             }
+        };
+        sonidoPrincipal.start();
+    }
+    public void sonidoClick(){
+        Thread t= new Thread(){
+             public void run() {
+                Sound s = new Sound();
+                s.playSound("./assets/sound/click.wav");
+             }
+        };
+        t.start();
+    }
+
+    public ArrayList<Ficha> getFichas() {
+        return fichas;
+    }
+
+    public void addFicha(Ficha ficha) {
+        this.fichas.add(ficha);
+    }
+
+
 
 
 

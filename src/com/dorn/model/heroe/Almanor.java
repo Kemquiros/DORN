@@ -20,6 +20,7 @@ public class Almanor extends Heroe{
         this.setRutaImagen("./assets/heroe/img/almanor.png");       
         this.setRutaCarta("./assets/heroe/card/almanor.png");
         this.setRutaRostro("./assets/heroe/face/almanor.png");
+        this.setRutaSprite("./assets/heroe/sprite/almanor1.png");
     }
 
     @Override
@@ -32,6 +33,11 @@ public class Almanor extends Heroe{
         this.vida=vidaMax;
         
         this.ataqueMax=1;
+        //0:Mágico
+        //1:Contacto
+        //2:Pica
+        //3:Arco        
+        setTipoAtaque(0);
         
         this.experienciaMax=5;
         this.experiencia=0;
@@ -48,8 +54,7 @@ public class Almanor extends Heroe{
         h.setTexto("Impacta contra una casilla hasta 3 de distancia. Causa 1 daño a cualquier criatura o héroe en esa casilla y todas las adyacentes.");
         h.setCuestaAtaque(true);
         h.setCuestaSangre(true);
-        habilidad.add(h);
-        
+        habilidad.add(h);        
     }
     
     @Override

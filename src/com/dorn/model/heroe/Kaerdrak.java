@@ -5,6 +5,7 @@
  */
 package com.dorn.model.heroe;
 
+import com.dorn.model.power.Habilidad;
 import java.util.ArrayList;
 
 /**
@@ -20,5 +21,38 @@ public class Kaerdrak extends Heroe{
         this.setRutaCarta("./assets/heroe/card/kaerdrak.png");
         
         this.setRutaRostro("./assets/heroe/face/kaerdrak.png");
+        this.setRutaSprite("./assets/heroe/sprite/kaerdrak1.png");
     }    
+    @Override
+    public void subirNivelUno() {
+        setNivel(1);
+        
+        this.movimientoMax=6;
+        
+        this.vidaMax=5;
+        this.vida=vidaMax;
+        
+        this.ataqueMax=1;
+        //0:Mágico
+        //1:Contacto
+        //2:Pica
+        //3:Arco        
+        setTipoAtaque(1);        
+        
+        this.experienciaMax=5;
+        this.experiencia=0;
+        //Habilidades
+        //--------------------------------------
+        Habilidad h = new Habilidad();
+        h.setNombre("Hacha");
+        h.setTexto("Kaerdrak causa 1 daño a una criatura adyacente.");
+        h.setCuestaAtaque(true);
+        habilidad.add(h);
+        //--------------------------------------
+        h = new Habilidad();
+        h.setNombre("Virtud del Paladín");
+        h.setTexto("Si Kaerdrak no se mueve de la casilla en la que ha comenzado el turno, puede curarse 1 punto de vida al final del mismo.");
+        h.setUnoPorTurno(true);
+        habilidad.add(h);  
+    }      
 }
