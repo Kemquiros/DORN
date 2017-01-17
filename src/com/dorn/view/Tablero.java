@@ -41,6 +41,8 @@ import sun.swing.PrintColorUIResource;
  */
 public class Tablero extends javax.swing.JFrame {
     Principal principal;
+    Zorkal guardian;
+    Heroe heroeActual;
     int widthScreen,heightScreen;
     Double factorEscaladoX,factorEscaladoY;
     ArrayList<Jugador> jugadores;
@@ -622,10 +624,10 @@ public class Tablero extends javax.swing.JFrame {
     //Programar el movimiento
     private void br_1ActionPerformed(ActionEvent evt) {
         Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = heroe.getCasilla();
+        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
         if(!oldCasilla.getC1().esOcupada()){
             oldCasilla.desocupar();
-            oldCasilla.getC1().ocupar(heroe);
+            oldCasilla.getC1().ocupar((Ficha)heroe.getFicha());
             heroe.mover();
         }
         
@@ -633,10 +635,10 @@ public class Tablero extends javax.swing.JFrame {
     }      
     private void br_2ActionPerformed(ActionEvent evt) {
         Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = heroe.getCasilla();
+        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
         if(!oldCasilla.getC2().esOcupada()){
             oldCasilla.desocupar();
-            oldCasilla.getC2().ocupar(heroe);
+            oldCasilla.getC2().ocupar((Ficha)heroe.getFicha());
             heroe.mover();
         }
         
@@ -644,10 +646,10 @@ public class Tablero extends javax.swing.JFrame {
     }      
     private void br_3ActionPerformed(ActionEvent evt) {
         Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = heroe.getCasilla();
+        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
         if(!oldCasilla.getC3().esOcupada()){
             oldCasilla.desocupar();
-            oldCasilla.getC3().ocupar(heroe);
+            oldCasilla.getC3().ocupar((Ficha)heroe.getFicha());
             heroe.mover();
         }
         
@@ -655,10 +657,10 @@ public class Tablero extends javax.swing.JFrame {
     }      
     private void br_4ActionPerformed(ActionEvent evt) {
         Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = heroe.getCasilla();
+        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
         if(!oldCasilla.getC4().esOcupada()){
             oldCasilla.desocupar();
-            oldCasilla.getC4().ocupar(heroe);
+            oldCasilla.getC4().ocupar((Ficha)heroe.getFicha());
             heroe.mover();
         }
         
@@ -666,10 +668,10 @@ public class Tablero extends javax.swing.JFrame {
     }   
     private void br_upActionPerformed(ActionEvent evt) {
         Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = heroe.getCasilla();
+        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
         if(!oldCasilla.getArriba().esOcupada()){
             oldCasilla.desocupar();
-            oldCasilla.getArriba().ocupar(heroe);
+            oldCasilla.getArriba().ocupar((Ficha)heroe.getFicha());
             heroe.mover();
         }
         
@@ -677,10 +679,10 @@ public class Tablero extends javax.swing.JFrame {
     }  
     private void br_rightActionPerformed(ActionEvent evt) {
         Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = heroe.getCasilla();
+        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
         if(!oldCasilla.getDerecha().esOcupada()){
             oldCasilla.desocupar();
-            oldCasilla.getDerecha().ocupar(heroe);
+            oldCasilla.getDerecha().ocupar((Ficha)heroe.getFicha());
             heroe.mover();
         }
         
@@ -688,10 +690,10 @@ public class Tablero extends javax.swing.JFrame {
     }     
     private void br_downActionPerformed(ActionEvent evt) {
         Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = heroe.getCasilla();
+        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
         if(!oldCasilla.getAbajo().esOcupada()){
             oldCasilla.desocupar();
-            oldCasilla.getAbajo().ocupar(heroe);
+            oldCasilla.getAbajo().ocupar((Ficha)heroe.getFicha());
             heroe.mover();
         }
 
@@ -700,10 +702,10 @@ public class Tablero extends javax.swing.JFrame {
     }    
     private void br_leftActionPerformed(ActionEvent evt) {
         Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = heroe.getCasilla();
+        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
         if(!oldCasilla.getIzquierda().esOcupada()){
             oldCasilla.desocupar();
-            oldCasilla.getIzquierda().ocupar(heroe);
+            oldCasilla.getIzquierda().ocupar((Ficha)heroe.getFicha());
             heroe.mover();
         }
         
@@ -711,12 +713,12 @@ public class Tablero extends javax.swing.JFrame {
     }  
     public void efectuarMovimiento(){
         Heroe heroe = jugadores.get(jugadorActual).getHeroe();
-        ((Ficha)heroe.getFicha()).setCasilla(heroe.getCasilla());
+        //((Ficha)heroe.getFicha()).setCasilla(heroe.getCasilla());
         if(esEscalado){
-            dibujarFichaEnTablero((JLabel)(((Ficha)heroe.getFicha()).getFiguraEscalada()), heroe.getCasilla().getX(), heroe.getCasilla().getY());
+            dibujarFichaEnTablero((JLabel)(((Ficha)heroe.getFicha()).getFiguraEscalada()), ((Ficha)heroe.getFicha()).getCasilla().getX(), ((Ficha)heroe.getFicha()).getCasilla().getY());
         }else{
             
-            dibujarFichaEnTablero((JLabel)(((Ficha)heroe.getFicha()).getFiguraOriginal()), heroe.getCasilla().getX(), heroe.getCasilla().getY());
+            dibujarFichaEnTablero((JLabel)(((Ficha)heroe.getFicha()).getFiguraOriginal()), ((Ficha)heroe.getFicha()).getCasilla().getX(), ((Ficha)heroe.getFicha()).getCasilla().getY());
             posicionarCamara(heroe.getFicha());
         }        
         actualizarMovimientoHeroe();
@@ -743,7 +745,8 @@ public class Tablero extends javax.swing.JFrame {
         
         for(int i=1;i<jugadores.size();i++){   
                 Ficha fichaHeroe = new Ficha();
-                argos[i-1].ocupar(jugadores.get(i).getHeroe());
+                jugadores.get(i).getHeroe().setFicha(fichaHeroe);
+                argos[i-1].ocupar(fichaHeroe);
                 
                 JLabel jl = new JLabel();
                 JLabel jlOriginal = new JLabel();
@@ -756,7 +759,7 @@ public class Tablero extends javax.swing.JFrame {
                 fichaHeroe.setFiguraOriginal(jlOriginal);
                 fichaHeroe.setFiguraEscalada(jl);
                 
-                jugadores.get(i).getHeroe().setFicha(fichaHeroe);
+
                 principal.addFicha(fichaHeroe);
                 //dibujarFichaEnTablero(jl, argos[i-1].getX(), argos[i-1].getY());
                 /*jl.setBounds(argos[i-1].getX(), argos[i-1].getY(),
@@ -769,9 +772,12 @@ public class Tablero extends javax.swing.JFrame {
     
     public void dibujarFichaZorkal() {
         //----------
+        guardian =(Zorkal)jugadores.get(0).getHeroe();
         Ficha fichaHeroe = new Ficha();
+        guardian.setFicha(fichaHeroe);
+        
         Casilla[] trono=mapa.getTrono();
-        trono[6].ocupar(jugadores.get(0).getHeroe());        
+        trono[6].ocupar(fichaHeroe);        
                                 
         JLabel jl = new JLabel();
         JLabel jlOriginal = new JLabel();
@@ -783,7 +789,7 @@ public class Tablero extends javax.swing.JFrame {
         fichaHeroe.setFiguraOriginal(jlOriginal);
         fichaHeroe.setFiguraEscalada(jl);
 
-        jugadores.get(0).getHeroe().setFicha(fichaHeroe);
+        //jugadores.get(0).getHeroe().setFicha(fichaHeroe);
         principal.addFicha(fichaHeroe);        
     }
     
@@ -856,8 +862,15 @@ public class Tablero extends javax.swing.JFrame {
         limpiarContenedores();
         jpAccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Invocar", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N
         jpAccion.setLayout(new GridLayout((numRituales/2), 2));
+        int cantCriaturas=0;
         for(Criatura criatura:zorkal.getCriaturas()){
-            JButton jc = new JButton(criatura.getNombre());
+            cantCriaturas+=1;
+            JButton jc = new JButton(cantCriaturas+"."+criatura.getNombre());
+            jc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dibujarCartaCriaturaActionPerformed(evt);
+            }
+        });
             jpAccion.add(jc);
         }
         JButton jboton = new JButton("Finalizar Invocar");
@@ -876,6 +889,14 @@ public class Tablero extends javax.swing.JFrame {
         this.show();
         
     }   
+    private void dibujarCartaCriaturaActionPerformed(ActionEvent evt) {
+        Zorkal zorkal = (Zorkal)jugadores.get(0).getHeroe();
+        JButton botonOrigen = (JButton)evt.getSource();
+        int indiceCriatura = Integer.parseInt(botonOrigen.getText().charAt(0)+"")-1;
+        Carta window = new Carta(this, zorkal.getCriatura(indiceCriatura).getRutaCarta());
+        window.setVisible(true);
+        
+    }    
     
     public void dibujarMover(){
         int w = (int)((widthScreen*4)/100);
@@ -1045,10 +1066,10 @@ public class Tablero extends javax.swing.JFrame {
         this.show();
     }
     public void verificarCasillas(){
-        Heroe heroeTemp = jugadores.get(jugadorActual).getHeroe();
-        Casilla casillaTemp = heroeTemp.getCasilla();
+        Heroe heroe = jugadores.get(jugadorActual).getHeroe();
+        Casilla casillaTemp = ((Ficha)heroe.getFicha()).getCasilla();
         
-       if(heroeTemp.getMovimiento()==0){//No puede mover
+       if(heroe.getMovimiento()==0){//No puede mover
            br_0.setEnabled(false);
            br_1.setEnabled(false);
            br_2.setEnabled(false);

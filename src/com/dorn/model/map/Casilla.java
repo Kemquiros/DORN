@@ -17,6 +17,7 @@
 package com.dorn.model.map;
 
 import com.dorn.model.heroe.Heroe;
+import com.dorn.model.monster.Criatura;
 
 /**
  *
@@ -182,12 +183,26 @@ public class Casilla {
             c4.setC2(this);
         }         
     }
-    public void ocupar(Object ocupante){
+    public void ocupar(Ficha ficha){
         this.ocupante=ocupante;
-        String nombreSuperclase = this.ocupante.getClass().getSuperclass().getCanonicalName();        
-        if(nombreSuperclase.contains("Heroe")){            
-            ((Heroe)this.ocupante).setCasilla(this);
+        //String nombreSuperclase = this.ocupante.getClass().getSuperclass().getCanonicalName(); 
+        ficha.setCasilla(this);
+        /*
+        if(nombreSuperclase.contains("Heroe")){        
+            try{
+            ((Ficha)((Heroe)this.ocupante).getFicha()).setCasilla(this);
+            }catch(Exception e){
+                System.err.println(e.getStackTrace().toString());
+                System.err.println("-----> ficha"+((Ficha)((Heroe)this.ocupante).getFicha()));
+                System.err.println("-----> casilla"+this);
+                System.err.println("-----> ocupante"+this.ocupante);
+            }
+            
+            
+        }else if(nombreSuperclase.contains("Criatura")){
+            ((Ficha)((Criatura)this.ocupante).getFicha()).setCasilla(this);
         }
+        */
         esOcupada=true;
     }
     public void desocupar(){

@@ -26,7 +26,7 @@ public class Heroe {
     boolean ataqueFisico;
     private boolean usaBendicion=false;
     private Bendicion bendicion;
-    private Casilla casilla;   
+    //private Casilla casilla;   
     private Object ficha;
     
     ArrayList<Habilidad> habilidad;
@@ -162,14 +162,14 @@ public class Heroe {
     public void setRutaRostro(String rutaRostro) {
         this.rutaRostro = rutaRostro;
     }
-    
+    /*
     public Casilla getCasilla() {
         return casilla;
     }
 
     public void setCasilla(Casilla casilla) {
         this.casilla = casilla;
-    }
+    }*/
 
     public String getRutaSprite() {
         return rutaSprite;

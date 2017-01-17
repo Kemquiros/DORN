@@ -38,6 +38,8 @@ public class Principal {
     private static ArrayList<Ficha> fichas;
     private static boolean esNoche;
     private static boolean juegoTermina=false;
+    private boolean isZorkalLibre= false;
+    private int turnoActual=0;
     
 
 
@@ -112,6 +114,7 @@ public class Principal {
 // --------------- JUEGO ------------------
 //-----------------------------------------     
     public void iniciarJuego() {
+        turnoActual=1;
         //Establecer orden turno aleatoriamente
         establecerOrdenTurno();
         
@@ -206,13 +209,28 @@ public class Principal {
         tablero.dibujarRitual();
     }
     public void jugarInvocar(){
+        /*if(turnoActual!=1){//En el turno 1 ya se dotó 6 criaturas
+            if(esNoche){
+                tablero.dibujarEscogerCriaturaNoche();
+            }else{
+                tablero.dibujarEscogerCriaturaNoche();
+            }
+        }*/
         tablero.dibujarInvocar();
     }
     public void jugarMoverZorkal(){
-        tablero.dibujarMoverZorkal();
+        //tablero.dibujarMoverCriaturas();
+        //if(isZorkalLibre){
+            tablero.dibujarMoverZorkal();
+        //}
+        
     }
     public void jugarAtacarZorkal(){
-        tablero.dibujarAtacarZorkal();
+        //tablero.dibujarAtacarCriaturas();
+        //if(isZorkalLibre){
+            tablero.dibujarAtacarZorkal();
+        //}
+        
     }
     public void finalizarTurnoZorkal(){
         alternarDiaNoche();

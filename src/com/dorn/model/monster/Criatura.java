@@ -34,6 +34,7 @@ public class Criatura {
     private String rutaSprite;
     private boolean criaturaMayor;    
     private int tipoAtaque;
+    private Object ficha;
 
     public String getNombre() {
         return nombre;
@@ -142,5 +143,14 @@ public class Criatura {
         //3:Arco
         this.tipoAtaque = tipoAtaque;
     }
+
+    public Object getFicha() {
+        return ficha;
+    }
+
+    public void setFicha(Object ficha) {
+        this.ficha = ficha;
+    }
+    
     
 }

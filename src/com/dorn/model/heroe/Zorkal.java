@@ -77,6 +77,9 @@ public class Zorkal extends Heroe{
     }
     public ArrayList<Criatura> getCriaturas(){
         return criatura;
+    }  
+    public Criatura getCriatura(int indice){
+        return criatura.get(indice);
     }    
     
 }

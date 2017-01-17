@@ -22,7 +22,7 @@ package com.dorn.model.monster;
  */
 public class Rata extends Criatura{
     public Rata(){
-        setNombre("Rata Gigante");
+        setNombre("Rata");
         setTipoAtaque(1);
         setMovimientoMax(7);
         setVidaMax(1);
