@@ -276,7 +276,7 @@ public class Seleccion extends javax.swing.JFrame {
 
         this.setSize(wp, hp);
         this.setPreferredSize(new Dimension(wp, hp));
-        setLocation(new Point((wp/2), (hp/2)));
+        //setLocation(new Point((wp/2), (hp/2)));
         setUndecorated(true);
         
         jpNombre.setSize(wp, ((jpHeroe.getHeight()*3)/10));
