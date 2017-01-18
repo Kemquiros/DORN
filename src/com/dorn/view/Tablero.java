@@ -335,8 +335,8 @@ public class Tablero extends javax.swing.JFrame {
         //-------------------------
         //Panel izquierda
         //-------------------------  
-        w = (int)((widthScreen*14)/20);
-        h = (int)((heightScreen*10)/12);             
+        w = (int)((widthScreen*15)/20);
+        h = (int)((heightScreen*12)/12);             
            
         jpIzquierda.setBackground(java.awt.Color.BLACK);
         jpIzquierda.setPreferredSize(new Dimension(w, h));
@@ -344,7 +344,7 @@ public class Tablero extends javax.swing.JFrame {
         //Panel derecha
         //-------------------------
         w = (int)((widthScreen*5)/20);
-        h = (int)((heightScreen*10)/12);
+        h = (int)((heightScreen*12)/12);
         jpDerecha.setBackground(java.awt.Color.BLACK);
         jpDerecha.setPreferredSize(new Dimension(w, h));  
         

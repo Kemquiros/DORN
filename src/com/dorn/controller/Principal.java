@@ -161,7 +161,7 @@ public class Principal {
 
             //---Colocar ficha Zorkal en pueblo Argos
             tablero.dibujarFichaZorkal();
-            tablero.pack();
+            tablero.show();
             tablero.setVisible(true);
             
             jugar();
