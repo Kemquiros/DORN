@@ -5,6 +5,7 @@
  */
 package com.dorn.view;
 
+import com.dorn.controller.AssetsController;
 import com.dorn.controller.Principal;
 import com.dorn.model.Jugador;
 import com.dorn.model.power.Habilidad;
@@ -33,7 +34,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import sun.swing.PrintColorUIResource;
+
 
 /**
  *
@@ -369,8 +370,8 @@ public class Tablero extends javax.swing.JFrame {
 
 
       
-        icMapaOriginal = new ImageIcon("./assets/map/mapa_escalado.jpg");
-        icMapaEscalado= this.escalarImagen(w, h, "./assets/map/mapa_escalado.jpg");
+        icMapaOriginal = new ImageIcon(getClass().getResource("/com/dorn/assets/map/mapa_escalado.jpg"));
+        icMapaEscalado= this.escalarImagen(w, h, "/com/dorn/assets/map/mapa_escalado.jpg");
         //lblMapa.setIcon();
         lblMapa.setIcon(icMapaEscalado);
         //lblMapa.getIcon().getIconWidth()
@@ -495,13 +496,13 @@ public class Tablero extends javax.swing.JFrame {
         //Sangre disponible
         for(int i=0;i<heroe.getVida();i++){
            JLabel s = new JLabel();
-            s.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/s_ok.png"));
+            s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/s_ok.png"));
             jpPuntosVida.add(s); 
         }
         //Sangre restante
         for(int i=0;i<(heroe.getVidaMax()-heroe.getVida());i++){
            JLabel s = new JLabel();
-            s.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/s_no.png"));
+            s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/s_no.png"));
             jpPuntosVida.add(s); 
         }  
         
@@ -520,19 +521,19 @@ public class Tablero extends javax.swing.JFrame {
             //Experiencia actual
             for(int i=0;i<heroe.getExperiencia();i++){
                JLabel s = new JLabel();
-                s.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/e_ok.png"));
+                s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/e_ok.png"));
                 jpPuntosExperiencia.add(s); 
             }
             //Experiencia total
             for(int i=0;i<(heroe.getExperienciaMax()-heroe.getExperiencia());i++){
                JLabel s = new JLabel();
-                s.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/e_no.png"));
+                s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/e_no.png"));
                 jpPuntosExperiencia.add(s); 
             }   
         }else{//Nivel máximo
             for(int i=0;i<7;i++){
                JLabel s = new JLabel();
-                s.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/z_no.png"));
+                s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/z_no.png"));
                 jpPuntosExperiencia.add(s); 
             }  
         }
@@ -544,12 +545,12 @@ public class Tablero extends javax.swing.JFrame {
         jpMovimiento.setLayout(new GridLayout(1, heroe.getMovimientoMax()));
         for(int i=0;i<heroe.getMovimiento();i++){
            JLabel s = new JLabel();
-            s.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/m_ok.png"));
+            s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/m_ok.png"));
             jpMovimiento.add(s); 
         }    
         for(int i=0;i<(heroe.getMovimientoMax()-heroe.getMovimiento());i++){
            JLabel s = new JLabel();
-            s.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/m_no.png"));
+            s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/m_no.png"));
             jpMovimiento.add(s); 
         }
         //-------------------------
@@ -562,24 +563,24 @@ public class Tablero extends javax.swing.JFrame {
             cambiarTipoAtaque("Físico");
             for(int i=0;i<heroe.getAtaque();i++){
                JLabel s = new JLabel();
-                s.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/ataque_fisico_ok.png"));
+                s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/ataque_fisico_ok.png"));
                 jpAtaque.add(s); 
             }    
             for(int i=0;i<(heroe.getAtaqueMax()-heroe.getAtaque());i++){
                JLabel s = new JLabel();
-                s.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/ataque_fisico_no.png"));
+                s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/ataque_fisico_no.png"));
                 jpAtaque.add(s); 
             }            
         }else{//Ataque Mágico
             cambiarTipoAtaque("Mágico");
             for(int i=0;i<heroe.getAtaque();i++){
                JLabel s = new JLabel();
-                s.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/ataque_magico_ok.png"));
+                s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/ataque_magico_ok.png"));
                 jpAtaque.add(s); 
             }    
             for(int i=0;i<(heroe.getAtaqueMax()-heroe.getAtaque());i++){
                JLabel s = new JLabel();
-                s.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/ataque_magico_no.png"));
+                s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/ataque_magico_no.png"));
                 jpAtaque.add(s); 
             }    
         }
@@ -594,19 +595,26 @@ public class Tablero extends javax.swing.JFrame {
         jpMovimiento.setLayout(new GridLayout(1, heroe.getMovimientoMax()));
         for(int i=0;i<heroe.getMovimiento();i++){
            JLabel s = new JLabel();
-            s.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/m_ok.png"));
+            s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/m_ok.png"));
             jpMovimiento.add(s); 
         }    
         for(int i=0;i<(heroe.getMovimientoMax()-heroe.getMovimiento());i++){
            JLabel s = new JLabel();
-            s.setIcon(this.escalarImagen(w, h, "./assets/heroe/img/m_no.png"));
+            s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/m_no.png"));
             jpMovimiento.add(s); 
         }
     }
     public ImageIcon escalarImagen(int w,int h, String url){
-        ImageIcon ic = new ImageIcon(url);
+        System.out.println("Ingresa a escalar imagen de "+url);
+        ImageIcon ic = new ImageIcon(getClass().getResource(url));
+        System.out.println("Imagen cargada -> "+ic);
+        try{
         Image icRes = ic.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
         ic = new ImageIcon(icRes);
+        }catch(Exception e){
+            System.err.println("Daña URL -> "+url);
+        }
+        
         return ic;
     }  
     private JLabel crearLabel(String texto){
@@ -751,8 +759,9 @@ public class Tablero extends javax.swing.JFrame {
                 JLabel jl = new JLabel();
                 JLabel jlOriginal = new JLabel();
                 jl.setIcon(escalarImagen(((widthScreen*2)/100), ((heightScreen*4)/100), jugadores.get(i).getHeroe().getRutaSprite()));  
-                ImageIcon icSprite = new ImageIcon(jugadores.get(i).getHeroe().getRutaRostro());
-                jlOriginal.setIcon(escalarImagen((icSprite.getIconWidth()*5)/10,(icSprite.getIconHeight()*6)/10,jugadores.get(i).getHeroe().getRutaSprite()));
+                ImageIcon icSprite = new ImageIcon(getClass().getResource(jugadores.get(i).getHeroe().getRutaSprite()));
+                //jlOriginal.setIcon(escalarImagen((icSprite.getIconWidth()*5)/10,(icSprite.getIconHeight()*6)/10,jugadores.get(i).getHeroe().getRutaSprite()));
+                jlOriginal.setIcon(escalarImagen((icSprite.getIconWidth()*5)/10,(icSprite.getIconHeight()*8)/20,jugadores.get(i).getHeroe().getRutaSprite()));
                 //principal.addFichasOriginales(jlOriginal);
                 //principal.addFichasEscaladas(jl);
                 fichaHeroe.setCasilla(argos[i-1]);
@@ -909,34 +918,34 @@ public class Tablero extends javax.swing.JFrame {
         //------------------------- 
         
         //-----Parte superior
-        br_4 = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_4.png"));
+        br_4 = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_4.png"));
         jpAccion.add(br_4);
 
-        br_up = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_up.png"));
+        br_up = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_up.png"));
         jpAccion.add(br_up);
 
-        br_1 = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_1.png"));
+        br_1 = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_1.png"));
         jpAccion.add(br_1); 
         
         //-----Parte central
-        br_left = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_left.png"));
+        br_left = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_left.png"));
         jpAccion.add(br_left);  
 
-        br_0 = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_0.png"));
+        br_0 = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_center.png"));
         br_0.setEnabled(false);
         jpAccion.add(br_0);  
 
-        br_right = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_right.png"));
+        br_right = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_right.png"));
         jpAccion.add(br_right); 
         
         //-----Parte inferior        
-        br_3 = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_3.png"));
+        br_3 = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_3.png"));
         jpAccion.add(br_3); 
 
-        br_down = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_down.png"));
+        br_down = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_down.png"));
         jpAccion.add(br_down);          
 
-        br_2 = new JButton(this.escalarImagen(w, h, "./assets/heroe/img/r_2.png"));
+        br_2 = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_2.png"));
         jpAccion.add(br_2);   
         
         //---------Se establecen los Listener

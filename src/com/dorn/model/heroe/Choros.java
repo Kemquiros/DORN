@@ -17,11 +17,11 @@ public class Choros extends Heroe{
         this.nombre="Choros";
         this.ataqueFisico=true;
         this.habilidad = new ArrayList();
-        this.setRutaImagen("./assets/heroe/img/choros.png");       
-        this.setRutaCarta("./assets/heroe/card/choros.png");
+        this.setRutaImagen("/com/dorn/assets/heroe/img/choros.png");       
+        this.setRutaCarta("/com/dorn/assets/heroe/card/choros.png");
         
-        this.setRutaRostro("./assets/heroe/face/choros.png");
-        this.setRutaSprite("./assets/heroe/sprite/choros1.png");
+        this.setRutaRostro("/com/dorn/assets/heroe/face/choros.png");
+        this.setRutaSprite("/com/dorn/assets/heroe/sprite/choros1.png");
     }     
     @Override
     public void subirNivelUno() {

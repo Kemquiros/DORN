@@ -30,7 +30,7 @@ public class Fantasma extends Criatura{
         setAtaqueMax(1);
         setLugarInvocacion("Templo Oscuro");
         setCriaturaMayor(true);
-        setRutaCarta("./assets/monster/card/fantasma.png");
-        setRutaSprite("./assets/monster/sprite/fantasma.png");
+        setRutaCarta("/com/dorn/assets/monster/card/fantasma.png");
+        setRutaSprite("/com/dorn/assets/monster/sprite/fantasma.png");
     }
 }

@@ -17,11 +17,11 @@ public class Ragnar extends Heroe{
         this.nombre="Ragnar";
         this.ataqueFisico=true;
         this.habilidad = new ArrayList();
-        this.setRutaImagen("./assets/heroe/img/ragnar.png");       
-        this.setRutaCarta("./assets/heroe/card/ragnar.png");
+        this.setRutaImagen("/com/dorn/assets/heroe/img/ragnar.png");       
+        this.setRutaCarta("/com/dorn/assets/heroe/card/ragnar.png");
         
-        this.setRutaRostro("./assets/heroe/face/ragnar.png");
-        this.setRutaSprite("./assets/heroe/sprite/ragnar1.png");
+        this.setRutaRostro("/com/dorn/assets/heroe/face/ragnar.png");
+        this.setRutaSprite("/com/dorn/assets/heroe/sprite/ragnar1.png");
     }        
     @Override
     public void subirNivelUno() {

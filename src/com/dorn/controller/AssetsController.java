@@ -14,22 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dorn.model.monster;
+package com.dorn.controller;
+
+import java.net.URL;
 
 /**
  *
  * @author t30r3m4
  */
-public class Gorgona extends Criatura{
-    public Gorgona(){
-        setNombre("Gorgona");
-        setTipoAtaque(3);//Arco
-        setMovimientoMax(6);
-        setVidaMax(2);
-        setAtaqueMax(1);
-        setLugarInvocacion("Templo Oscuro");
-        setCriaturaMayor(true);
-        setRutaCarta("/com/dorn/assets/monster/card/gorgona.png");
-        setRutaSprite("/com/dorn/assets/monster/sprite/gorgona.png");
+public final class AssetsController {
+    private static Object o;
+    private AssetsController(){
+        
+    }
+    public static URL getRecurso(String url){
+        System.out.println("/com/dorn"+url);
+        return o.getClass().getResource("/com/dorn/assets/"+url);
     }
 }

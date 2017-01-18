@@ -17,11 +17,11 @@ public class Vargen extends Heroe{
         this.nombre="Vargen";
         this.ataqueFisico=true;
         this.habilidad = new ArrayList();
-        this.setRutaImagen("./assets/heroe/img/vargen.png");       
-        this.setRutaCarta("./assets/heroe/card/vargen.png");
+        this.setRutaImagen("/com/dorn/assets/heroe/img/vargen.png");       
+        this.setRutaCarta("/com/dorn/assets/heroe/card/vargen.png");
         
-        this.setRutaRostro("./assets/heroe/face/vargen.png");
-        this.setRutaSprite("./assets/heroe/sprite/vargen1.png");
+        this.setRutaRostro("/com/dorn/assets/heroe/face/vargen.png");
+        this.setRutaSprite("/com/dorn/assets/heroe/sprite/vargen1.png");
     }   
     @Override
     public void subirNivelUno() {

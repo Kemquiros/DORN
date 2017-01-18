@@ -29,7 +29,7 @@ public class Zombi extends Criatura{
         setAtaqueMax(1);
         setLugarInvocacion("Cementerio");
         setCriaturaMayor(false);
-        setRutaCarta("./assets/monster/card/zombi.png");
-        setRutaSprite("./assets/monster/sprite/zombi.png");
+        setRutaCarta("/com/dorn/assets/monster/card/zombi.png");
+        setRutaSprite("/com/dorn/assets/monster/sprite/zombi.png");
     }
 }

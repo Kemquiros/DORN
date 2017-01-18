@@ -17,11 +17,11 @@ public class Gor extends Heroe{
         this.nombre="Gor";
         this.ataqueFisico=false;
         this.habilidad = new ArrayList();
-        this.setRutaImagen("./assets/heroe/img/gor.png");       
-        this.setRutaCarta("./assets/heroe/card/gor.png");
+        this.setRutaImagen("/com/dorn/assets/heroe/img/gor.png");       
+        this.setRutaCarta("/com/dorn/assets/heroe/card/gor.png");
         
-        this.setRutaRostro("./assets/heroe/face/gor.png");
-        this.setRutaSprite("./assets/heroe/sprite/gor1.png");
+        this.setRutaRostro("/com/dorn/assets/heroe/face/gor.png");
+        this.setRutaSprite("/com/dorn/assets/heroe/sprite/gor1.png");
     }     
     @Override
     public void subirNivelUno() {

@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class Principal {
     private Mapa mapa;
     private static Heroe[] heroes;
-    private static String rutaMapa="./assets/map/mapa_escalado.jpg";
+    private static String rutaMapa="/assets/map/mapa_escalado.jpg";
     private static Tablero tablero;
     private static Inicio inicio;
     private static Seleccion seleccion;    
@@ -445,7 +445,10 @@ public class Principal {
         Thread sonidoPrincipal= new Thread(){
              public void run() {
                 Sound s = new Sound();
-                s.playSound("./assets/sound/main.wav");
+                //s.playSound("./assets/sound/main.wav");
+                s.playSound("/com/dorn/assets/sound/main.wav");
+                //s.playSound(AssetsController.getRecurso("sound/main.wav"));
+                
              }
         };
         sonidoPrincipal.start();
@@ -454,7 +457,9 @@ public class Principal {
         Thread t= new Thread(){
              public void run() {
                 Sound s = new Sound();
-                s.playSound("./assets/sound/click.wav");
+                //s.playSound("./assets/sound/click.wav");
+                //s.playSound(getClass().getResource(rutaMapa));
+                s.playSound("/com/dorn/assets/sound/click.wav");
              }
         };
         t.start();

@@ -17,11 +17,11 @@ public class Kaerdrak extends Heroe{
         this.nombre="Kaerdrak";
         this.ataqueFisico=true;
         this.habilidad = new ArrayList();
-        this.setRutaImagen("./assets/heroe/img/kaerdrak.png");       
-        this.setRutaCarta("./assets/heroe/card/kaerdrak.png");
+        this.setRutaImagen("/com/dorn/assets/heroe/img/kaerdrak.png");       
+        this.setRutaCarta("/com/dorn/assets/heroe/card/kaerdrak.png");
         
-        this.setRutaRostro("./assets/heroe/face/kaerdrak.png");
-        this.setRutaSprite("./assets/heroe/sprite/kaerdrak1.png");
+        this.setRutaRostro("/com/dorn/assets/heroe/face/kaerdrak.png");
+        this.setRutaSprite("/com/dorn/assets/heroe/sprite/kaerdrak1.png");
     }    
     @Override
     public void subirNivelUno() {

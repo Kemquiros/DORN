@@ -30,8 +30,8 @@ public class Vampiro extends Criatura{
         setAtaqueMax(2);
         setLugarInvocacion("Templo Oscuro");
         setCriaturaMayor(true);
-        setRutaCarta("./assets/monster/card/vampiro.png");
-        setRutaSprite("./assets/monster/sprite/vampiro.png");
+        setRutaCarta("/com/dorn/assets/monster/card/vampiro.png");
+        setRutaSprite("/com/dorn/assets/monster/sprite/vampiro.png");
     }
     public void tranformarMurcielago(){
         setNombre("Murcielago");

@@ -121,8 +121,7 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JOptionPane jo = new JOptionPane("Ayuda aún no hay sido implementado.");
-        jo.setVisible(true);
+        JOptionPane.showMessageDialog(null, "Desarrollado por:\n -Kemquiros\n -lfheanol");
         parent.sonidoClick();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -154,11 +153,11 @@ public class Inicio extends javax.swing.JFrame {
         //Graphics g = new 
         //jPanel2.paint(g);
         jLabel1.setBounds(0, 0, widthScreen, heightScreen);
-        jLabel1.setIcon(escalarImagen(widthScreen,heightScreen, "./assets/front.jpg"));
+        jLabel1.setIcon(escalarImagen(widthScreen,heightScreen, "/com/dorn/assets/front.jpg"));
         
     }
     public ImageIcon escalarImagen(int w,int h, String url){
-        ImageIcon ic = new ImageIcon(url);
+        ImageIcon ic = new ImageIcon(getClass().getResource(url));
         Image icRes = ic.getImage().getScaledInstance(w, ((h*9)/10), Image.SCALE_SMOOTH);
         ic = new ImageIcon(icRes);
         return ic;

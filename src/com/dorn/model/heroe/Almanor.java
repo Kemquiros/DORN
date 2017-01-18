@@ -17,10 +17,10 @@ public class Almanor extends Heroe{
         this.nombre="Almanor";
         this.ataqueFisico=false;
         this.habilidad = new ArrayList();
-        this.setRutaImagen("./assets/heroe/img/almanor.png");       
-        this.setRutaCarta("./assets/heroe/card/almanor.png");
-        this.setRutaRostro("./assets/heroe/face/almanor.png");
-        this.setRutaSprite("./assets/heroe/sprite/almanor1.png");
+        this.setRutaImagen("/com/dorn/assets/heroe/img/almanor.png");       
+        this.setRutaCarta("/com/dorn/assets/heroe/card/almanor.png");
+        this.setRutaRostro("/com/dorn/assets/heroe/face/almanor.png");
+        this.setRutaSprite("/com/dorn/assets/heroe/sprite/almanor1.png");
     }
 
     @Override

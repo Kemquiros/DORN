@@ -59,7 +59,7 @@ public class Carta extends JDialog{
         
         //Imagen carta
         Dimension size=parent.getSize();
-        ImageIcon ic = new ImageIcon(rutaImagen);
+        ImageIcon ic = new ImageIcon(getClass().getResource(rutaImagen));
         int w = Math.min(size.width, ic.getIconWidth());
         int h = Math.min(size.height,ic.getIconHeight());        
         JLabel imagenCarta = new JLabel( this.escalarImagen(w, h,ic) );

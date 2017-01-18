@@ -29,7 +29,7 @@ public class Esqueleto extends Criatura{
         setAtaqueMax(1);
         setLugarInvocacion("Cripta");
         setCriaturaMayor(false);
-        setRutaCarta("./assets/monster/card/esqueleto.png");
-        setRutaSprite("./assets/monster/sprite/esqueleto.png");
+        setRutaCarta("/com/dorn/assets/monster/card/esqueleto.png");
+        setRutaSprite("/com/dorn/assets/monster/sprite/esqueleto.png");
     }
 }

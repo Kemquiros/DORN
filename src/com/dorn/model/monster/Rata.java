@@ -29,7 +29,7 @@ public class Rata extends Criatura{
         setAtaqueMax(1);
         setLugarInvocacion("Cloacas");
         setCriaturaMayor(false);
-        setRutaCarta("./assets/monster/card/rata.png");
-        setRutaSprite("./assets/monster/sprite/rata.png");
+        setRutaCarta("/com/dorn/assets/monster/card/rata.png");
+        setRutaSprite("/com/dorn/assets/monster/sprite/rata.png");
     }
 }

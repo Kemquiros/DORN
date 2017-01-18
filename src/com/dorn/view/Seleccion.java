@@ -293,7 +293,8 @@ public class Seleccion extends javax.swing.JFrame {
     }
 
     public ImageIcon escalarImagen(int w_,int h_, String url){
-        ImageIcon ic = new ImageIcon(url);
+        System.out.println("URL -> "+url);
+        ImageIcon ic = new ImageIcon(getClass().getResource(url));
         Image icRes = ic.getImage().getScaledInstance(w_, h_, Image.SCALE_SMOOTH);
         ic = new ImageIcon(icRes);
         return ic;
@@ -301,7 +302,7 @@ public class Seleccion extends javax.swing.JFrame {
     public ImageIcon escalarImagenOptimizado(int w_,int h_, String url){
         int tempW=0,tempH=0;
         Double factEsca,a,b;
-        ImageIcon ic = new ImageIcon(url);
+        ImageIcon ic = new ImageIcon(getClass().getResource(url));
         a=Double.parseDouble(Integer.toString(ic.getIconHeight()) );
         b=Double.parseDouble(Integer.toString(h_) );
         factEsca= (a/b);
@@ -346,7 +347,7 @@ public class Seleccion extends javax.swing.JFrame {
         jpFigura.setLayout(new GridLayout(3, 3, 2, 2));
         for(int i=0;i<9;i++){
             if(i==4){
-               boton[i] = new JButton(this.escalarImagen(((w*8)/100), ((h*8)/100), "./assets/heroe/face/zorkal.png")) ;
+               boton[i] = new JButton(this.escalarImagen(((w*8)/100), ((h*8)/100), "/com/dorn/assets/heroe/face/zorkal.png")) ;
                boton[i].setText("ZORKAL");
                boton[i].setEnabled(true);
                 //Listener Zorkal     

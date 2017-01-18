@@ -17,11 +17,11 @@ public class Riel extends Heroe{
         this.nombre="Riel";
         this.ataqueFisico=true;
         this.habilidad = new ArrayList();
-        this.setRutaImagen("./assets/heroe/img/riel.png");       
-        this.setRutaCarta("./assets/heroe/card/riel.png");
+        this.setRutaImagen("/com/dorn/assets/heroe/img/riel.png");       
+        this.setRutaCarta("/com/dorn/assets/heroe/card/riel.png");
         
-        this.setRutaRostro("./assets/heroe/face/riel.png");
-        this.setRutaSprite("./assets/heroe/sprite/riel1.png");
+        this.setRutaRostro("/com/dorn/assets/heroe/face/riel.png");
+        this.setRutaSprite("/com/dorn/assets/heroe/sprite/riel1.png");
     }     
     @Override
     public void subirNivelUno() {

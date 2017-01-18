@@ -30,7 +30,7 @@ public class Momia extends Criatura{
         setAtaqueMax(2);
         setLugarInvocacion("Templo Oscuro");
         setCriaturaMayor(true);
-        setRutaCarta("./assets/monster/card/momia.png");
-        setRutaSprite("./assets/monster/sprite/momia.png");
+        setRutaCarta("/com/dorn/assets/monster/card/momia.png");
+        setRutaSprite("/com/dorn/assets/monster/sprite/momia.png");
     }
 }

@@ -17,11 +17,11 @@ public class Guelin extends Heroe{
         this.nombre="Guelin";
         this.ataqueFisico=true;
         this.habilidad = new ArrayList();
-        this.setRutaImagen("./assets/heroe/img/guelin.png");       
-        this.setRutaCarta("./assets/heroe/card/guelin.png");
+        this.setRutaImagen("/com/dorn/assets/heroe/img/guelin.png");       
+        this.setRutaCarta("/com/dorn/assets/heroe/card/guelin.png");
         
-        this.setRutaRostro("./assets/heroe/face/guelin.png");
-        this.setRutaSprite("./assets/heroe/sprite/guelin1.png");
+        this.setRutaRostro("/com/dorn/assets/heroe/face/guelin.png");
+        this.setRutaSprite("/com/dorn/assets/heroe/sprite/guelin1.png");
     }  
     @Override
     public void subirNivelUno() {

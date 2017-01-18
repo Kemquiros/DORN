@@ -21,11 +21,11 @@ public class Zorkal extends Heroe{
         this.nombre="Zorkal";
         this.ataqueFisico=true;
         this.habilidad = new ArrayList();
-        this.setRutaImagen("./assets/heroe/img/zorkal.png");       
-        this.setRutaCarta("./assets/heroe/card/zorkal.png");
+        this.setRutaImagen("/com/dorn/assets/heroe/img/zorkal.png");       
+        this.setRutaCarta("/com/dorn/assets/heroe/card/zorkal.png");
         
-        this.setRutaRostro("./assets/heroe/face/zorkal.png");
-        this.setRutaSprite("./assets/heroe/sprite/zorkal1.png");
+        this.setRutaRostro("/com/dorn/assets/heroe/face/zorkal.png");
+        this.setRutaSprite("/com/dorn/assets/heroe/sprite/zorkal1.png");
     }    
     
     @Override
