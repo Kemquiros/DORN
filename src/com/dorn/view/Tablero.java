@@ -26,6 +26,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -51,6 +53,8 @@ public class Tablero extends javax.swing.JFrame {
     Mapa mapa;
     boolean esEscalado;
     int indiceCriaturaInicial;
+    int indiceCriaturaActual;
+    Object personajeActual;
     
     ImageIcon icMapaOriginal,icMapaEscalado;
 
@@ -585,24 +589,116 @@ public class Tablero extends javax.swing.JFrame {
                 jpAtaque.add(s); 
             }    
         }
-    }    
-    public void actualizarMovimientoHeroe(){
-        Heroe heroe = jugadores.get(jugadorActual).getHeroe();
-        int w = (int)((widthScreen*4)/100);
-        int h = (int)((heightScreen*4)/100);
-        //Remover elementos anteriores
-        jpMovimiento.removeAll();
+    } 
+    public void dibujarCriattura(Criatura c){
+        int w,h;
+        cambiarNombreHeroe(c.getNombre());
+        //-------------------------
+        //Imagen Heroe
+        //-------------------------          
+        w = (int)((widthScreen*4)/20);
+        h = (int)((heightScreen*4)/12);
+        //lblImagenHeroe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblImagenHeroe.setIcon(this.escalarImagen(w, h, c.getRutaCarta()));        
+        lblImagenHeroe.setSize(w, h);
+        lblImagenHeroe.setBounds(((int)((heightScreen*2)/100)), ((int)((heightScreen*3)/100)), w, h);
+        jpImagenHeroe.setPreferredSize(new Dimension(w, h));
+        jpImagenHeroe.setSize(w,h);
+        //-------------------------
+        //Vida
+        //-------------------------
+        jpPuntosVida.removeAll();
+        jpVida.setBackground(Color.BLACK);
+        jpPuntosVida.setBackground(Color.BLACK);
+
         
-        jpMovimiento.setLayout(new GridLayout(1, heroe.getMovimientoMax()));
-        for(int i=0;i<heroe.getMovimiento();i++){
+        w = (int)((widthScreen*4)/100);
+        h = (int)((heightScreen*4)/100);
+        
+        jpPuntosVida.setLayout(new GridLayout(1, c.getVidaMax()));
+        System.out.println("Criatura: "+c.getNombre());
+        //Sangre disponible
+        for(int i=0;i<c.getVida();i++){
+           JLabel s = new JLabel();
+            s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/s_ok.png"));
+            jpPuntosVida.add(s); 
+        }
+        //Sangre restante
+        for(int i=0;i<(c.getVidaMax()-c.getVida());i++){
+           JLabel s = new JLabel();
+            s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/s_no.png"));
+            jpPuntosVida.add(s); 
+        }     
+        //-------------------------
+        //Experiencia
+        //-------------------------
+        jpExperiencia.removeAll();    
+        //-------------------------
+        //Movimiento
+        //-------------------------   
+        jpMovimiento.removeAll();
+        jpMovimiento.setBackground(Color.BLACK);
+        jpMovimiento.setLayout(new GridLayout(1, c.getMovimientoMax()));
+        for(int i=0;i<c.getMovimiento();i++){
            JLabel s = new JLabel();
             s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/m_ok.png"));
             jpMovimiento.add(s); 
         }    
-        for(int i=0;i<(heroe.getMovimientoMax()-heroe.getMovimiento());i++){
+        for(int i=0;i<(c.getMovimientoMax()-c.getMovimiento());i++){
            JLabel s = new JLabel();
             s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/m_no.png"));
             jpMovimiento.add(s); 
+        }   
+        //-------------------------
+        //Ataque
+        //-------------------------   
+        jpAtaque.removeAll();
+        cambiarTipoAtaque("Físico");
+        for(int i=0;i<c.getAtaque();i++){
+           JLabel s = new JLabel();
+            s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/ataque_fisico_ok.png"));
+            jpAtaque.add(s); 
+        }    
+        for(int i=0;i<(c.getAtaqueMax()-c.getAtaque());i++){
+           JLabel s = new JLabel();
+            s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/ataque_fisico_no.png"));
+            jpAtaque.add(s); 
+        }           
+   
+    }
+    public void actualizarMovimientoPersonaje(){
+        
+        int w = (int)((widthScreen*4)/100);
+        int h = (int)((heightScreen*4)/100);
+        //Remover elementos anteriores
+        jpMovimiento.removeAll();
+
+        if(personajeActual.getClass().getSuperclass().getName().contains("Heroe")){
+            Heroe heroe = (Heroe)personajeActual;
+            jpMovimiento.setLayout(new GridLayout(1, heroe.getMovimientoMax())); 
+            for(int i=0;i<heroe.getMovimiento();i++){
+               JLabel s = new JLabel();
+                s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/m_ok.png"));
+                jpMovimiento.add(s); 
+            }    
+            for(int i=0;i<(heroe.getMovimientoMax()-heroe.getMovimiento());i++){
+               JLabel s = new JLabel();
+                s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/m_no.png"));
+                jpMovimiento.add(s); 
+            }
+        }else if(personajeActual.getClass().getSuperclass().getName().contains("Criatura")){
+            Criatura criatura = (Criatura)personajeActual;
+            jpMovimiento.setLayout(new GridLayout(1, criatura .getMovimientoMax())); 
+            for(int i=0;i<criatura .getMovimiento();i++){
+               JLabel s = new JLabel();
+                s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/m_ok.png"));
+                jpMovimiento.add(s); 
+            }    
+            for(int i=0;i<(criatura .getMovimientoMax()-criatura.getMovimiento());i++){
+               JLabel s = new JLabel();
+                s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/m_no.png"));
+                jpMovimiento.add(s); 
+            }            
         }
     }
     public ImageIcon escalarImagen(int w,int h, String url){
@@ -627,116 +723,212 @@ public class Tablero extends javax.swing.JFrame {
 
     //Programar el movimiento
     private void br_1ActionPerformed(ActionEvent evt) {
-        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
-        if(!oldCasilla.getC1().esOcupada()){
-            oldCasilla.desocupar();
-            oldCasilla.getC1().ocupar((Ficha)heroe.getFicha());
-            heroe.mover();
+        if(personajeActual.getClass().getSuperclass().getName().contains("Heroe")){
+            Heroe heroe =(Heroe)personajeActual;
+            Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
+            if(!oldCasilla.getC1().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getC1().ocupar((Ficha)heroe.getFicha());
+                heroe.mover();
+            }
+            
+        }else if(personajeActual.getClass().getSuperclass().getName().contains("Criatura")){
+            Criatura criatura =(Criatura)personajeActual;
+            Casilla oldCasilla = ((Ficha)criatura.getFicha()).getCasilla();
+            if(!oldCasilla.getC1().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getC1().ocupar((Ficha)criatura.getFicha());
+                criatura.mover();
+            }            
         }
-        
         efectuarMovimiento();
+
     }      
     private void br_2ActionPerformed(ActionEvent evt) {
-        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
-        if(!oldCasilla.getC2().esOcupada()){
-            oldCasilla.desocupar();
-            oldCasilla.getC2().ocupar((Ficha)heroe.getFicha());
-            heroe.mover();
+        if(personajeActual.getClass().getSuperclass().getName().contains("Heroe")){
+            Heroe heroe =(Heroe)personajeActual;
+            Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
+            if(!oldCasilla.getC2().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getC2().ocupar((Ficha)heroe.getFicha());
+                heroe.mover();
+            }
+            
+        }else if(personajeActual.getClass().getSuperclass().getName().contains("Criatura")){
+            Criatura criatura =(Criatura)personajeActual;
+            Casilla oldCasilla = ((Ficha)criatura.getFicha()).getCasilla();
+            if(!oldCasilla.getC2().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getC2().ocupar((Ficha)criatura.getFicha());
+                criatura.mover();
+            }            
         }
-        
-         efectuarMovimiento();
+        efectuarMovimiento();
     }      
     private void br_3ActionPerformed(ActionEvent evt) {
-        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
-        if(!oldCasilla.getC3().esOcupada()){
-            oldCasilla.desocupar();
-            oldCasilla.getC3().ocupar((Ficha)heroe.getFicha());
-            heroe.mover();
+        if(personajeActual.getClass().getSuperclass().getName().contains("Heroe")){
+            Heroe heroe =(Heroe)personajeActual;
+            Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
+            if(!oldCasilla.getC3().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getC3().ocupar((Ficha)heroe.getFicha());
+                heroe.mover();
+            }
+            
+        }else if(personajeActual.getClass().getSuperclass().getName().contains("Criatura")){
+            Criatura criatura =(Criatura)personajeActual;
+            Casilla oldCasilla = ((Ficha)criatura.getFicha()).getCasilla();
+            if(!oldCasilla.getC3().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getC3().ocupar((Ficha)criatura.getFicha());
+                criatura.mover();
+            }            
         }
-        
-         efectuarMovimiento();
+        efectuarMovimiento();
     }      
     private void br_4ActionPerformed(ActionEvent evt) {
-        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
-        if(!oldCasilla.getC4().esOcupada()){
-            oldCasilla.desocupar();
-            oldCasilla.getC4().ocupar((Ficha)heroe.getFicha());
-            heroe.mover();
+        if(personajeActual.getClass().getSuperclass().getName().contains("Heroe")){
+            Heroe heroe =(Heroe)personajeActual;
+            Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
+            if(!oldCasilla.getC4().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getC4().ocupar((Ficha)heroe.getFicha());
+                heroe.mover();
+            }
+            
+        }else if(personajeActual.getClass().getSuperclass().getName().contains("Criatura")){
+            Criatura criatura =(Criatura)personajeActual;
+            Casilla oldCasilla = ((Ficha)criatura.getFicha()).getCasilla();
+            if(!oldCasilla.getC4().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getC4().ocupar((Ficha)criatura.getFicha());
+                criatura.mover();
+            }            
         }
-        
-         efectuarMovimiento();
+        efectuarMovimiento();
     }   
     private void br_upActionPerformed(ActionEvent evt) {
-        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
-        if(!oldCasilla.getArriba().esOcupada()){
-            oldCasilla.desocupar();
-            oldCasilla.getArriba().ocupar((Ficha)heroe.getFicha());
-            heroe.mover();
+        if(personajeActual.getClass().getSuperclass().getName().contains("Heroe")){
+            Heroe heroe =(Heroe)personajeActual;
+            Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
+            if(!oldCasilla.getArriba().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getArriba().ocupar((Ficha)heroe.getFicha());
+                heroe.mover();
+            }
+            
+        }else if(personajeActual.getClass().getSuperclass().getName().contains("Criatura")){
+            Criatura criatura =(Criatura)personajeActual;
+            Casilla oldCasilla = ((Ficha)criatura.getFicha()).getCasilla();
+            if(!oldCasilla.getArriba().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getArriba().ocupar((Ficha)criatura.getFicha());
+                criatura.mover();
+            }            
         }
-        
-         efectuarMovimiento();
-    }  
+        efectuarMovimiento();
+    }
     private void br_rightActionPerformed(ActionEvent evt) {
-        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
-        if(!oldCasilla.getDerecha().esOcupada()){
-            oldCasilla.desocupar();
-            oldCasilla.getDerecha().ocupar((Ficha)heroe.getFicha());
-            heroe.mover();
+        if(personajeActual.getClass().getSuperclass().getName().contains("Heroe")){
+            Heroe heroe =(Heroe)personajeActual;
+            Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
+            if(!oldCasilla.getDerecha().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getDerecha().ocupar((Ficha)heroe.getFicha());
+                heroe.mover();
+            }
+            
+        }else if(personajeActual.getClass().getSuperclass().getName().contains("Criatura")){
+            Criatura criatura =(Criatura)personajeActual;
+            Casilla oldCasilla = ((Ficha)criatura.getFicha()).getCasilla();
+            if(!oldCasilla.getDerecha().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getDerecha().ocupar((Ficha)criatura.getFicha());
+                criatura.mover();
+            }            
         }
-        
-         efectuarMovimiento();
+        efectuarMovimiento();
     }     
     private void br_downActionPerformed(ActionEvent evt) {
-        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
-        if(!oldCasilla.getAbajo().esOcupada()){
-            oldCasilla.desocupar();
-            oldCasilla.getAbajo().ocupar((Ficha)heroe.getFicha());
-            heroe.mover();
+        if(personajeActual.getClass().getSuperclass().getName().contains("Heroe")){
+            Heroe heroe =(Heroe)personajeActual;
+            Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
+            if(!oldCasilla.getAbajo().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getAbajo().ocupar((Ficha)heroe.getFicha());
+                heroe.mover();
+            }
+            
+        }else if(personajeActual.getClass().getSuperclass().getName().contains("Criatura")){
+            Criatura criatura =(Criatura)personajeActual;
+            Casilla oldCasilla = ((Ficha)criatura.getFicha()).getCasilla();
+            if(!oldCasilla.getAbajo().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getAbajo().ocupar((Ficha)criatura.getFicha());
+                criatura.mover();
+            }            
         }
-
-        
-         efectuarMovimiento();
+        efectuarMovimiento();
     }    
     private void br_leftActionPerformed(ActionEvent evt) {
-        Heroe heroe =jugadores.get(jugadorActual).getHeroe();
-        Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
-        if(!oldCasilla.getIzquierda().esOcupada()){
-            oldCasilla.desocupar();
-            oldCasilla.getIzquierda().ocupar((Ficha)heroe.getFicha());
-            heroe.mover();
-        }
-        
-         efectuarMovimiento();
-    }  
-    public void efectuarMovimiento(){
-        Heroe heroe = jugadores.get(jugadorActual).getHeroe();
-        //((Ficha)heroe.getFicha()).setCasilla(heroe.getCasilla());
-        if(esEscalado){
-            dibujarFichaEnTablero((JLabel)(((Ficha)heroe.getFicha()).getFiguraEscalada()), ((Ficha)heroe.getFicha()).getCasilla().getX(), ((Ficha)heroe.getFicha()).getCasilla().getY());
-        }else{
+        if(personajeActual.getClass().getSuperclass().getName().contains("Heroe")){
+            Heroe heroe =(Heroe)personajeActual;
+            Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
+            if(!oldCasilla.getIzquierda().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getIzquierda().ocupar((Ficha)heroe.getFicha());
+                heroe.mover();
+            }
             
-            dibujarFichaEnTablero((JLabel)(((Ficha)heroe.getFicha()).getFiguraOriginal()), ((Ficha)heroe.getFicha()).getCasilla().getX(), ((Ficha)heroe.getFicha()).getCasilla().getY());
-            posicionarCamara(heroe.getFicha());
-        }        
-        actualizarMovimientoHeroe();
-        dibujarMoverZorkal();
+        }else if(personajeActual.getClass().getSuperclass().getName().contains("Criatura")){
+            Criatura criatura =(Criatura)personajeActual;
+            Casilla oldCasilla = ((Ficha)criatura.getFicha()).getCasilla();
+            if(!oldCasilla.getIzquierda().esOcupada()){
+                oldCasilla.desocupar();
+                oldCasilla.getIzquierda().ocupar((Ficha)criatura.getFicha());
+                criatura.mover();
+            }            
+        }
+        efectuarMovimiento();
+}
+public void efectuarMovimiento(){
+        if(personajeActual.getClass().getSuperclass().getName().contains("Heroe")){
+            Heroe heroe = (Heroe)personajeActual;
+            //((Ficha)heroe.getFicha()).setCasilla(heroe.getCasilla());
+            if(esEscalado){
+                dibujarFichaEnTablero((JLabel)(((Ficha)heroe.getFicha()).getFiguraEscalada()), ((Ficha)heroe.getFicha()).getCasilla().getX(), ((Ficha)heroe.getFicha()).getCasilla().getY());
+            }else{
 
-        
+                dibujarFichaEnTablero((JLabel)(((Ficha)heroe.getFicha()).getFiguraOriginal()), ((Ficha)heroe.getFicha()).getCasilla().getX(), ((Ficha)heroe.getFicha()).getCasilla().getY());
+                posicionarCamara(heroe.getFicha());
+            }        
+            actualizarMovimientoPersonaje();
+            dibujarMover();
+            principal.sonido.sonidoMover();
+        }else if(personajeActual.getClass().getSuperclass().getName().contains("Criatura")){
+            Criatura criatura =(Criatura)personajeActual;
+            if(esEscalado){
+                dibujarFichaEnTablero((JLabel)(((Ficha)criatura.getFicha()).getFiguraEscalada()), ((Ficha)criatura.getFicha()).getCasilla().getX(), ((Ficha)criatura.getFicha()).getCasilla().getY());
+            }else{
+
+                dibujarFichaEnTablero((JLabel)(((Ficha)criatura.getFicha()).getFiguraOriginal()), ((Ficha)criatura.getFicha()).getCasilla().getX(), ((Ficha)criatura.getFicha()).getCasilla().getY());
+                posicionarCamara(criatura.getFicha());
+            }  
+            actualizarMovimientoPersonaje();
+            dibujarMoverCriatura();
+            principal.sonido.sonidoMover();
+        }
         
         this.show();        
     }
 
+
     private void cambiarNombreHeroe(String nombre,String nivel) {
-        jpImagenHeroe.setBorder(javax.swing.BorderFactory.createTitledBorder(null, nombre+" - nivel:"+nivel, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 24), new java.awt.Color(254, 254, 254))); // NOI18N
-        
+        jpImagenHeroe.setBorder(javax.swing.BorderFactory.createTitledBorder(null, nombre+" - nivel:"+nivel, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 24), new java.awt.Color(254, 254, 254))); // NOI18N        
     }
+    private void cambiarNombreHeroe(String nombre) {
+        jpImagenHeroe.setBorder(javax.swing.BorderFactory.createTitledBorder(null, nombre, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 24), new java.awt.Color(254, 254, 254))); // NOI18N        
+    }    
     private void cambiarTipoAtaque(String nombre){
         jpAtaque.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ataque "+nombre, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N
     }
@@ -874,9 +1066,9 @@ public class Tablero extends javax.swing.JFrame {
     public void dibujarInvocar(){
         guardian = (Zorkal)jugadores.get(jugadorActual).getHeroe();
         int numCriaturas = guardian.getCriaturas().size();
+        jpAccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Invocar", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N
         limpiarContenedores();
-       if(numCriaturas !=0){ 
-            jpAccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Invocar", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N
+       if(numCriaturas !=0){             
             jpAccion.setLayout(new GridLayout((numCriaturas/2), 2));
             int cont=0;
             for(Criatura criatura:guardian.getCriaturas()){
@@ -911,6 +1103,7 @@ public class Tablero extends javax.swing.JFrame {
         JButton botonOrigen = (JButton)evt.getSource();
         indiceCriaturaInicial = Integer.parseInt(botonOrigen.getText().charAt(0)+"")-1;
         Carta window = new Carta(this, guardian.getCriatura(indiceCriaturaInicial).getRutaCarta(),3);
+        window.setVisible(true);
     }
     private void dibujarCartaRitualActionPerformed(ActionEvent evt) {
        Zorkal zorkal = (Zorkal)jugadores.get(0).getHeroe();
@@ -920,8 +1113,7 @@ public class Tablero extends javax.swing.JFrame {
         Carta window = new Carta(this, zorkal.getRitual(indiceRitual).getRutaImagen(),1);
         window.setVisible(true);
     }    
-    private void dibujarCartaCriaturaActionPerformed(ActionEvent evt) { 
-    }   
+ 
     public void invocarCriaturaInicial(){
         Criatura cri = guardian.getCriaturas().remove(indiceCriaturaInicial);
         int cantidadCriaturasInvocada = guardian.getCriaturasInvocada().size();
@@ -952,10 +1144,29 @@ public class Tablero extends javax.swing.JFrame {
         //La dibujamos en el tablero        
         dibujarFichaEnTablero((JLabel)f.getFiguraEscalada(), f.getCasilla().getX(), f.getCasilla().getY());
         
+        //Sonido de invocacion
+        if(cri.getNombre().equals("Rata")){
+            principal.sonido.sonidoRata();
+        }else if(cri.getNombre().equals("Engendro")){
+            principal.sonido.sonidoEngendro();
+        }else if(cri.getNombre().equals("Esqueleto")){
+            principal.sonido.sonidoEsqueleto();
+        }else if(cri.getNombre().equals("Zombi")){
+            principal.sonido.sonidoZombi();
+        }else if(cri.getNombre().equals("Gorgona")){
+            principal.sonido.sonidoGorgona();
+        }else if(cri.getNombre().equals("Momia")){
+            principal.sonido.sonidoMomia();
+        }else if(cri.getNombre().equals("Fantasma")){
+            principal.sonido.sonidoFantasma();
+        }else if(cri.getNombre().equals("Vampiro")){
+            principal.sonido.sonidoVampiro();
+        }
+        
         //Si ya invocó todas las fichas
         if(guardian.getCriaturas().size() ==0){
             //Pasa a la siguiente fase
-             principal.jugarMoverZorkal();
+             principal.jugarMoverGuardian();
         }else{
             //Reestablecemos las figuras que falten
             dibujarInvocar();
@@ -1006,6 +1217,93 @@ public class Tablero extends javax.swing.JFrame {
         jpAccion.add(br_2);   
         
         //---------Se establecen los Listener
+        establecerListener();
+
+        verificarCasillas();
+        
+        JButton jboton = new JButton("Finalizar Mover");
+      
+        jboton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if(jugadorActual==0){
+                    jugarAtacarActionPerformed(evt);
+                }else{
+                    principal.jugarMoverHeroes(jugadorActual+1);
+                }
+                
+            }
+        });
+        jpBoton.add(jboton);   
+        
+        //----------Pasar secuencia a Mover
+        desactivarElementoSecuencia((JLabel)jpSecuencia2.getComponent(1));
+        activarElementoSecuencia((JLabel)jpSecuencia2.getComponent(2));
+        
+        this.show();
+    }
+    public void dibujarMoverZorkal(){
+        dibujarMover();
+        //Funcion para mover criaturas
+    }
+    public void dibujarMoverCriatura(){
+        int w = (int)((widthScreen*4)/100);
+        int h = (int)((heightScreen*4)/100);
+        limpiarContenedores();
+        jpAccion.setLayout(new GridLayout(3, 3));
+        jpAccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mover", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N
+        //-------------------------
+        //Mover
+        //------------------------- 
+        
+        //-----Parte superior
+        br_4 = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_4.png"));
+        jpAccion.add(br_4);
+
+        br_up = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_up.png"));
+        jpAccion.add(br_up);
+
+        br_1 = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_1.png"));
+        jpAccion.add(br_1); 
+        
+        //-----Parte central
+        br_left = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_left.png"));
+        jpAccion.add(br_left);  
+
+        br_0 = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_center.png"));
+        br_0.setEnabled(false);
+        jpAccion.add(br_0);  
+
+        br_right = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_right.png"));
+        jpAccion.add(br_right); 
+        
+        //-----Parte inferior        
+        br_3 = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_3.png"));
+        jpAccion.add(br_3); 
+
+        br_down = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_down.png"));
+        jpAccion.add(br_down);          
+
+        br_2 = new JButton(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/r_2.png"));
+        jpAccion.add(br_2);  
+        
+        //---------Se establecen los Listener
+        establecerListener();
+
+        verificarCasillas();
+        
+        JButton jboton = new JButton("Finalizar Mover");
+      
+        jboton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                principal.jugarMoverCriaturas(indiceCriaturaActual+1);                
+            }
+        });
+        jpBoton.add(jboton);
+        
+        
+        this.show();
+    }
+    public void establecerListener(){
         br_1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 br_1ActionPerformed(evt);
@@ -1045,36 +1343,49 @@ public class Tablero extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 br_leftActionPerformed(evt);
             }
-        });
-        verificarCasillas();
+        });        
+    }
+    private void dibujarAtacarCriatura() {
+        Criatura c = (Criatura)personajeActual;
+        limpiarContenedores();
+        jpAccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Habilidades", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N        
+        JButton boton = new JButton();
         
-        JButton jboton = new JButton("Finalizar Mover");
-      
-        jboton.addActionListener(new java.awt.event.ActionListener() {
+        int tipoAtaque= c.getTipoAtaque(); 
+        //0:Mágico
+        //1:Contacto
+        //2:Pica
+        //3:Arco
+        switch(tipoAtaque){
+            case 0:
+                boton.setText("Magia");
+                break;
+            case 1:
+                boton.setText("Golpe");
+                break; 
+            case 2:
+                boton.setText("Pica");
+                break;
+            case 3:
+                boton.setText("Arco");
+                break;
+        }
+        jpAccion.add(boton);
+        
+        //-------Panel de acciones
+        JButton terminar = new JButton("Terminar Ataque");
+        jpBoton.add(terminar);
+        
+        terminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                if(jugadorActual==0){
-                    jugarAtacarActionPerformed(evt);
-                }else{
-                    principal.jugarMoverHeroes(jugadorActual+1);
-                }
-                
+                    principal.jugarAtacarCriaturas(indiceCriaturaActual+1);
             }
-        });
-        jpBoton.add(jboton);   
-        
-        //----------Pasar secuencia a Mover
-        desactivarElementoSecuencia((JLabel)jpSecuencia2.getComponent(1));
-        activarElementoSecuencia((JLabel)jpSecuencia2.getComponent(2));
+        });        
         
         this.show();
     }
-    public void dibujarMoverZorkal(){
-        dibujarMover();
-        //Funcion para mover criaturas
-    }
     public void dibujarAtacarZorkal(){
         dibujarAtacar();
-        //Funcion para atacar criaturas
     }    
     public void dibujarAtacar(){
         Heroe heroe = jugadores.get(jugadorActual).getHeroe();
@@ -1132,10 +1443,20 @@ public class Tablero extends javax.swing.JFrame {
         this.show();
     }
     public void verificarCasillas(){
-        Heroe heroe = jugadores.get(jugadorActual).getHeroe();
-        Casilla casillaTemp = ((Ficha)heroe.getFicha()).getCasilla();
+        Casilla casillaTemp= null;
+        int movimientosDisponibles=0;
+        if(personajeActual.getClass().getSuperclass().getName().contains("Heroe")){
+            Heroe heroe = (Heroe)personajeActual;
+            casillaTemp = ((Ficha)heroe.getFicha()).getCasilla();
+            movimientosDisponibles=heroe.getMovimiento();
+        }else if(personajeActual.getClass().getSuperclass().getName().contains("Criatura")){
+            Criatura criatura = (Criatura)personajeActual;
+            casillaTemp = ((Ficha)criatura.getFicha()).getCasilla();  
+            movimientosDisponibles=criatura.getMovimiento();
+        }
         
-       if(heroe.getMovimiento()==0){//No puede mover
+        
+       if(movimientosDisponibles==0){//No puede mover
            br_0.setEnabled(false);
            br_1.setEnabled(false);
            br_2.setEnabled(false);
@@ -1270,10 +1591,10 @@ public class Tablero extends javax.swing.JFrame {
         principal.jugarInvocar();
     } 
     private void jugarMoverZorkalActionPerformed(ActionEvent evt) {
-        principal.jugarMoverZorkal();
+        principal.jugarMoverGuardian();
     } 
     private void jugarAtacarActionPerformed(ActionEvent evt) {
-        principal.jugarAtacarZorkal();
+        principal.jugarAtacarGuardian();
     }    
     private void finalizarTurnoZorkalActionPerformed(ActionEvent evt) {
         principal.finalizarTurnoZorkal();
@@ -1323,19 +1644,7 @@ public class Tablero extends javax.swing.JFrame {
         show();
     }
 
-    private void dibujarFichas(boolean escaladas) {
-        /*for(Jugador j:jugadores){
-            ImageIcon ic = new ImageIcon(j.getHeroe().getRutaSprite());
-            JLabel jlFicha= ((JLabel)j.getHeroe().getFicha());
-            jlFicha.setIcon(ic);
-            dibujarFichaEnTablero(jlFicha, j.getHeroe().getCasilla().getX(), j.getHeroe().getCasilla().getY());
-            //dibujarFichaEnTablero(jlFicha, 0, 0);
-        }*/
-       // Ficha temp =(Ficha)jugadores.get(1).getHeroe().getFicha();
-        //temp.
-        
-       // System.out.println("Escalada x:"+temp.getCasilla().getX()+"  y:"+temp.getCasilla().getY());
-        //System.out.println("Label x:"+((JLabel)temp.getFiguraEscalada()).getLocation().x+"  y:"+((JLabel)temp.getFiguraEscalada()).getLocation().y);
+    private void dibujarFichas(boolean escaladas) {   
         for(Ficha ficha: principal.getFichas()){
             //ficha.setIsEscalada(escaladas);
             if(escaladas){
@@ -1361,6 +1670,53 @@ public class Tablero extends javax.swing.JFrame {
        jsMapa.getVerticalScrollBar().setValue(((Ficha)ficha).getCasilla().getY()-(jsMapa.getHeight()/2));
        //jsMapa.getVerticalScrollBar().setEnabled(false);
     }
+
+    public void dibujarEscogerCriaturaNoche() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void dibujarEscogerCriaturaDia() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void dibujarMoverCriaturas(int indice) {
+        this.indiceCriaturaActual=indice;
+       Criatura c= guardian.getCriaturasInvocada().get(indice);
+       //Dibujar stats
+        dibujarCriattura(c);
+        try {
+            //Posicionar camara
+            Thread.sleep(200);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        posicionarCamara(c.getFicha());
+        //Dibujar mover
+        dibujarMoverCriatura();
+    }
+    public void setPersonajeActual(Object per){
+        this.personajeActual = per;
+    }
+
+    public void dibujarAtacarCriaturas(int indiceCriatura) {
+        this.indiceCriaturaActual=indiceCriatura;
+        Criatura c= guardian.getCriaturasInvocada().get(indiceCriatura);     
+       //Dibujar stats
+        dibujarCriattura(c);
+        try {
+            //Posicionar camara
+            Thread.sleep(200);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        posicionarCamara(c.getFicha());
+        //Dibujar atacar
+        dibujarAtacarCriatura();
+        
+    
+    }
+
+
 
 
     

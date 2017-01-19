@@ -26,6 +26,7 @@ public class Esqueleto extends Criatura{
         setTipoAtaque(2);//Pica
         setMovimientoMax(6);
         setVidaMax(1);
+        setVida(getVidaMax());
         setAtaqueMax(1);
         setLugarInvocacion("Cripta");
         setCriaturaMayor(false);

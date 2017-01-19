@@ -51,6 +51,7 @@ public class Criatura {
     public void setMovimiento(int movimiento) {
         this.movimiento = movimiento;
     }
+    
 
     public int getMovimientoMax() {
         return movimientoMax;
@@ -153,6 +154,18 @@ public class Criatura {
         this.ficha = ficha;
         
     }
+    public void atacar(){
+        ataque-=1;
+    };
+    public void mover(){
+        movimiento-=1;
+    }
+    public void establecerTodoMovimiento(){
+        movimiento=this.movimientoMax;
+    }    
+    public void establecerTodoAtaque(){
+        ataque=this.ataqueMax;
+    }      
     
     
 }

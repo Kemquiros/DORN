@@ -6,7 +6,6 @@
 package com.dorn.controller;
 
 
-import com.dorn.game.DORN;
 import com.dorn.model.Jugador;
 import com.dorn.model.bless.*;
 import com.dorn.model.heroe.*;
@@ -14,11 +13,19 @@ import com.dorn.model.map.Ficha;
 import com.dorn.model.map.Mapa;
 import com.dorn.model.monster.*;
 import com.dorn.model.ritual.*;
-import com.dorn.sound.Sound;
 import com.dorn.view.Inicio;
 import com.dorn.view.Seleccion;
 import com.dorn.view.Tablero;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.AbstractAction;
+
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  *
@@ -39,6 +46,7 @@ public class Principal {
     private static boolean juegoTermina=false;
     private boolean isZorkalLibre= false;
     private int turnoActual=0;
+    public SoundController sonido;
     
 
 
@@ -46,10 +54,11 @@ public class Principal {
     public Principal(){  
         inicio = new Inicio(this); 
         mapa = new Mapa();
+        sonido = new SoundController();
         tablero = new Tablero();
         fichas = new ArrayList<>();
         iniciarHeroes();
-        iniciarSonido();
+        sonido.sonidoInicio();
     }
 //-----------------------------------------
 // --------------- MENÚ -------------------
@@ -196,11 +205,15 @@ public class Principal {
     //--------- TURNO ZORKAL  ------
     //------------------------------
     public void jugarZorkal(){
+        
         tablero.setCamaraGlobal();
         tablero.dibujarSecuenciaZorkal();
-        iniciarStatsTurno(jugadores.get(0).getHeroe());
+
         tablero.setJugadorActual(0);
+        tablero.setPersonajeActual(jugadores.get(0).getHeroe());
         tablero.dibujarHeroe();
+        //-------Iniciar stats de turno
+        iniciarStatsTurno(jugadores.get(0).getHeroe());
         //Jugar ritual
         jugarRitual();        
     }
@@ -212,18 +225,51 @@ public class Principal {
             if(esNoche){
                 tablero.dibujarEscogerCriaturaNoche();
             }else{
-                tablero.dibujarEscogerCriaturaNoche();
+                tablero.dibujarEscogerCriaturaDia();
             }
         }*/
         tablero.dibujarInvocar();
     }
-    public void jugarMoverZorkal(){
-        //tablero.dibujarMoverCriaturas();
-        //if(isZorkalLibre){
-            tablero.dibujarMoverZorkal();
-        //}
-        
+    public void jugarMoverGuardian(){
+        //Inicia stats
+        for(Criatura c:((Zorkal)jugadores.get(0).getHeroe()).getCriaturasInvocada()){
+            iniciarStatsTurno(c);
+        }
+        tablero.setCamaraPersonal();        
+        jugarMoverCriaturas(0);
+
     }
+    public void jugarMoverZorkal(){
+            tablero.dibujarMoverZorkal();        
+    }
+    public void jugarMoverCriaturas(int indiceCriatura){
+        
+        if(indiceCriatura<((Zorkal)jugadores.get(0).getHeroe()).getCriaturasInvocada().size()){
+            tablero.setPersonajeActual(((Zorkal)jugadores.get(0).getHeroe()).getCriaturasInvocada().get(indiceCriatura));
+            tablero.dibujarMoverCriaturas(indiceCriatura);
+        }else{//Ya movieron todas las criaturas
+            if(isZorkalLibre){//Si Zorkal está libre
+                jugarMoverZorkal();
+            }else{
+                jugarAtacarGuardian();
+            }
+        }
+    }
+    public void jugarAtacarGuardian(){    
+        jugarAtacarCriaturas(0);
+    }
+    public void jugarAtacarCriaturas(int indiceCriatura){
+        if(indiceCriatura<((Zorkal)jugadores.get(0).getHeroe()).getCriaturasInvocada().size()){
+        tablero.setPersonajeActual(((Zorkal)jugadores.get(0).getHeroe()).getCriaturasInvocada().get(indiceCriatura));
+        tablero.dibujarAtacarCriaturas(indiceCriatura);
+        }else{//Ya movieron todas las criaturas
+            if(isZorkalLibre){//Si Zorkal está libre
+                jugarAtacarZorkal();
+            }else{
+                finalizarTurnoZorkal();
+            }
+        }        
+    }    
     public void jugarAtacarZorkal(){
         //tablero.dibujarAtacarCriaturas();
         //if(isZorkalLibre){
@@ -234,8 +280,52 @@ public class Principal {
     public void finalizarTurnoZorkal(){
         alternarDiaNoche();
         tablero.alternarDiaNoche(esNoche);
+        cambiarTurno();
+    }
+    public void cambiarTurno(){
+        int w = Toolkit.getDefaultToolkit().getScreenSize().width;
+        int h = Toolkit.getDefaultToolkit().getScreenSize().height;
+        tablero.setCamaraGlobal();
+        //Genera retraso
+        ImageIcon ic = new ImageIcon(getClass().getResource("/com/dorn/assets/other/party.png"));
+        /*JOptionPane jop = new JOptionPane("HÉROES",JOptionPane.INFORMATION_MESSAGE,JOptionPane.DEFAULT_OPTION,ic);
+        //jop = new JOptionPane
+        JDialog jd = jop.createDialog(null,"Cambio de turno");
+        new Timer(2000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    jd.dispose();
+                }
+            }).start();*/
+        //JOptionPane.showMessageDialog(this, "HÉROES", "Cambio de turno",JOptionPane.INFORMATION_MESSAGE, ic);
+        final JOptionPane optionPane = new JOptionPane("Héroes", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, ic, new Object[]{}, null);
+
+        final JDialog dialog = new JDialog();
+        dialog.setTitle("Cambio de turno");
+        dialog.setModal(true);
+        dialog.setUndecorated(true);
+        dialog.getRootPane().setOpaque(false);
+        dialog.setContentPane(optionPane);
+        
+        
+
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.pack();
+        dialog.setLocation(((w/2)-(dialog.getWidth()/2)), ((h/2)-(dialog.getHeight()/2)));
+        //create timer to dispose of dialog after 5 seconds
+        new Timer(4000, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                dialog.dispose();
+            }
+        }).start();
+        //timer.setRepeats(false);//the timer should only go off once
+
+        //start timer to close JDialog as dialog modal we must start the timer before its visible
+        //timer.start();
+
+        dialog.setVisible(true);
         jugarHeroes();
-       
     }
     
     //------------------------------
@@ -263,6 +353,7 @@ public class Principal {
     }
     public void jugarMoverHeroes(int jugador){
         if(jugador<jugadores.size()){
+            tablero.setPersonajeActual(jugadores.get(jugador).getHeroe());
             tablero.setJugadorActual(jugador);
             tablero.posicionarCamara(jugadores.get(jugador).getHeroe().getFicha());
             tablero.dibujarHeroe();
@@ -274,6 +365,7 @@ public class Principal {
     public void jugarAtacarHeroes(int jugador){
         if(jugador<jugadores.size()){
             tablero.setJugadorActual(jugador);
+            tablero.setPersonajeActual(jugadores.get(jugador).getHeroe());
             tablero.posicionarCamara(jugadores.get(jugador).getHeroe().getFicha());
             tablero.dibujarHeroe();
             tablero.dibujarAtacar();
@@ -427,9 +519,16 @@ public class Principal {
         //Agregar a zorkal
         ((Zorkal)jugadores.get(0).getHeroe()).addCriatura(mayor);        
     }
-    public void iniciarStatsTurno(Heroe heroe){
-        heroe.establecerTodoMovimiento();
-        heroe.establecerTodoAtaque();
+    public void iniciarStatsTurno(Object personaje){
+        if(personaje.getClass().getSuperclass().getCanonicalName().contains("Heroe")){
+            ((Heroe)personaje).establecerTodoMovimiento();
+            ((Heroe)personaje).establecerTodoAtaque();
+        }else if(personaje.getClass().getSuperclass().getCanonicalName().contains("Criatura")){
+            System.out.println("Reestablece criatura");
+            ((Criatura)personaje).establecerTodoMovimiento();
+            ((Criatura)personaje).establecerTodoAtaque();
+        }
+
     }
 
     private void alternarDiaNoche() {
@@ -440,29 +539,7 @@ public class Principal {
         }
     }
 
-    private void iniciarSonido() {
-        Thread sonidoPrincipal= new Thread(){
-             public void run() {
-                Sound s = new Sound();
-                //s.playSound("./assets/sound/main.wav");
-                s.playSound("/com/dorn/assets/sound/main.wav");
-                //s.playSound(AssetsController.getRecurso("sound/main.wav"));
-                
-             }
-        };
-        sonidoPrincipal.start();
-    }
-    public void sonidoClick(){
-        Thread t= new Thread(){
-             public void run() {
-                Sound s = new Sound();
-                //s.playSound("./assets/sound/click.wav");
-                //s.playSound(getClass().getResource(rutaMapa));
-                s.playSound("/com/dorn/assets/sound/click.wav");
-             }
-        };
-        t.start();
-    }
+
 
     public ArrayList<Ficha> getFichas() {
         return fichas;
@@ -471,13 +548,6 @@ public class Principal {
     public void addFicha(Ficha ficha) {
         this.fichas.add(ficha);
     }
-    /**public void invocar(Object criatura){
-        Zorkal zorkal =(Zorkal)jugadores.get(0).getHeroe();
-        int numCriaInvo=zorkal.getCriaturasInvocada().size();
-        Casilla casillaInvocar= mapa.getInvocacionInicial()[numCriaInvo];
-        tablero.invocar
-        //tablero.dibujarFichaEnTablero(ficha, x, y);
-    }*/
 
 
 

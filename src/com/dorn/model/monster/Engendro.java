@@ -25,11 +25,15 @@ public class Engendro extends Criatura{
         setNombre("Engendro");
         setTipoAtaque(1);
         setMovimientoMax(5);
+        setMovimiento(getMovimientoMax());
         setVidaMax(2);
+        setVida(getVidaMax());
         setAtaqueMax(1);
+        setAtaque(getAtaqueMax());
         setLugarInvocacion("Pantano Negro");
         setCriaturaMayor(false);
         setRutaCarta("/com/dorn/assets/monster/card/engendro.png");
         setRutaSprite("/com/dorn/assets/monster/sprite/engendro.png");
+        
     }
 }

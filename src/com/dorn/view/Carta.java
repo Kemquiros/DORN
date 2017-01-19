@@ -41,12 +41,11 @@ public class Carta extends JDialog{
         
         super(parent,true);
         initComponents(rutaImagen,parent);
-        pack();
         Rectangle parentBounds = parent.getBounds();
         Dimension size = getSize();
         // Center in the parent
-        int x = Math.max(0, parentBounds.x + (parentBounds.width - size.width) / 2);
-        int y = Math.max(0, parentBounds.y + (parentBounds.height - size.height) / 2);
+        int x = Math.max(0, parentBounds.x + ((parentBounds.width - size.width) / 2));
+        int y = Math.max(0, parentBounds.y + ((parentBounds.height - size.height) / 2));
         setLocation(new Point(x, y));
         switch(tipoCarta){
             case 1:
@@ -67,6 +66,7 @@ public class Carta extends JDialog{
             default:
                 break;
         }
+        this.pack();
         
     }
 
@@ -128,13 +128,13 @@ public class Carta extends JDialog{
     private void cartaRitual() {
         this.setTitle("Carta Ritual");
         jbAceptar.setText("Jugar");
-        this.show();
+        //this.show();
     }
 
     private void cartaBendicion() {
         this.setTitle("Carta Bendición");
         jbAceptar.setText("Jugar");
-        this.show();
+        //this.show();
     }
 
     private void InvocarInicial() {
@@ -147,20 +147,20 @@ public class Carta extends JDialog{
 
 
         });   
-        this.show();
+        //this.show();
     }
 
     private void cartaInvocar() {
         
         this.setTitle("Jugar carta Invocar");
         this.setTitle("Invocar");
-        this.show();
+        //this.show();
     }
 
     private void cartaHeroe() {
         this.setTitle("Carta Héroe");
         jbAceptar.setVisible(false);
-        this.show();
+        //this.show();
     }
     
     private void invocarInicial() {

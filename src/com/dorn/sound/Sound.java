@@ -17,8 +17,13 @@
 package com.dorn.sound;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+//import javazoom.jl.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -92,5 +97,33 @@ public class Sound {
 
         sourceLine.drain();
         sourceLine.close();
-    }    
+    } 
+    public void playMP3(String url){
+        
+        //Media hit = new Media(url);
+//        Media hit = new Media(getClass().getResource(url).toString());
+//        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+//        mediaPlayer.play();
+        /*
+        try{
+             FileInputStream fis = new FileInputStream("File location.");
+             Player playMP3 = new Player(fis);
+
+             playMP3.play();
+
+        }  catch(Exception e){
+             System.out.println(e);
+        }   */
+        
+//        String songName = "HungryKidsofHungary-ScatteredDiamonds.mp3";
+//        String pathToMp3 = System.getProperty("user.dir") +"/"+ songName;
+//        BasicPlayer player = new BasicPlayer();
+//        try {
+//            player.open(getClass().getResource(url));
+//            player.play();
+//        } catch (BasicPlayerException | MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+        
+    }
 }

@@ -164,12 +164,12 @@ public class Seleccion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
-        parent.sonidoClick();
+        parent.sonido.sonidoClick();
         parent.cancelarSeleccion();
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFinalizarActionPerformed
-        parent.sonidoClick();
+        parent.sonido.sonidoClick();
         parent.finalizarSeleccion(jugadores);
     }//GEN-LAST:event_jbFinalizarActionPerformed
 
@@ -201,11 +201,11 @@ public class Seleccion extends javax.swing.JFrame {
         //setLocation(new Point((wp/2), (hp/2)));
         setUndecorated(true);
         
-        jpFigura.setSize(wp, ((jpHeroe.getHeight()*9)/10));
-        jpHeroe.setSize(wp, ((hp*8)/10));
-        jpOpcion.setSize(wp, ((hp*2)/10));
+        jpFigura.setSize(wp, jpHeroe.getHeight());
+        jpHeroe.setSize(wp, ((hp*9)/10));
+        jpOpcion.setSize(wp, ((hp*1)/10));
 
-
+        
 
         this.setPreferredSize(new Dimension(wp, hp+(hp/10)));
         jbFinalizar.setEnabled(false);
@@ -312,7 +312,7 @@ public class Seleccion extends javax.swing.JFrame {
         }
     }
     private void botonHeroe_ActionPerformed(ActionEvent evt) {
-        parent.sonidoClick();
+        parent.sonido.sonidoClick();
 //        jbSiguiente.setEnabled(true);
 //        jbFinalizar.setEnabled(false);
         JButton origen = ((JButton)evt.getSource());
@@ -347,7 +347,7 @@ public class Seleccion extends javax.swing.JFrame {
     }
     
     private void botonZorkal_ActionPerformed(ActionEvent evt) {
-        parent.sonidoClick();
+        parent.sonido.sonidoClick();
         //jbSiguiente.setEnabled(true);
         boton[4].setEnabled(false);
         

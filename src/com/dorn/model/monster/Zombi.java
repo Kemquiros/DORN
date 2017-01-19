@@ -26,6 +26,7 @@ public class Zombi extends Criatura{
         setTipoAtaque(1);
         setMovimientoMax(6);
         setVidaMax(1);
+        setVida(getVidaMax());
         setAtaqueMax(1);
         setLugarInvocacion("Cementerio");
         setCriaturaMayor(false);

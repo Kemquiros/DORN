@@ -27,6 +27,7 @@ public class Fantasma extends Criatura{
         setTipoAtaque(1);
         setMovimientoMax(12);
         setVidaMax(2);
+        setVida(getVidaMax());
         setAtaqueMax(1);
         setLugarInvocacion("Templo Oscuro");
         setCriaturaMayor(true);

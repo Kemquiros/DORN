@@ -26,6 +26,7 @@ public class Gorgona extends Criatura{
         setTipoAtaque(3);//Arco
         setMovimientoMax(6);
         setVidaMax(2);
+        setVida(getVidaMax());
         setAtaqueMax(1);
         setLugarInvocacion("Templo Oscuro");
         setCriaturaMayor(true);

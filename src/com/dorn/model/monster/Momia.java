@@ -27,6 +27,7 @@ public class Momia extends Criatura{
         setTipoAtaque(1);
         setMovimientoMax(6);
         setVidaMax(2);
+        setVida(getVidaMax());
         setAtaqueMax(2);
         setLugarInvocacion("Templo Oscuro");
         setCriaturaMayor(true);

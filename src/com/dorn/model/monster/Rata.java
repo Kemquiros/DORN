@@ -26,6 +26,7 @@ public class Rata extends Criatura{
         setTipoAtaque(1);
         setMovimientoMax(7);
         setVidaMax(1);
+        setVida(getVidaMax());
         setAtaqueMax(1);
         setLugarInvocacion("Cloacas");
         setCriaturaMayor(false);
