@@ -12,6 +12,6 @@ package com.dorn.model.bless;
 public class B6 extends Bendicion{
     public B6(){
         setNombre("Quiero que mueras");        
-        setRutaImagen("./assets/card/bless/6.png");
+        setRutaImagen("/com/dorn/assets/card/bless/6.png");
     }
 }

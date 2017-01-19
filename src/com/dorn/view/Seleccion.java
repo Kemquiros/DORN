@@ -12,15 +12,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -66,13 +65,9 @@ public class Seleccion extends javax.swing.JFrame {
         jpGeneral = new javax.swing.JPanel();
         jpIzquierda = new javax.swing.JPanel();
         jpHeroe = new javax.swing.JPanel();
-        jpNombre = new javax.swing.JPanel();
-        lblNombre = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
         jpFigura = new javax.swing.JPanel();
         jpOpcion = new javax.swing.JPanel();
         jbCancelar = new javax.swing.JButton();
-        jbSiguiente = new javax.swing.JButton();
         jbFinalizar = new javax.swing.JButton();
         jpDerecha = new javax.swing.JPanel();
         jpJugadores = new javax.swing.JPanel();
@@ -87,13 +82,6 @@ public class Seleccion extends javax.swing.JFrame {
 
         jpHeroe.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Selección de Guardián", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 18))); // NOI18N
 
-        jpNombre.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jpNombre.setLayout(new java.awt.GridLayout(2, 1));
-
-        lblNombre.setText("Nombre Jugador");
-        jpNombre.add(lblNombre);
-        jpNombre.add(txtNombre);
-
         jpFigura.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jpFigura.setLayout(new javax.swing.BoxLayout(jpFigura, javax.swing.BoxLayout.LINE_AXIS));
 
@@ -101,21 +89,17 @@ public class Seleccion extends javax.swing.JFrame {
         jpHeroe.setLayout(jpHeroeLayout);
         jpHeroeLayout.setHorizontalGroup(
             jpHeroeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpFigura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jpNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+            .addComponent(jpFigura, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
         );
         jpHeroeLayout.setVerticalGroup(
             jpHeroeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpHeroeLayout.createSequentialGroup()
-                .addComponent(jpNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpFigura, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE))
+            .addComponent(jpFigura, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
         );
 
         jpIzquierda.add(jpHeroe);
 
         jpOpcion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Opciones", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 18))); // NOI18N
-        jpOpcion.setLayout(new java.awt.GridLayout(1, 3));
+        jpOpcion.setLayout(new java.awt.GridLayout(1, 4));
 
         jbCancelar.setText("Cancelar");
         jbCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -124,14 +108,6 @@ public class Seleccion extends javax.swing.JFrame {
             }
         });
         jpOpcion.add(jbCancelar);
-
-        jbSiguiente.setText("Siguiente Jugador");
-        jbSiguiente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbSiguienteActionPerformed(evt);
-            }
-        });
-        jpOpcion.add(jbSiguiente);
 
         jbFinalizar.setText("Finalizar");
         jbFinalizar.addActionListener(new java.awt.event.ActionListener() {
@@ -187,56 +163,6 @@ public class Seleccion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSiguienteActionPerformed
-        parent.sonidoClick();
-        if(numjugador==0){//Zorkal
-            //------Crear nuevo Jugador
-            Jugador j= new Jugador();
-            j.setNombre(txtNombre.getText());
-            j.setHeroe(new Zorkal());
-            jugadores.add(j);
-            numjugador++;
-            //-------------------------
-            
-            //--------Transformación Gráfica            
-            jpHeroe.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Selección de Héroes", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 18))); // NOI18N
-            lblNombre.setText("Nombre Jugador "+numjugador);
-            txtNombre.setText("");
-            jbSiguiente.setEnabled(false);
-            agregarJugadorLista(j);
-            crearBotonesHeroes();
-            
-            //-----------------------------
-        }else{//Heroes            
-            if(numjugador>=1){ 
-            //--------Transformación Gráfica
-            jbFinalizar.setEnabled(true);
-            //--------
-            }
-            //------Crear nuevo Jugador
-            Jugador j= new Jugador();
-            j.setNombre(txtNombre.getText());
-            j.setHeroe(parent.getHeroes()[indiceHeroe]);
-            jugadores.add(j);
-            numjugador++;
-            //------------------------------
-            
-            //--------Transformación Gráfica 
-            jbSiguiente.setEnabled(false);
-            lblNombre.setText("Nombre Jugador "+numjugador);
-            txtNombre.setText("");
-            jbSiguiente.setEnabled(false);
-            agregarJugadorLista(j);
-            mostrarHeroes();            
-            //------------------------------            
-            indiceHeroe =-1;
-            //Bloquear
-            if(numjugador==6){//Ya escogieron a todos los personajes
-                bloquearSeleccion();
-            }            
-        }
-    }//GEN-LAST:event_jbSiguienteActionPerformed
-
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
         parent.sonidoClick();
         parent.cancelarSeleccion();
@@ -251,7 +177,6 @@ public class Seleccion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbFinalizar;
-    private javax.swing.JButton jbSiguiente;
     private javax.swing.JPanel jpDerecha;
     private javax.swing.JPanel jpFigura;
     private javax.swing.JPanel jpGeneral;
@@ -259,10 +184,7 @@ public class Seleccion extends javax.swing.JFrame {
     private javax.swing.JPanel jpIzquierda;
     private javax.swing.JPanel jpJugadores;
     private javax.swing.JPanel jpLista;
-    private javax.swing.JPanel jpNombre;
     private javax.swing.JPanel jpOpcion;
-    private javax.swing.JLabel lblNombre;
-    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
     private void initComponents2() {
@@ -279,8 +201,7 @@ public class Seleccion extends javax.swing.JFrame {
         //setLocation(new Point((wp/2), (hp/2)));
         setUndecorated(true);
         
-        jpNombre.setSize(wp, ((jpHeroe.getHeight()*3)/10));
-        jpFigura.setSize(wp, ((jpHeroe.getHeight()*7)/10));
+        jpFigura.setSize(wp, ((jpHeroe.getHeight()*9)/10));
         jpHeroe.setSize(wp, ((hp*8)/10));
         jpOpcion.setSize(wp, ((hp*2)/10));
 
@@ -288,43 +209,12 @@ public class Seleccion extends javax.swing.JFrame {
 
         this.setPreferredSize(new Dimension(wp, hp+(hp/10)));
         jbFinalizar.setEnabled(false);
-        jbSiguiente.setEnabled(false);
-        pack();
+        this.show();
     }
 
-    public ImageIcon escalarImagen(int w_,int h_, String url){
-        System.out.println("URL -> "+url);
-        ImageIcon ic = new ImageIcon(getClass().getResource(url));
-        Image icRes = ic.getImage().getScaledInstance(w_, h_, Image.SCALE_SMOOTH);
-        ic = new ImageIcon(icRes);
-        return ic;
-    }    
-    public ImageIcon escalarImagenOptimizado(int w_,int h_, String url){
-        int tempW=0,tempH=0;
-        Double factEsca,a,b;
-        ImageIcon ic = new ImageIcon(getClass().getResource(url));
-        a=Double.parseDouble(Integer.toString(ic.getIconHeight()) );
-        b=Double.parseDouble(Integer.toString(h_) );
-        factEsca= (a/b);
-        if(factEsca<=1){
-           // System.err.println("PAILAS");
-        }else{
-            tempW= (int) (ic.getIconWidth()/factEsca);
-            tempH= (int) (ic.getIconHeight()/factEsca);
-        }
-        //System.err.println("FAc Real Esc "+tempH);
-        /*
-        tempW=Math.min(w,ic.getIconWidth());
-        tempH=Math.min(h,ic.getIconHeight());
-        */
 
-        Image icRes = ic.getImage().getScaledInstance(tempW, tempH, Image.SCALE_SMOOTH);
-        ic = new ImageIcon(icRes);
-        return ic;
-    } 
     public void agregarJugadorLista(Jugador j){
         JPanel jp = new JPanel();
-
         jp.setLayout(new GridLayout(1, 2));
         JLabel ji = new JLabel();
         JLabel jn = new JLabel(j.getNombre());
@@ -340,7 +230,7 @@ public class Seleccion extends javax.swing.JFrame {
         }
         
         //jp.add(jp)
-        
+        this.show();
     }
 
     public void crearBotonesZorkal(){
@@ -391,6 +281,7 @@ public class Seleccion extends javax.swing.JFrame {
             //boton[i] = new JButton(this.escalarImagen(((w*8)/100), ((h*8)/100), parent.getHeroes()[i].getRutaRostro()));       
             boton[i].setIcon(this.escalarImagen(((w*8)/100), ((h*8)/100), parent.getHeroes()[i].getRutaRostro()));
             boton[i].setText(parent.getHeroes()[i].getNombre());
+            boton[i].setName(Integer.toString(i));
             
             if(i==4){//Remover Listener Zorkal
                 boton[i].removeActionListener(zorkalListener);
@@ -422,36 +313,96 @@ public class Seleccion extends javax.swing.JFrame {
     }
     private void botonHeroe_ActionPerformed(ActionEvent evt) {
         parent.sonidoClick();
-        jbSiguiente.setEnabled(true);
-        jbFinalizar.setEnabled(false);
+//        jbSiguiente.setEnabled(true);
+//        jbFinalizar.setEnabled(false);
         JButton origen = ((JButton)evt.getSource());
-        String nombreBoton = origen.getName();        
-        indiceHeroe = Integer.parseInt(nombreBoton.substring(1));
+        String nombreJugador = JOptionPane.showInputDialog(this, "Ingrese el nombre del jugador #"+numjugador);//origen.getName();        
+        indiceHeroe = Integer.parseInt(origen.getName());
         //Héroe seleccionado
         selectHeroes[indiceHeroe]=1;
-        //Realiza cambio gráfico
-        for(int i=0;i<9;i++){
-            if(i==indiceHeroe){
-                boton[i].setEnabled(false);
-            }else{
-                boton[i].setVisible(false);
+        origen.setEnabled(false);
+
+        //------------------------------------------------
+            if(numjugador>=1){ 
+            //--------Transformación Gráfica
+            jbFinalizar.setEnabled(true);
+            //--------
             }
-        }        
+            //------Crear nuevo Jugador
+            Jugador j= new Jugador();
+            j.setNombre(nombreJugador);
+            j.setHeroe(parent.getHeroes()[indiceHeroe]);
+            jugadores.add(j);
+            numjugador++;
+            //------------------------------
+
+            agregarJugadorLista(j);         
+            //------------------------------            
+            indiceHeroe =-1;
+            //Bloquear
+            if(numjugador==6){//Ya escogieron a todos los personajes
+                bloquearSeleccion();
+            }         
+        //------------------------------------------------
     }
     
     private void botonZorkal_ActionPerformed(ActionEvent evt) {
         parent.sonidoClick();
-        jbSiguiente.setEnabled(true);
+        //jbSiguiente.setEnabled(true);
         boton[4].setEnabled(false);
+        
+        
+        //-------------------------------
+        //------Crear nuevo Jugador
+        Jugador j= new Jugador();
+        String nombre = JOptionPane.showInputDialog("Ingrese el nombre del jugador:");
+        j.setNombre(nombre);
+        j.setHeroe(new Zorkal());
+        jugadores.add(j);
+        numjugador++;
+        //-------------------------
+
+        //--------Transformación Gráfica            
+        jpHeroe.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Selección de Héroes", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 18))); 
+        agregarJugadorLista(j);
+        crearBotonesHeroes();        
     }    
     private void bloquearSeleccion(){
-        lblNombre.setVisible(false);
-        txtNombre.setVisible(false);
         jbFinalizar.setEnabled(true);
         for(int i=0;i<9;i++){
             boton[i].setEnabled(false);
         }
-        jbSiguiente.setEnabled(false);
     }
+    
+    
+    public ImageIcon escalarImagen(int w_,int h_, String url){
+        ImageIcon ic = new ImageIcon(getClass().getResource(url));
+        Image icRes = ic.getImage().getScaledInstance(w_, h_, Image.SCALE_SMOOTH);
+        ic = new ImageIcon(icRes);
+        return ic;
+    }    
+    public ImageIcon escalarImagenOptimizado(int w_,int h_, String url){
+        int tempW=0,tempH=0;
+        Double factEsca,a,b;
+        ImageIcon ic = new ImageIcon(getClass().getResource(url));
+        a=Double.parseDouble(Integer.toString(ic.getIconHeight()) );
+        b=Double.parseDouble(Integer.toString(h_) );
+        factEsca= (a/b);
+        if(factEsca<=1){
+           // System.err.println("PAILAS");
+        }else{
+            tempW= (int) (ic.getIconWidth()/factEsca);
+            tempH= (int) (ic.getIconHeight()/factEsca);
+        }
+        //System.err.println("FAc Real Esc "+tempH);
+        /*
+        tempW=Math.min(w,ic.getIconWidth());
+        tempH=Math.min(h,ic.getIconHeight());
+        */
+
+        Image icRes = ic.getImage().getScaledInstance(tempW, tempH, Image.SCALE_SMOOTH);
+        ic = new ImageIcon(icRes);
+        return ic;
+    }     
     
 }

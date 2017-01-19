@@ -12,6 +12,6 @@ package com.dorn.model.bless;
 public class B8 extends Bendicion{
     public B8(){
         setNombre("Las raíces firmes");        
-        setRutaImagen("./assets/card/bless/8.png");
+        setRutaImagen("/com/dorn/assets/card/bless/8.png");
     }
 }

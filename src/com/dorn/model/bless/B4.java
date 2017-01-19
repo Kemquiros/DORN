@@ -12,6 +12,6 @@ package com.dorn.model.bless;
 public class B4 extends Bendicion{
     public B4(){
         setNombre("El canto de Orfeo");        
-        setRutaImagen("./assets/card/bless/4.png");
+        setRutaImagen("/com/dorn/assets/card/bless/4.png");
     }
 }

@@ -12,6 +12,6 @@ package com.dorn.model.bless;
 public class B9 extends Bendicion{
     public B9(){
         setNombre("Lazos curativos");        
-        setRutaImagen("./assets/card/bless/9.png");
+        setRutaImagen("/com/dorn/assets/card/bless/9.png");
     }
 }

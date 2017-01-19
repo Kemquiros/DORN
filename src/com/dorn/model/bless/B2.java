@@ -12,6 +12,6 @@ package com.dorn.model.bless;
 public class B2 extends Bendicion{
     public B2(){
         setNombre("Las dos caras del héroe");        
-        setRutaImagen("./assets/card/bless/2.png");
+        setRutaImagen("/com/dorn/assets/card/bless/2.png");
     }
 }

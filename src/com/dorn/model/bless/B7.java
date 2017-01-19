@@ -12,6 +12,6 @@ package com.dorn.model.bless;
 public class B7 extends Bendicion{
     public B7(){
         setNombre("La fuerza de la ira");        
-        setRutaImagen("./assets/card/bless/7.png");
+        setRutaImagen("/com/dorn/assets/card/bless/7.png");
     }
 }

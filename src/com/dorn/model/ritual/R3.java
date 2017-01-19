@@ -14,6 +14,6 @@ public class R3 extends Ritual{
         setNombre("Prisión Gélida");
         setCostoSangre(7);
         setDescripcion("");
-        setRutaImagen("./assets/card/ritual/3.png");
+        setRutaImagen("/com/dorn/assets/card/ritual/3.png");
     }
 }

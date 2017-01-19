@@ -14,6 +14,6 @@ public class R5 extends Ritual{
         setNombre("Ratas Hambrientas");
         setCostoSangre(3);
         setDescripcion("");
-        setRutaImagen("./assets/card/ritual/5.png");
+        setRutaImagen("/com/dorn/assets/card/ritual/5.png");
     }
 }

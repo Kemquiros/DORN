@@ -14,6 +14,6 @@ public class R10 extends Ritual{
         setNombre("Portales Espinosos");
         setCostoSangre(3);
         setDescripcion("");
-        setRutaImagen("./assets/card/ritual/10.png");
+        setRutaImagen("/com/dorn/assets/card/ritual/10.png");
     }
 }

@@ -18,7 +18,6 @@ import com.dorn.sound.Sound;
 import com.dorn.view.Inicio;
 import com.dorn.view.Seleccion;
 import com.dorn.view.Tablero;
-import com.dorn.view.Tablero3;
 import java.util.ArrayList;
 
 /**
@@ -472,6 +471,13 @@ public class Principal {
     public void addFicha(Ficha ficha) {
         this.fichas.add(ficha);
     }
+    /**public void invocar(Object criatura){
+        Zorkal zorkal =(Zorkal)jugadores.get(0).getHeroe();
+        int numCriaInvo=zorkal.getCriaturasInvocada().size();
+        Casilla casillaInvocar= mapa.getInvocacionInicial()[numCriaInvo];
+        tablero.invocar
+        //tablero.dibujarFichaEnTablero(ficha, x, y);
+    }*/
 
 
 

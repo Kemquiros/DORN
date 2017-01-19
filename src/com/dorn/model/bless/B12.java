@@ -12,6 +12,6 @@ package com.dorn.model.bless;
 public class B12 extends Bendicion{
     public B12(){
         setNombre("Las piernas ardientes");        
-        setRutaImagen("./assets/card/bless/12.png");
+        setRutaImagen("/com/dorn/assets/card/bless/12.png");
     }
 }

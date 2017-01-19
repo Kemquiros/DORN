@@ -14,6 +14,6 @@ public class R11 extends Ritual{
         setNombre("La Tierra Despierta");
         setCostoSangre(2);
         setDescripcion("");
-        setRutaImagen("./assets/card/ritual/11.png");
+        setRutaImagen("/com/dorn/assets/card/ritual/11.png");
     }
 }

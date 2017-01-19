@@ -149,7 +149,9 @@ public class Criatura {
     }
 
     public void setFicha(Object ficha) {
+        
         this.ficha = ficha;
+        
     }
     
     

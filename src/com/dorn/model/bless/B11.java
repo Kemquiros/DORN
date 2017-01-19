@@ -12,6 +12,6 @@ package com.dorn.model.bless;
 public class B11 extends Bendicion{
     public B11(){
         setNombre("Escucha la llamada");        
-        setRutaImagen("./assets/card/bless/11.png");
+        setRutaImagen("/com/dorn/assets/card/bless/11.png");
     }
 }

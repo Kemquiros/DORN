@@ -12,6 +12,6 @@ package com.dorn.model.bless;
 public class B10 extends Bendicion{
     public B10(){
         setNombre("El viento en el pelo");        
-        setRutaImagen("./assets/card/bless/10.png");
+        setRutaImagen("/com/dorn/assets/card/bless/10.png");
     }
 }

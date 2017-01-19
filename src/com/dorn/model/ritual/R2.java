@@ -14,6 +14,6 @@ public class R2 extends Ritual{
         setNombre("Fuente Negra");
         setCostoSangre(3);
         setDescripcion("");
-        setRutaImagen("./assets/card/ritual/2.png");
+        setRutaImagen("/com/dorn/assets/card/ritual/2.png");
     }
 }

@@ -12,6 +12,6 @@ package com.dorn.model.bless;
 public class B5 extends Bendicion{
     public B5(){
         setNombre("Canción de la discordia");        
-        setRutaImagen("./assets/card/bless/5.png");
+        setRutaImagen("/com/dorn/assets/card/bless/5.png");
     }
 }

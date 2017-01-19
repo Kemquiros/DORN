@@ -34,19 +34,43 @@ public class Mapa {
         Casilla[] m = new Casilla[80];
         
         //Bosque
-        Casilla[] b = new Casilla[109];
+        Casilla[] b = new Casilla[110];
         
         //Herbolario
-        Casilla h ;
+        Casilla s ;
         
         //Trono de Zorkal
         Casilla[] t = new Casilla[11];
-    
+        
+        //Cámara Ritual
+        Casilla[] i = new Casilla[19];          
+        
+        //Cripta (Esqueletos)
+        Casilla[] e = new Casilla[7];
+        
+        //Criaturas Mayores (Templo Oscuro)
+        Casilla[] r = new Casilla[7];      
+        
+        //Zombi (Cementerio)
+        Casilla[] z = new Casilla[7];  
+        
+        //Hexagonos izquierda
+        Casilla[] Hi = new Casilla[101];  
+        
+        //Hexagonos derecha
+        Casilla[] Hd = new Casilla[87];  
+        
+        //Caminos izquierda
+        Casilla[] Ji = new Casilla[50];  
+        
+        //Caminos derecha
+        Casilla[] Jd = new Casilla[19];  
+        
+        Casilla[] invocacionInicial = new Casilla[6];
     public Mapa(){
         construirMapa();
     }
     public void construirMapa(){
-        System.out.println("----------------------Ingresa a construir Mapa");
         
         //--------------------
         //------CONSTRUIR MAPA
@@ -56,7 +80,10 @@ public class Mapa {
         construirMina();
         construirBosque();
         construirHerbolario();
+        construirSectorIzquierda();
+        construirSectorDerecha();
         construirTrono();
+        
 
         //--------------------
         //------CONECTAR MAPA
@@ -66,11 +93,25 @@ public class Mapa {
         conectarMina();
         conectarBosque();
         conectarHerbolario();
+        //conectarSectorIzquierda();
+        //conectarSectorDerecha();
         conectarTrono();
         
-        System.out.println("----------------------Termina de construir Mapa");
+        //--------------------
+        //------CASILLAS ESPECIALES
+        //--------------------      
+        invocacionInicial[0] = b[109];
+        invocacionInicial[1] = m[76];
+        invocacionInicial[2] = Hi[47];
+        invocacionInicial[3] = Hi[69];
+        invocacionInicial[4] = Hi[96];
+        invocacionInicial[5] = Hd[42];
+        
+        
+        
     }
     public void escalar(Double factorEscaladoX,Double factorEscaladoY, boolean disminuir){
+        
 
         escalarSector(a,factorEscaladoX,factorEscaladoY, disminuir);
 
@@ -80,7 +121,11 @@ public class Mapa {
         
         escalarSector(b,factorEscaladoX,factorEscaladoY, disminuir);
         
-        escalarSector(h,factorEscaladoX,factorEscaladoY, disminuir);
+        escalarSector(s,factorEscaladoX,factorEscaladoY, disminuir);
+        
+        escalarSector(Hi,factorEscaladoX,factorEscaladoY, disminuir);
+        
+        escalarSector(Hd,factorEscaladoX,factorEscaladoY, disminuir);
         
         escalarSector(t,factorEscaladoX,factorEscaladoY, disminuir); 
     }
@@ -285,7 +330,9 @@ public class Mapa {
             }
             b[contB]= new Casilla(110+(i*dX)+(interrupcion*dX), 1411+(contFila*dY), 4);            
             contB++;
-        }         
+        }
+        //Olvidé esta casilla
+        b[109]= new Casilla(1178, 2095, 4);
         //Double distancia = Math.sqrt(Math.pow(b[0].getX()-b[7].getX(), 2)+Math.pow(b[0].getY()-b[7].getY(), 2));
         //System.out.println("Distancia -> "+distancia);
         /*for(int i=0;i<contB;i++){
@@ -295,8 +342,24 @@ public class Mapa {
     }
     private void construirHerbolario() {
         //Herbolario
-        h = new Casilla(744, 1317, 5);        
-    }    
+        s = new Casilla(744, 1317, 5);        
+    }  
+    private void construirSectorIzquierda() {
+        for(int i=0;i<Hi.length;i++){
+            Hi[i]= new Casilla(0, 0, 0);
+        }
+        Hi[47] = new Casilla(523,1232, 0);
+        Hi[69] = new Casilla(1282,1569, 0);
+        Hi[96] = new Casilla(2155,1436, 0);
+    }
+    private void construirSectorDerecha() {
+        for(int i=0;i<Hd.length;i++){
+            Hd[i]= new Casilla(0, 0, 0);
+        }        
+        Hd[42] = new Casilla(2363, 723, 0);
+    }
+
+
 
     private void construirTrono() {
         //Trono de Zorkal
@@ -518,12 +581,25 @@ public class Mapa {
         //Conecta los casos excepcionales B84 y B95 - B15 y B21
         b[21].setC1(b[15]);
         b[95].setC1(b[84]);
+        //Olvdé esta casilla
+        b[109].setC1(b[70]);
+        b[109].setC2(b[94]);
+        b[109].setC3(b[93]);
+        b[109].setIzquierda(b[83]);
+        b[109].setC4(b[69]);
         
     }
 
     private void conectarHerbolario() {
-        h.setC3(b[2]);
+        s.setC3(b[2]);
     }
+
+    private void conectarSectorDerecha() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    private void conectarSectorIzquierda() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }    
 
     private void conectarTrono() {
         //Trono de Zorkal
@@ -550,6 +626,13 @@ public class Mapa {
     private Double calcularDistancia(Casilla casilla1, Casilla casilla2) {
         return Math.sqrt(Math.pow(casilla1.getX()-casilla2.getX(), 2)+Math.pow(casilla1.getY()-casilla2.getY(), 2));
     }
+    public Casilla[] getInvocacionInicial(){
+        return invocacionInicial;
+    }
+
+
+
+
 
 
 

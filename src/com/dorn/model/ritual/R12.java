@@ -14,6 +14,6 @@ public class R12 extends Ritual{
         setNombre("Frenesí Zombi");
         setCostoSangre(5);
         setDescripcion("");
-        setRutaImagen("./assets/card/ritual/12.png");
+        setRutaImagen("/com/dorn/assets/card/ritual/12.png");
     }
 }

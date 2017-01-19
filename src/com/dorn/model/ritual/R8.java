@@ -14,6 +14,6 @@ public class R8 extends Ritual{
         setNombre("Maldición de los Discípulos");
         setCostoSangre(6);
         setDescripcion("");
-        setRutaImagen("./assets/card/ritual/8.png");
+        setRutaImagen("/com/dorn/assets/card/ritual/8.png");
     }
 }

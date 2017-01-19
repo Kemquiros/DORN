@@ -12,6 +12,6 @@ package com.dorn.model.bless;
 public class B3 extends Bendicion{
     public B3(){
         setNombre("La sangre vuelve a fluir");        
-        setRutaImagen("./assets/card/bless/3.png");
+        setRutaImagen("/com/dorn/assets/card/bless/3.png");
     }
 }

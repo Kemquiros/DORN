@@ -13,6 +13,6 @@ public class B1 extends Bendicion{
     public B1(){
         setNombre("El Viajero Astral");
         setDescripcion("El héroe desaparece del tablero. En su siguiente turno reaparece en cualquier lugar del tablero (salvo más allá de la puerta de la condena). En el turno en el que el héroe reaparece, no puede moverse, atacar, usar magia u objeto alguno.)");
-        setRutaImagen("./assets/card/bless/1.png");
+        setRutaImagen("/com/dorn/assets/card/bless/1.png");
     }
 }

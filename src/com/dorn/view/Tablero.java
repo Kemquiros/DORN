@@ -50,6 +50,7 @@ public class Tablero extends javax.swing.JFrame {
     private int jugadorActual;
     Mapa mapa;
     boolean esEscalado;
+    int indiceCriaturaInicial;
     
     ImageIcon icMapaOriginal,icMapaEscalado;
 
@@ -605,9 +606,7 @@ public class Tablero extends javax.swing.JFrame {
         }
     }
     public ImageIcon escalarImagen(int w,int h, String url){
-        System.out.println("Ingresa a escalar imagen de "+url);
         ImageIcon ic = new ImageIcon(getClass().getResource(url));
-        System.out.println("Imagen cargada -> "+ic);
         try{
         Image icRes = ic.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
         ic = new ImageIcon(icRes);
@@ -625,10 +624,7 @@ public class Tablero extends javax.swing.JFrame {
          j.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
          return j;
     }    
-    /*private void dibujarFicha(String urlFicha){
-        int w,h;
-        
-    }*/
+
     //Programar el movimiento
     private void br_1ActionPerformed(ActionEvent evt) {
         Heroe heroe =jugadores.get(jugadorActual).getHeroe();
@@ -815,7 +811,7 @@ public class Tablero extends javax.swing.JFrame {
         String nombreHeroe =((JButton)evt.getSource()).getName();
         nombreHeroe=nombreHeroe.substring(10);  
         String rutaImagen =jugadores.get(Integer.parseInt(nombreHeroe)).getHeroe().getRutaCarta();
-        Carta carta = new Carta(this, rutaImagen);
+        Carta carta = new Carta(this, rutaImagen,5);
         carta.setTitle(jugadores.get(Integer.parseInt(nombreHeroe)).getNombre());
         carta.setVisible(true);
     }   
@@ -850,9 +846,19 @@ public class Tablero extends javax.swing.JFrame {
         Zorkal zorkal = (Zorkal)jugadores.get(jugadorActual).getHeroe();
         limpiarContenedores();
         jpAccion.setLayout(new GridLayout(3, 2));
+        int cantRit=0;
         for(Ritual ritual: zorkal.getRituales()){
-            JButton jr = new JButton(ritual.getNombre());
+            cantRit++;
+            JButton jr = new JButton(cantRit+"."+ritual.getNombre());
+            jr.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    dibujarCartaRitualActionPerformed(evt);
+                }
+            });
+            
             jpAccion.add(jr);
+
+                
         }
         JButton jboton = new JButton("Finalizar");
         jboton.addActionListener(new java.awt.event.ActionListener() {
@@ -864,32 +870,35 @@ public class Tablero extends javax.swing.JFrame {
         jpAccion.setBackground(Color.BLACK);
         jpAccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rituales", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N
         this.show();
-    }    
+    } 
     public void dibujarInvocar(){
-        Zorkal zorkal = (Zorkal)jugadores.get(jugadorActual).getHeroe();
-        int numRituales = zorkal.getCriaturas().size();
+        guardian = (Zorkal)jugadores.get(jugadorActual).getHeroe();
+        int numCriaturas = guardian.getCriaturas().size();
         limpiarContenedores();
-        jpAccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Invocar", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N
-        jpAccion.setLayout(new GridLayout((numRituales/2), 2));
-        int cantCriaturas=0;
-        for(Criatura criatura:zorkal.getCriaturas()){
-            cantCriaturas+=1;
-            JButton jc = new JButton(cantCriaturas+"."+criatura.getNombre());
-            jc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dibujarCartaCriaturaActionPerformed(evt);
+       if(numCriaturas !=0){ 
+            jpAccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Invocar", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N
+            jpAccion.setLayout(new GridLayout((numCriaturas/2), 2));
+            int cont=0;
+            for(Criatura criatura:guardian.getCriaturas()){
+                cont++;
+                JButton jc = new JButton(cont+". "+criatura.getNombre());
+                jc.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        seleccionarCriaturaActionPerformed(evt);
+                    }
+                });
+                jpAccion.add(jc);
             }
-        });
-            jpAccion.add(jc);
-        }
-        JButton jboton = new JButton("Finalizar Invocar");
-        jboton.addActionListener(new java.awt.event.ActionListener() {
+       }else{
+           JButton jboton = new JButton("Finalizar");
+           jboton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jugarMoverZorkalActionPerformed(evt);
             }
-        });
-        jpBoton.add(jboton);  
-        
+            
+            });
+           jpBoton.add(jboton);
+       }  
         //----------Pasar secuencia a invocar
         desactivarElementoSecuencia((JLabel)jpSecuencia2.getComponent(0));
         activarElementoSecuencia((JLabel)jpSecuencia2.getComponent(1));
@@ -897,15 +906,63 @@ public class Tablero extends javax.swing.JFrame {
         
         this.show();
         
-    }   
-    private void dibujarCartaCriaturaActionPerformed(ActionEvent evt) {
-        Zorkal zorkal = (Zorkal)jugadores.get(0).getHeroe();
+    }  
+    private void seleccionarCriaturaActionPerformed(ActionEvent evt) {
         JButton botonOrigen = (JButton)evt.getSource();
-        int indiceCriatura = Integer.parseInt(botonOrigen.getText().charAt(0)+"")-1;
-        Carta window = new Carta(this, zorkal.getCriatura(indiceCriatura).getRutaCarta());
-        window.setVisible(true);
+        indiceCriaturaInicial = Integer.parseInt(botonOrigen.getText().charAt(0)+"")-1;
+        Carta window = new Carta(this, guardian.getCriatura(indiceCriaturaInicial).getRutaCarta(),3);
+    }
+    private void dibujarCartaRitualActionPerformed(ActionEvent evt) {
+       Zorkal zorkal = (Zorkal)jugadores.get(0).getHeroe();
+        JButton botonOrigen = (JButton)evt.getSource();
+        int indiceRitual = Integer.parseInt(botonOrigen.getText().charAt(0)+"")-1;
         
+        Carta window = new Carta(this, zorkal.getRitual(indiceRitual).getRutaImagen(),1);
+        window.setVisible(true);
     }    
+    private void dibujarCartaCriaturaActionPerformed(ActionEvent evt) { 
+    }   
+    public void invocarCriaturaInicial(){
+        Criatura cri = guardian.getCriaturas().remove(indiceCriaturaInicial);
+        int cantidadCriaturasInvocada = guardian.getCriaturasInvocada().size();
+        Casilla cas= mapa.getInvocacionInicial()[cantidadCriaturasInvocada];
+        
+        //Se crean las imagenes
+        JLabel imOr= new JLabel();
+        JLabel imEs = new JLabel();
+        ImageIcon ic= new ImageIcon(getClass().getResource(cri.getRutaSprite()));
+        //imOr.setIcon(escalarImagen(ic.getIconWidth(),ic.getIconHeight(), cri.getRutaSprite()));  
+        imEs.setIcon(escalarImagen(((widthScreen*2)/100), ((heightScreen*4)/100), cri.getRutaSprite())); 
+        imOr.setIcon(escalarImagen((ic.getIconWidth()*5)/10, (ic.getIconHeight()*5)/10, cri.getRutaSprite()));
+        
+        //Se crea la ficha
+        Ficha f = new Ficha();
+        f.setCasilla(cas);
+        cas.ocupar(f);
+        f.setFiguraOriginal(imOr);
+        f.setFiguraEscalada(imEs);
+
+        //Criatura posee ficha
+        cri.setFicha(f);
+        //Guardian posee criatura
+        guardian.addCriaturaInvocada(cri);
+        //Principal posee fichas
+        principal.addFicha(f);
+        
+        //La dibujamos en el tablero        
+        dibujarFichaEnTablero((JLabel)f.getFiguraEscalada(), f.getCasilla().getX(), f.getCasilla().getY());
+        
+        //Si ya invocó todas las fichas
+        if(guardian.getCriaturas().size() ==0){
+            //Pasa a la siguiente fase
+             principal.jugarMoverZorkal();
+        }else{
+            //Reestablecemos las figuras que falten
+            dibujarInvocar();
+        }
+        
+        
+    }
     
     public void dibujarMover(){
         int w = (int)((widthScreen*4)/100);
@@ -1139,6 +1196,12 @@ public class Tablero extends javax.swing.JFrame {
         //jpAccion.setLayout(new BoxLayout(jpAccion, javax.swing.BoxLayout.Y_AXIS));
         jpAccion.setLayout(new GridLayout(1, 1));
         JButton jr = new JButton(heroe.getBendicion().getNombre());
+        jr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                //jugarMoverHeroesPerformed(evt);
+                dibujarCartaBendicionActionPerformed(evt);
+            }
+        });     
         jpAccion.add(jr);
         
         JButton jboton = new JButton("Finalizar");
@@ -1151,6 +1214,11 @@ public class Tablero extends javax.swing.JFrame {
         jpBoton.add(jboton);
         this.show();
     }
+    private void dibujarCartaBendicionActionPerformed(ActionEvent evt) {
+        Heroe heroe= jugadores.get(jugadorActual).getHeroe();
+        Carta window = new Carta(this,heroe.getBendicion().getRutaImagen(),2 );
+        window.setVisible(true);
+    } 
     
     
    

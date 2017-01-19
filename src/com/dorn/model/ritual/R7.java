@@ -14,6 +14,6 @@ public class R7 extends Ritual{
         setNombre("Transformación Fantasmal");
         setCostoSangre(5);
         setDescripcion("");
-        setRutaImagen("./assets/card/ritual/7.png");
+        setRutaImagen("/com/dorn/assets/card/ritual/7.png");
     }
 }

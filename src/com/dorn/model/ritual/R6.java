@@ -14,6 +14,6 @@ public class R6 extends Ritual{
         setNombre("Refuerzos");
         setCostoSangre(6);
         setDescripcion("");
-        setRutaImagen("./assets/card/ritual/6.png");
+        setRutaImagen("/com/dorn/assets/card/ritual/6.png");
     }
 }

@@ -28,7 +28,16 @@ public class Carta extends JDialog{
     public JPanel jpExterno;
     public JPanel jpImagen;
     public JScrollPane spImagen; 
-    public Carta(JFrame parent,String rutaImagen) {
+    JButton jbCancelar;
+    JButton jbAceptar;
+    /*
+    TIPO CARTA:
+    1:Ritual
+    2:Bendicion
+    3:Invocar
+    4:Héroe
+    */
+    public Carta(JFrame parent,String rutaImagen, int tipoCarta) {
         
         super(parent,true);
         initComponents(rutaImagen,parent);
@@ -39,6 +48,26 @@ public class Carta extends JDialog{
         int x = Math.max(0, parentBounds.x + (parentBounds.width - size.width) / 2);
         int y = Math.max(0, parentBounds.y + (parentBounds.height - size.height) / 2);
         setLocation(new Point(x, y));
+        switch(tipoCarta){
+            case 1:
+                cartaRitual();
+                break;
+            case 2:
+                cartaBendicion();
+                break;
+            case 3:
+                InvocarInicial();
+                break;
+            case 4:
+                cartaInvocar();
+                break;
+            case 5:
+                cartaHeroe();
+                break;
+            default:
+                break;
+        }
+        
     }
 
     private void initComponents(String rutaImagen,JFrame parent) {
@@ -49,12 +78,12 @@ public class Carta extends JDialog{
         //Menu inferior
         JPanel menu = new JPanel();
         menu.setLayout(new GridLayout(1,2));
-        JButton cancelar = new JButton("Cancelar");
-        JButton invocar = new JButton("Aceptar");          
+        jbCancelar = new JButton("Cancelar");
+        jbAceptar = new JButton("Aceptar");          
         
         
-        menu.add(cancelar);
-        menu.add(invocar);
+        menu.add(jbCancelar);
+        menu.add(jbAceptar);
         this.add(jpExterno);
         
         //Imagen carta
@@ -77,7 +106,7 @@ public class Carta extends JDialog{
         jpExterno.add(menu);
         
         //Listeners
-        cancelar.addActionListener(new java.awt.event.ActionListener() {
+        jbCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelarActionPerformed(evt);
             }
@@ -86,7 +115,6 @@ public class Carta extends JDialog{
                 
     }
     private void cancelarActionPerformed(ActionEvent evt) {
-        System.out.println("PRUSUSUDASDS");
         this.dispose();
     }
     
@@ -95,5 +123,48 @@ public class Carta extends JDialog{
         Image icRes = ic.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
         ic = new ImageIcon(icRes);
         return ic;
+    }    
+
+    private void cartaRitual() {
+        this.setTitle("Carta Ritual");
+        jbAceptar.setText("Jugar");
+        this.show();
+    }
+
+    private void cartaBendicion() {
+        this.setTitle("Carta Bendición");
+        jbAceptar.setText("Jugar");
+        this.show();
+    }
+
+    private void InvocarInicial() {
+        this.setTitle("Invocación inicial de criaturas");
+        this.setTitle("Invocar");
+        jbAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+               invocarInicial();
+            }
+
+
+        });   
+        this.show();
+    }
+
+    private void cartaInvocar() {
+        
+        this.setTitle("Jugar carta Invocar");
+        this.setTitle("Invocar");
+        this.show();
+    }
+
+    private void cartaHeroe() {
+        this.setTitle("Carta Héroe");
+        jbAceptar.setVisible(false);
+        this.show();
+    }
+    
+    private void invocarInicial() {
+        ((Tablero)this.getParent()).invocarCriaturaInicial();
+        this.dispose();
     }    
 }

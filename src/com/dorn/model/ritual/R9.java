@@ -14,6 +14,6 @@ public class R9 extends Ritual{
         setNombre("Fortaleza Oscura");
         setCostoSangre(4);
         setDescripcion("");
-        setRutaImagen("./assets/card/ritual/9.png");
+        setRutaImagen("/com/dorn/assets/card/ritual/9.png");
     }
 }

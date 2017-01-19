@@ -14,6 +14,6 @@ public class R4 extends Ritual{
         setNombre("Ansia de Sangre");
         setCostoSangre(6);
         setDescripcion("");
-        setRutaImagen("./assets/card/ritual/4.png");
+        setRutaImagen("/com/dorn/assets/card/ritual/4.png");
     }
 }

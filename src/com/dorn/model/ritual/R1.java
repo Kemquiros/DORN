@@ -14,6 +14,6 @@ public class R1 extends Ritual{
         setNombre("Cieno de la Desesperanza");
         setCostoSangre(4);
         setDescripcion("");
-        setRutaImagen("./assets/card/ritual/1.png");
+        setRutaImagen("/com/dorn/assets/card/ritual/1.png");
     }
 }

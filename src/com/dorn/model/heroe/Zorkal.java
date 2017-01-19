@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class Zorkal extends Heroe{
     ArrayList<Ritual> ritual = new ArrayList<Ritual>();
     ArrayList<Criatura> criatura = new ArrayList<Criatura>();
+    private ArrayList<Criatura> criaturaInvocada = new ArrayList<Criatura>();
     public Zorkal(){
         this.nombre="Zorkal";
         this.ataqueFisico=true;
@@ -68,6 +69,9 @@ public class Zorkal extends Heroe{
     public ArrayList<Ritual> getRituales(){
         return ritual;
     }
+    public Ritual getRitual(int indice){
+        return ritual.get(indice);
+    }
     public int numRituales(){
         return ritual.size();
     }
@@ -75,11 +79,20 @@ public class Zorkal extends Heroe{
         System.out.println("Zorkal -> Se añade la criatura : "+c.getNombre());
         criatura.add(c);
     }
+    public void addCriaturaInvocada(Criatura c){
+        System.out.println("Zorkal -> Se invoca la criatura : "+c.getNombre());
+        criaturaInvocada.add(c);
+    }    
     public ArrayList<Criatura> getCriaturas(){
         return criatura;
     }  
     public Criatura getCriatura(int indice){
         return criatura.get(indice);
     }    
+
+    public ArrayList<Criatura> getCriaturasInvocada() {
+        return criaturaInvocada;
+    }
+    
     
 }
