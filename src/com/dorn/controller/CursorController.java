@@ -16,19 +16,23 @@
  */
 package com.dorn.controller;
 
-import java.net.URL;
+import java.awt.Cursor;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
+import javax.swing.JFrame;
 
 /**
  *
  * @author t30r3m4
  */
-public final class AssetsController {
-    private static Object o;
-    private AssetsController(){
-        
-    }
-    public static URL getRecurso(String url){
-        System.out.println("/com/dorn"+url);
-        return o.getClass().getResource("/com/dorn/assets/"+url);
+public class CursorController {
+
+    public void  setNormal(JFrame tablero){
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Image image = toolkit.getImage(getClass().getResource("/com/dorn/assets/cursor/hit.png"));
+        Cursor c = toolkit.createCustomCursor(image , new Point(tablero.getX(), 
+        tablero.getY()), "img");
+        tablero.setCursor (c);
     }
 }

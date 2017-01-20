@@ -211,13 +211,13 @@ public class Mapa {
         int contC=0;
         for(int i=0;i<2;i++){//Dos primeras filas
             for(int j=0;j<12;j++){
-                m[contC] = new Casilla((2130+(j*100)), (1760+(i*100)), 3); 
+                m[contC] = new Casilla((2130+(j*102)), (1760+(i*100)), 3); 
                 contC++;
             }            
         }
         for(int i=0;i<4;i++){//Fila 3 a 6
             for(int j=0;j<14;j++){
-                m[contC] = new Casilla((1930+(j*100)), (1960+(i*100)), 3); 
+                m[contC] = new Casilla((1930+(j*102)), (1960+(i*100)), 3); 
                 contC++;
             }            
         }         

@@ -41,7 +41,7 @@ public class Zorkal extends Heroe{
         this.ataqueMax=2;
         this.setTipoAtaque(1);//Contacto
         
-        this.experienciaMax=5;
+        this.experienciaMax=7;
         this.experiencia=0;
         //Habilidades
         //--------------------------------------

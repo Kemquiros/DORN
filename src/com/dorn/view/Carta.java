@@ -168,7 +168,8 @@ public class Carta extends JDialog{
     }
     
     private void invocarInicial() {
-        ((Tablero)this.getParent()).invocarCriaturaInicial();
         this.dispose();
+        ((Tablero)this.getParent()).invocarCriaturaInicial();
+        
     }    
 }

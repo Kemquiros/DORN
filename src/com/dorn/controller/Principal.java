@@ -49,6 +49,7 @@ public class Principal {
     private boolean isZorkalLibre= false;
     private int turnoActual=0;
     public SoundController sonido;
+    public CursorController cursor;
     
 
 
@@ -57,6 +58,7 @@ public class Principal {
         inicio = new Inicio(this); 
         mapa = new Mapa();
         sonido = new SoundController();
+        cursor = new CursorController();
         tablero = new Tablero();
         fichas = new ArrayList<>();
         iniciarHeroes();
@@ -68,14 +70,15 @@ public class Principal {
     public void iniciarMenu(){
         hiloInicio= new Thread(){
              public void run() {
-                 inicio.start();                 
+                 inicio.start();  
+                 
                  /*Tablero3 t3 = new Tablero3();
                  t3.dibujarTablero(rutaMapa);
                  t3.setVisible(true);*/
              }
         };
         hiloInicio.start();
-        
+        cursor.setNormal(inicio);
     }
     
 //-----------------------------------------
@@ -216,7 +219,7 @@ public class Principal {
         3.Todos los héroes atacan
         4.Se resuelven efectos de curación
         */
-        jugarZorkal();  
+        cambiarTurnoZorkal();
     }
     
     //------------------------------
@@ -224,7 +227,7 @@ public class Principal {
     //------------------------------
     public void jugarZorkal(){
         
-        tablero.setCamaraGlobal();
+        
         tablero.dibujarSecuenciaZorkal();
 
         tablero.setJugadorActual(0);
@@ -253,15 +256,8 @@ public class Principal {
         for(Criatura c:((Zorkal)jugadores.get(0).getHeroe()).getCriaturasInvocada()){
             iniciarStatsTurno(c);
         }
-        try {
-            Thread.sleep(1000);
-                tablero.setCamaraPersonal();        
-                jugarMoverCriaturas(0);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
+        tablero.setCamaraPersonal();        
+        jugarMoverCriaturas(0);        
     }
     public void jugarMoverZorkal(){
             tablero.dibujarMoverZorkal();        
@@ -304,9 +300,41 @@ public class Principal {
     public void finalizarTurnoZorkal(){
         alternarDiaNoche();
         tablero.alternarDiaNoche(esNoche);
-        cambiarTurno();
+        cambiarTurnoHeroes();
     }
-    public void cambiarTurno(){
+    public void cambiarTurnoZorkal(){
+        tablero.setCamaraGlobal();
+        int w = Toolkit.getDefaultToolkit().getScreenSize().width;
+        int h = Toolkit.getDefaultToolkit().getScreenSize().height;
+        ImageIcon ic = new ImageIcon(getClass().getResource("/com/dorn/assets/other/guardian.png"));
+        final JOptionPane optionPane = new JOptionPane("Guardían", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, ic, new Object[]{}, null);
+
+        final JDialog dialog = new JDialog();
+        dialog.setTitle("Cambio de turno");
+        dialog.setModal(true);
+        dialog.setUndecorated(true);
+        dialog.getRootPane().setOpaque(false);
+        dialog.setContentPane(optionPane);
+        
+        
+
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.pack();
+        dialog.setLocation(((w/2)-(dialog.getWidth()/2)), ((h/2)-(dialog.getHeight()/2)));
+        //create timer to dispose of dialog after 5 seconds
+        
+        sonido.sonidoGuardian();
+        new Timer(4000, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                dialog.dispose();
+            }
+        }).start();
+
+        dialog.setVisible(true);
+        jugarZorkal();
+    }
+    public void cambiarTurnoHeroes(){
         int w = Toolkit.getDefaultToolkit().getScreenSize().width;
         int h = Toolkit.getDefaultToolkit().getScreenSize().height;
         tablero.setCamaraGlobal();
@@ -322,7 +350,7 @@ public class Principal {
                 }
             }).start();*/
         //JOptionPane.showMessageDialog(this, "HÉROES", "Cambio de turno",JOptionPane.INFORMATION_MESSAGE, ic);
-        final JOptionPane optionPane = new JOptionPane("Héroes", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, ic, new Object[]{}, null);
+        final JOptionPane optionPane = new JOptionPane("HÉROES", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, ic, new Object[]{}, null);
 
         final JDialog dialog = new JDialog();
         dialog.setTitle("Cambio de turno");
@@ -336,6 +364,8 @@ public class Principal {
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         dialog.pack();
         dialog.setLocation(((w/2)-(dialog.getWidth()/2)), ((h/2)-(dialog.getHeight()/2)));
+        
+        sonido.sonidoHeroes();
         //create timer to dispose of dialog after 5 seconds
         new Timer(4000, new AbstractAction() {
             @Override
@@ -347,8 +377,8 @@ public class Principal {
 
         //start timer to close JDialog as dialog modal we must start the timer before its visible
         //timer.start();
-
         dialog.setVisible(true);
+        
         jugarHeroes();
     }
     
@@ -402,7 +432,7 @@ public class Principal {
         //Se cura al que se debe curar
         
         //Termina turno
-        jugarZorkal();
+        cambiarTurnoZorkal();
     } 
 
     private void iniciarHeroes() {

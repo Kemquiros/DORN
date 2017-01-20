@@ -148,5 +148,25 @@ public class SoundController {
              }
         };
         t.start();
-    }        
+    }    
+    public void sonidoGuardian(){
+        Thread t= new Thread(){
+             public void run() {
+                
+                Sound s = new Sound();
+                s.playSound("/com/dorn/assets/sound/zorkal.wav");
+             }
+        };
+        t.start();
+    }  
+    public void sonidoHeroes(){
+        Thread t= new Thread(){
+             public void run() {
+                
+                Sound s = new Sound();
+                s.playSound("/com/dorn/assets/sound/party.wav");
+             }
+        };
+        t.start();
+    }      
 }

@@ -5,7 +5,7 @@
  */
 package com.dorn.view;
 
-import com.dorn.controller.AssetsController;
+
 import com.dorn.controller.Principal;
 import com.dorn.model.Jugador;
 import com.dorn.model.power.Habilidad;
@@ -19,8 +19,6 @@ import com.dorn.model.ritual.Ritual;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -33,7 +31,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -418,6 +415,7 @@ public class Tablero extends javax.swing.JFrame {
             jbTemp.setName("botonHeroe"+i);
             jbTemp.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    principal.sonido.sonidoClick();
                     botonHeroe_ActionPerformed(evt);
                 }
 
@@ -514,7 +512,8 @@ public class Tablero extends javax.swing.JFrame {
         //-------------------------
         //Experiencia
         //-------------------------
-        jpExperiencia.removeAll();
+        jpExperiencia.setVisible(true);
+        jpPuntosExperiencia.removeAll();
         jpExperiencia.setBackground(Color.BLACK);
         jpPuntosExperiencia.setBackground(Color.BLACK);
 
@@ -522,14 +521,17 @@ public class Tablero extends javax.swing.JFrame {
         w = (int)((widthScreen*4)/100);
         h = (int)((heightScreen*4)/100);
         jpPuntosExperiencia.setLayout(new GridLayout(1, heroe.getExperienciaMax()));
+        System.out.println(heroe.getNombre()+" nivel:"+heroe.getNivel());
         if(heroe.getNivel()<3){
             //Experiencia actual
+            System.out.println("Exp act:"+heroe.getExperiencia());
             for(int i=0;i<heroe.getExperiencia();i++){
                JLabel s = new JLabel();
                 s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/e_ok.png"));
                 jpPuntosExperiencia.add(s); 
             }
             //Experiencia total
+            System.out.println("Exp tot:"+heroe.getExperienciaMax());
             for(int i=0;i<(heroe.getExperienciaMax()-heroe.getExperiencia());i++){
                JLabel s = new JLabel();
                 s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/e_no.png"));
@@ -632,7 +634,7 @@ public class Tablero extends javax.swing.JFrame {
         //-------------------------
         //Experiencia
         //-------------------------
-        jpExperiencia.removeAll();    
+        jpExperiencia.setVisible(false);
         //-------------------------
         //Movimiento
         //-------------------------   
@@ -1049,6 +1051,7 @@ public void efectuarMovimiento(){
             JButton jr = new JButton(cantRit+"."+ritual.getNombre());
             jr.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    principal.sonido.sonidoClick();
                     dibujarCartaRitualActionPerformed(evt);
                 }
             });
@@ -1060,6 +1063,7 @@ public void efectuarMovimiento(){
         JButton jboton = new JButton("Finalizar");
         jboton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                principal.sonido.sonidoClick();
                 jugarInvocarctionPerformed(evt);
             }
         });
@@ -1080,7 +1084,8 @@ public void efectuarMovimiento(){
                 cont++;
                 JButton jc = new JButton(cont+". "+criatura.getNombre());
                 jc.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {                        
+                        principal.sonido.sonidoClick();
                         seleccionarCriaturaActionPerformed(evt);
                     }
                 });
@@ -1170,8 +1175,24 @@ public void efectuarMovimiento(){
         
         //Si ya invocó todas las fichas
         if(guardian.getCriaturas().size() ==0){
-            //Pasa a la siguiente fase
-             principal.jugarMoverGuardian();
+            //Espere
+
+             limpiarContenedores();
+             this.show();
+             //dibujarInvocar();
+            new Thread(){
+                public void run() {         
+                    try {
+                        Thread.sleep(2000);
+                        //Pasa a la siguiente fase
+                         principal.jugarMoverGuardian();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }.start();             
+
+
         }else{
             //Reestablecemos las figuras que falten
             dibujarInvocar();
@@ -1230,6 +1251,7 @@ public void efectuarMovimiento(){
       
         jboton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                principal.sonido.sonidoClick();
                 if(jugadorActual==0){
                     jugarAtacarActionPerformed(evt);
                 }else{
@@ -1300,6 +1322,7 @@ public void efectuarMovimiento(){
       
         jboton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                principal.sonido.sonidoClick();
                 principal.jugarMoverCriaturas(indiceCriaturaActual+1);                
             }
         });
@@ -1375,6 +1398,11 @@ public void efectuarMovimiento(){
                 boton.setText("Arco");
                 break;
         }
+        boton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                principal.sonido.sonidoClick();
+            }
+        });        
         jpAccion.add(boton);
         
         //-------Panel de acciones
@@ -1383,7 +1411,8 @@ public void efectuarMovimiento(){
         
         terminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    principal.jugarAtacarCriaturas(indiceCriaturaActual+1);
+                principal.sonido.sonidoClick();
+                principal.jugarAtacarCriaturas(indiceCriaturaActual+1);
             }
         });        
         
@@ -1412,12 +1441,17 @@ public void efectuarMovimiento(){
         //-------------------------
        
         for(Habilidad hab:heroe.getHabilidad()){
-            
-            if(hab.isCuestaAtaque()){//Activa
-                JButton boton = new JButton(hab.getNombre());                
+            JButton boton = new JButton(hab.getNombre());
+            boton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    principal.sonido.sonidoClick();
+                }
+            });
+            if(hab.isCuestaAtaque()){
+                //Activa 
                 habActiva.add(boton);                
-            }else{//Pasiva
-                JButton boton = new JButton(hab.getNombre());
+            }else{
+                //Pasiva
                 habPasiva.add(boton);
             }
         }     
@@ -1431,6 +1465,7 @@ public void efectuarMovimiento(){
       
         jboton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                principal.sonido.sonidoClick();
                 if(jugadorActual==0){
                     finalizarTurnoZorkalActionPerformed(evt);
                 }else{
@@ -1525,6 +1560,7 @@ public void efectuarMovimiento(){
         jr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 //jugarMoverHeroesPerformed(evt);
+                principal.sonido.sonidoClick();
                 dibujarCartaBendicionActionPerformed(evt);
             }
         });     
@@ -1532,8 +1568,8 @@ public void efectuarMovimiento(){
         
         JButton jboton = new JButton("Finalizar");
         jboton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //jugarMoverHeroesPerformed(evt);
+            public void actionPerformed(java.awt.event.ActionEvent evt) {                
+                principal.sonido.sonidoClick();
                 principal.jugarBencion(jugadorActual+1);
             }
         });        
