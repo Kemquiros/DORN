@@ -50,7 +50,7 @@ public class SoundController {
         Thread t= new Thread(){
              public void run() {
                 Sound s = new Sound();
-                s.playMP3("/com/dorn/assets/sound/fondo.mp3");
+                s.playSound("/com/dorn/assets/sound/fondo.wav");
                 
              }
         };
@@ -70,7 +70,7 @@ public class SoundController {
         Thread t= new Thread(){
              public void run() {
                 Sound s = new Sound();
-                s.playMP3("/com/dorn/assets/sound/monster/esqueleto.mp3");
+                s.playSound("/com/dorn/assets/sound/monster/esqueleto.wav");
              }
         };
         t.start();
@@ -79,7 +79,7 @@ public class SoundController {
         Thread t= new Thread(){
              public void run() {
                 Sound s = new Sound();
-                s.playMP3("/com/dorn/assets/sound/monster/engendro.mp3");
+                s.playSound("/com/dorn/assets/sound/monster/engendro.wav");
              }
         };
         t.start();
@@ -88,7 +88,7 @@ public class SoundController {
         Thread t= new Thread(){
              public void run() {
                 Sound s = new Sound();
-                s.playMP3("/com/dorn/assets/sound/monster/rata.mp3");
+                s.playSound("/com/dorn/assets/sound/monster/rata.wav");
              }
         };
         t.start();
@@ -97,7 +97,7 @@ public class SoundController {
         Thread t= new Thread(){
              public void run() {
                 Sound s = new Sound();
-                s.playMP3("/com/dorn/assets/sound/monster/no-mercy.mp3");
+                s.playSound("/com/dorn/assets/sound/monster/no-mercy.wav");
              }
         };
         t.start();
@@ -107,7 +107,7 @@ public class SoundController {
         Thread t= new Thread(){
              public void run() {
                 Sound s = new Sound();
-                s.playMP3("/com/dorn/assets/sound/monster/gorgona.mp3");
+                s.playSound("/com/dorn/assets/sound/monster/gorgona.wav");
              }
         };
         t.start();
@@ -116,7 +116,7 @@ public class SoundController {
         Thread t= new Thread(){
              public void run() {
                 Sound s = new Sound();
-                s.playMP3("/com/dorn/assets/sound/monster/fantasma.mp3");
+                s.playSound("/com/dorn/assets/sound/monster/fantasma.wav");
              }
         };
         t.start();
@@ -125,7 +125,7 @@ public class SoundController {
         Thread t= new Thread(){
              public void run() {
                 Sound s = new Sound();
-                s.playMP3("/com/dorn/assets/sound/monster/vampiro.mp3");
+                s.playSound("/com/dorn/assets/sound/monster/vampiro.wav");
              }
         };
         t.start();
@@ -134,7 +134,17 @@ public class SoundController {
         Thread t= new Thread(){
              public void run() {
                 Sound s = new Sound();
-                s.playMP3("/com/dorn/assets/sound/monster/momia.mp3");
+                s.playSound("/com/dorn/assets/sound/monster/momia.wav");
+             }
+        };
+        t.start();
+    }        
+    public void sonidoTableroFondo(){
+        Thread t= new Thread(){
+             public void run() {
+                
+                Sound s = new Sound();
+                s.playSound("/com/dorn/assets/sound/fondo.wav");
              }
         };
         t.start();

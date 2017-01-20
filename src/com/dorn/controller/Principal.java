@@ -20,6 +20,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 
 import javax.swing.ImageIcon;
@@ -153,6 +155,22 @@ public class Principal {
 // --------------- TABLERO ----------------
 //-----------------------------------------     
     public void iniciaTablero(){
+        //Sonido de fondo del talblero
+        //Dura 17 segundos
+        SoundController sc = this.sonido;
+        new Thread(){
+            public void run() {
+                while(!juegoTermina){            
+                    try {
+                        sc.sonidoTableroFondo();
+                        Thread.sleep(17000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }.start();
+
         hiloTablero= new Thread(){
         public void run() {
             tablero.dibujarTablero(rutaMapa);
