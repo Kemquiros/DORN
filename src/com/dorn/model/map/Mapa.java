@@ -101,7 +101,7 @@ public class Mapa {
         //------CASILLAS ESPECIALES
         //--------------------      
         invocacionInicial[0] = b[109];
-        invocacionInicial[1] = m[76];
+        invocacionInicial[1] = m[75];
         invocacionInicial[2] = Hi[47];
         invocacionInicial[3] = Hi[69];
         invocacionInicial[4] = Hi[96];

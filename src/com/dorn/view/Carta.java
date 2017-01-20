@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -42,11 +43,10 @@ public class Carta extends JDialog{
         super(parent,true);
         initComponents(rutaImagen,parent);
         Rectangle parentBounds = parent.getBounds();
+        Dimension sizePant = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension size = getSize();
         // Center in the parent
-        int x = Math.max(0, parentBounds.x + ((parentBounds.width - size.width) / 2));
-        int y = Math.max(0, parentBounds.y + ((parentBounds.height - size.height) / 2));
-        setLocation(new Point(x, y));
+
         switch(tipoCarta){
             case 1:
                 cartaRitual();
@@ -66,8 +66,12 @@ public class Carta extends JDialog{
             default:
                 break;
         }
-        this.pack();
         
+        
+        int x = Math.max(0, (sizePant.width/2) - ((size.width) / 2));
+        int y = Math.max(0, (sizePant.height/2)- ((size.height) / 2));
+        setLocation(new Point(x, y)); 
+        this.pack();
     }
 
     private void initComponents(String rutaImagen,JFrame parent) {

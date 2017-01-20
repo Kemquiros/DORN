@@ -638,7 +638,12 @@ public class Tablero extends javax.swing.JFrame {
         //-------------------------   
         jpMovimiento.removeAll();
         jpMovimiento.setBackground(Color.BLACK);
-        jpMovimiento.setLayout(new GridLayout(1, c.getMovimientoMax()));
+        if(c.getMovimientoMax()>6){
+            jpMovimiento.setLayout(new GridLayout(2, (c.getMovimientoMax()/2)));
+        }else{
+            jpMovimiento.setLayout(new GridLayout(1, c.getMovimientoMax()));
+        }
+        
         for(int i=0;i<c.getMovimiento();i++){
            JLabel s = new JLabel();
             s.setIcon(this.escalarImagen(w, h, "/com/dorn/assets/heroe/img/m_ok.png"));
@@ -1684,12 +1689,7 @@ public void efectuarMovimiento(){
        Criatura c= guardian.getCriaturasInvocada().get(indice);
        //Dibujar stats
         dibujarCriattura(c);
-        try {
-            //Posicionar camara
-            Thread.sleep(200);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
         posicionarCamara(c.getFicha());
         //Dibujar mover
         dibujarMoverCriatura();

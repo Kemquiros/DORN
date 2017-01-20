@@ -253,8 +253,14 @@ public class Principal {
         for(Criatura c:((Zorkal)jugadores.get(0).getHeroe()).getCriaturasInvocada()){
             iniciarStatsTurno(c);
         }
-        tablero.setCamaraPersonal();        
-        jugarMoverCriaturas(0);
+        try {
+            Thread.sleep(1000);
+                tablero.setCamaraPersonal();        
+                jugarMoverCriaturas(0);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 
     }
     public void jugarMoverZorkal(){
