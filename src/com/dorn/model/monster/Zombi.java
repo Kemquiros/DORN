@@ -16,6 +16,8 @@
  */
 package com.dorn.model.monster;
 
+import com.dorn.model.power.Habilidad;
+
 /**
  *
  * @author t30r3m4
@@ -32,5 +34,21 @@ public class Zombi extends Criatura{
         setCriaturaMayor(false);
         setRutaCarta("/com/dorn/assets/monster/card/zombi.png");
         setRutaSprite("/com/dorn/assets/monster/sprite/zombi.png");
+        
+        //Habilidades
+        //--------------------------------------
+        Habilidad h = new Habilidad();
+        h.setNombre("Morder");
+        h.setTexto("");
+        h.setCuestaAtaque(true);
+        h.setDaño(1);
+        h.setDistancia(1);
+        habilidad.add(h);
+        //--------------------------------------     
+        //--------------------------------------
+        h = new Habilidad();
+        h.setNombre("Maldición de Cementerio");
+        h.setTexto("Siempre son invocados en el Cementerio.");
+        habilidad.add(h);            
     }
 }

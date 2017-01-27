@@ -6,7 +6,6 @@
 package com.dorn.model.heroe;
 
 import com.dorn.model.bless.Bendicion;
-import com.dorn.model.map.Casilla;
 import com.dorn.model.power.Habilidad;
 import java.util.ArrayList;
 
@@ -25,8 +24,8 @@ public class Heroe {
     private int tipoAtaque;
     boolean ataqueFisico;
     private boolean usaBendicion=false;
+    private boolean usaDetenerAtaque=false;
     private Bendicion bendicion;
-    //private Casilla casilla;   
     private Object ficha;
     
     ArrayList<Habilidad> habilidad;
@@ -98,6 +97,7 @@ public class Heroe {
     public void usaBendicion() {
         this.usaBendicion = true;
     }
+    
 
     public ArrayList<Habilidad> getHabilidad() {
         return habilidad;
@@ -197,6 +197,14 @@ public class Heroe {
 
     public void setFicha(Object ficha) {
         this.ficha = ficha;
+    }
+
+    public boolean isUsaDetenerAtaque() {
+        return usaDetenerAtaque;
+    }
+
+    public void setUsaDetenerAtaque(boolean usaDetenerAtaque) {
+        this.usaDetenerAtaque = usaDetenerAtaque;
     }
     
     

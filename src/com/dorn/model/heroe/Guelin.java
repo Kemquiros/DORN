@@ -47,6 +47,8 @@ public class Guelin extends Heroe{
         h.setNombre("Arco Corto");
         h.setTexto("Guelin causa 1 daño a una criatura hasta a 3 casillas.");
         h.setCuestaAtaque(true);
+        h.setDaño(1);
+        h.setDistancia(3);        
         habilidad.add(h);
         //--------------------------------------
         h = new Habilidad();

@@ -47,6 +47,8 @@ public class Kaerdrak extends Heroe{
         h.setNombre("Hacha");
         h.setTexto("Kaerdrak causa 1 daño a una criatura adyacente.");
         h.setCuestaAtaque(true);
+        h.setDaño(1);
+        h.setDistancia(1);        
         habilidad.add(h);
         //--------------------------------------
         h = new Habilidad();

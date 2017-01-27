@@ -16,6 +16,8 @@
  */
 package com.dorn.model.monster;
 
+import com.dorn.model.power.Habilidad;
+
 /**
  *
  * @author t30r3m4
@@ -32,5 +34,21 @@ public class Esqueleto extends Criatura{
         setCriaturaMayor(false);
         setRutaCarta("/com/dorn/assets/monster/card/esqueleto.png");
         setRutaSprite("/com/dorn/assets/monster/sprite/esqueleto.png");
+        
+        //Habilidades
+        //--------------------------------------
+        Habilidad h = new Habilidad();
+        h.setNombre("Pica");
+        h.setTexto("Sólo puede atacar a dos casillas estrictas de distancia.");
+        h.setCuestaAtaque(true);
+        h.setDaño(1);
+        h.setDistancia(2);
+        habilidad.add(h);
+        //--------------------------------------     
+        //--------------------------------------
+        h = new Habilidad();
+        h.setNombre("Maldición de Cripta");
+        h.setTexto("Siempre son invocados en la Cripta.");
+        habilidad.add(h);            
     }
 }

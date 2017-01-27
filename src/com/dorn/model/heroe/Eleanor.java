@@ -48,6 +48,8 @@ public class Eleanor extends Heroe{
         h.setNombre("Pica");
         h.setTexto("Eleanor causa 1 daño a una criatura a 2 casillas de distancia.");
         h.setCuestaAtaque(true);
+        h.setDaño(1);
+        h.setDistancia(2);        
         habilidad.add(h);
         //--------------------------------------
         h = new Habilidad();

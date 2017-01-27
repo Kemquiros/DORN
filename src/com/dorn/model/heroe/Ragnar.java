@@ -47,6 +47,8 @@ public class Ragnar extends Heroe{
         h.setNombre("Estoque");
         h.setTexto("Ragnar causa 1 daño a una criatura adyacente.");
         h.setCuestaAtaque(true);
+        h.setDaño(1);
+        h.setDistancia(1);        
         habilidad.add(h);
         //--------------------------------------
         h = new Habilidad();

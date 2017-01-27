@@ -46,6 +46,8 @@ public class Choros extends Heroe{
         Habilidad h = new Habilidad();
         h.setNombre("Hacha");
         h.setTexto("Choros causa 1 daño a una criatura adyacente.");
+        h.setDaño(1);
+        h.setDistancia(1);        
         h.setCuestaAtaque(true);
         habilidad.add(h);
         //--------------------------------------

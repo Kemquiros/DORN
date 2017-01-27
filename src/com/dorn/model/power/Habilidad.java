@@ -15,11 +15,15 @@ public class Habilidad {
     private boolean cuestaAtaque;
     private boolean cuestaSangre;
     private boolean unoPorTurno;
+    private int distancia;
+    private int daño;
     
     public Habilidad(){
         this.cuestaAtaque = false;
         this.cuestaSangre = false;
         this.unoPorTurno = false;
+        this.distancia=0;
+        this.daño=0;
     }
 
     public String getNombre() {
@@ -60,6 +64,22 @@ public class Habilidad {
 
     public void setUnoPorTurno(boolean unoPorTurno) {
         this.unoPorTurno = unoPorTurno;
+    }
+
+    public int getDistancia() {
+        return distancia;
+    }
+
+    public void setDistancia(int distancia) {
+        this.distancia = distancia;
+    }
+
+    public int getDaño() {
+        return daño;
+    }
+
+    public void setDaño(int daño) {
+        this.daño = daño;
     }
     
 }

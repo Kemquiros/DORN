@@ -16,6 +16,8 @@
  */
 package com.dorn.model.monster;
 
+import com.dorn.model.power.Habilidad;
+
 /**
  *
  * @author t30r3m4
@@ -35,5 +37,20 @@ public class Engendro extends Criatura{
         setRutaCarta("/com/dorn/assets/monster/card/engendro.png");
         setRutaSprite("/com/dorn/assets/monster/sprite/engendro.png");
         
+        //Habilidades
+        //--------------------------------------
+        Habilidad h = new Habilidad();
+        h.setNombre("Embestir");
+        h.setTexto("");
+        h.setCuestaAtaque(true);
+        h.setDaño(1);
+        h.setDistancia(1);
+        habilidad.add(h);
+        //--------------------------------------     
+        //--------------------------------------
+        h = new Habilidad();
+        h.setNombre("Maldición de Pantano");
+        h.setTexto("Siempre son invocados en el Pantano.");
+        habilidad.add(h);          
     }
 }

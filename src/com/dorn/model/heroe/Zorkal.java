@@ -49,6 +49,8 @@ public class Zorkal extends Heroe{
         h.setNombre("Horcada Infernal");
         h.setTexto("Zorkal causa 1 daño a un enemigo adyacente.");
         h.setCuestaAtaque(true);
+        h.setDaño(1);
+        h.setDistancia(1);        
         habilidad.add(h);
         //--------------------------------------
         h = new Habilidad();

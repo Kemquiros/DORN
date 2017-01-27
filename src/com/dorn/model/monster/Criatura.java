@@ -16,6 +16,9 @@
  */
 package com.dorn.model.monster;
 
+import com.dorn.model.power.Habilidad;
+import java.util.ArrayList;
+
 /**
  *
  * @author t30r3m4
@@ -35,6 +38,7 @@ public class Criatura {
     private boolean criaturaMayor;    
     private int tipoAtaque;
     private Object ficha;
+    ArrayList<Habilidad> habilidad;
 
     public String getNombre() {
         return nombre;

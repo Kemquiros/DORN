@@ -16,6 +16,8 @@
  */
 package com.dorn.model.monster;
 
+import com.dorn.model.power.Habilidad;
+
 /**
  *
  * @author t30r3m4
@@ -32,5 +34,21 @@ public class Rata extends Criatura{
         setCriaturaMayor(false);
         setRutaCarta("/com/dorn/assets/monster/card/rata.png");
         setRutaSprite("/com/dorn/assets/monster/sprite/rata.png");
+        
+        //Habilidades
+        //--------------------------------------
+        Habilidad h = new Habilidad();
+        h.setNombre("Garras");
+        h.setTexto("");
+        h.setCuestaAtaque(true);
+        h.setDaño(1);
+        h.setDistancia(1);
+        habilidad.add(h);
+        //--------------------------------------
+        //--------------------------------------
+        h = new Habilidad();
+        h.setNombre("Maldición de Cloaca");
+        h.setTexto("Siempre son invocadas en cloacas");
+        habilidad.add(h);           
     }
 }

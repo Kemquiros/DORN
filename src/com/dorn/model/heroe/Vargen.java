@@ -47,6 +47,8 @@ public class Vargen extends Heroe{
         h.setNombre("Garras");
         h.setTexto("Vargen causa 1 daño a una criatura adyacente.");
         h.setCuestaAtaque(true);
+        h.setDaño(1);
+        h.setDistancia(1);        
         habilidad.add(h);
         //--------------------------------------
         h = new Habilidad();

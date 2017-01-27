@@ -47,6 +47,8 @@ public class Riel extends Heroe{
         h.setNombre("Arco Largo");
         h.setTexto("Riel causa 1 daño a una criatura hasta a 4 casillas.");
         h.setCuestaAtaque(true);
+        h.setDaño(1);
+        h.setDistancia(4);        
         habilidad.add(h);
         //--------------------------------------
         h = new Habilidad();
