@@ -17,6 +17,7 @@
 package com.dorn.model.monster;
 
 import com.dorn.model.power.Habilidad;
+import java.util.ArrayList;
 
 /**
  *
@@ -36,6 +37,7 @@ public class Engendro extends Criatura{
         setCriaturaMayor(false);
         setRutaCarta("/com/dorn/assets/monster/card/engendro.png");
         setRutaSprite("/com/dorn/assets/monster/sprite/engendro.png");
+        this.habilidad = new ArrayList();
         
         //Habilidades
         //--------------------------------------

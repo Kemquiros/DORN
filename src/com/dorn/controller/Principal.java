@@ -50,6 +50,7 @@ public class Principal {
     private int turnoActual=0;
     public SoundController sonido;
     public CursorController cursor;
+    public PowerController power;
     
 
 
@@ -57,9 +58,10 @@ public class Principal {
     public Principal(){  
         inicio = new Inicio(this); 
         mapa = new Mapa();
-        sonido = new SoundController();
-        cursor = new CursorController();
         tablero = new Tablero();
+        sonido = new SoundController();
+        cursor = new CursorController();        
+        power = new PowerController(mapa,tablero);
         fichas = new ArrayList<>();
         iniciarHeroes();
         sonido.sonidoInicio();
@@ -601,6 +603,10 @@ public class Principal {
 
     public void addFicha(Ficha ficha) {
         this.fichas.add(ficha);
+    }
+    
+    public void resolverHabilidad(){
+        
     }
 
 

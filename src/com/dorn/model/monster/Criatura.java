@@ -170,6 +170,9 @@ public class Criatura {
     public void establecerTodoAtaque(){
         ataque=this.ataqueMax;
     }      
+    public ArrayList<Habilidad> getHabilidad() {
+        return habilidad;
+    }    
     
     
 }

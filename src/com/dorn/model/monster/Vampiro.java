@@ -16,6 +16,8 @@
  */
 package com.dorn.model.monster;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author t30r3m4
@@ -33,6 +35,7 @@ public class Vampiro extends Criatura{
         setCriaturaMayor(true);
         setRutaCarta("/com/dorn/assets/monster/card/vampiro.png");
         setRutaSprite("/com/dorn/assets/monster/sprite/vampiro.png");
+        this.habilidad = new ArrayList();
     }
     public void tranformarMurcielago(){
         setNombre("Murcielago");

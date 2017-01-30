@@ -1377,33 +1377,36 @@ public void efectuarMovimiento(){
         Criatura c = (Criatura)personajeActual;
         limpiarContenedores();
         jpAccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Habilidades", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N        
-        JButton boton = new JButton();
-        
-        int tipoAtaque= c.getTipoAtaque(); 
-        //0:Mágico
-        //1:Contacto
-        //2:Pica
-        //3:Arco
-        switch(tipoAtaque){
-            case 0:
-                boton.setText("Magia");
-                break;
-            case 1:
-                boton.setText("Golpe");
-                break; 
-            case 2:
-                boton.setText("Pica");
-                break;
-            case 3:
-                boton.setText("Arco");
-                break;
-        }
-        boton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                principal.sonido.sonidoClick();
+        jpAccion.setLayout(new GridLayout(1, 2));
+        JPanel habActiva = new JPanel();
+        JPanel habPasiva = new JPanel();
+        jpAccion.add(habActiva);
+        jpAccion.add(habPasiva);
+        habActiva.setLayout(new BoxLayout(habActiva,javax.swing.BoxLayout.Y_AXIS ));
+        habPasiva.setLayout(new BoxLayout(habPasiva,javax.swing.BoxLayout.Y_AXIS ));
+        habActiva.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Activas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Bitstream Charter", 1, 18)));
+        habPasiva.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pasivas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Bitstream Charter", 1, 18)));
+        habActiva.setBackground(Color.BLACK);
+        habPasiva.setBackground(Color.BLACK);
+        //-------------------------
+        //Habilidad
+        //-------------------------
+       
+        for(Habilidad hab:c.getHabilidad()){
+            JButton boton = new JButton(hab.getNombre());
+            boton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    principal.sonido.sonidoClick();
+                }
+            });
+            if(hab.isCuestaAtaque()){
+                //Activa 
+                habActiva.add(boton);                
+            }else{
+                //Pasiva
+                habPasiva.add(boton);
             }
-        });        
-        jpAccion.add(boton);
+        }     
         
         //-------Panel de acciones
         JButton terminar = new JButton("Terminar Ataque");

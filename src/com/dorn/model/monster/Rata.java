@@ -17,6 +17,7 @@
 package com.dorn.model.monster;
 
 import com.dorn.model.power.Habilidad;
+import java.util.ArrayList;
 
 /**
  *
@@ -34,6 +35,7 @@ public class Rata extends Criatura{
         setCriaturaMayor(false);
         setRutaCarta("/com/dorn/assets/monster/card/rata.png");
         setRutaSprite("/com/dorn/assets/monster/sprite/rata.png");
+        this.habilidad = new ArrayList();
         
         //Habilidades
         //--------------------------------------

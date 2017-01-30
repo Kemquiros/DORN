@@ -31,7 +31,7 @@ public class TwoPanels {
         JPanel p = new JPanel();
         // setting layout to null so we can make panels overlap
         p.setLayout(null);
-/*
+
         CirclePanel topPanel = new CirclePanel();
         // drawing should be in blue
         topPanel.setForeground(Color.blue);
@@ -43,9 +43,11 @@ public class TwoPanels {
         topPanel.setBounds(50, 50, 100, 100);
         // add topPanel - components paint in order added, 
         // so add topPanel first
-*/
+
+       /* 
         OvalPanel topPanel = new OvalPanel();
         topPanel.setBackground(Color.MAGENTA);
+        */
         
         p.add(topPanel);
 

@@ -16,6 +16,8 @@
  */
 package com.dorn.model.monster;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author t30r3m4
@@ -32,5 +34,6 @@ public class Gorgona extends Criatura{
         setCriaturaMayor(true);
         setRutaCarta("/com/dorn/assets/monster/card/gorgona.png");
         setRutaSprite("/com/dorn/assets/monster/sprite/gorgona.png");
+        this.habilidad = new ArrayList();
     }
 }
