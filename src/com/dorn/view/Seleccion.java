@@ -202,8 +202,8 @@ public class Seleccion extends javax.swing.JFrame {
         setUndecorated(true);
         
         jpFigura.setSize(wp, jpHeroe.getHeight());
-        jpHeroe.setSize(wp, ((hp*9)/10));
-        jpOpcion.setSize(wp, ((hp*1)/10));
+        jpHeroe.setSize(wp, ((hp*5)/10));
+        jpOpcion.setSize(wp, ((hp*5)/10));
 
         
 
@@ -316,7 +316,16 @@ public class Seleccion extends javax.swing.JFrame {
 //        jbSiguiente.setEnabled(true);
 //        jbFinalizar.setEnabled(false);
         JButton origen = ((JButton)evt.getSource());
-        String nombreJugador = JOptionPane.showInputDialog(this, "Ingrese el nombre del jugador #"+numjugador);//origen.getName();        
+        boolean nombreCorrecto = false;
+        String nombreJugador = "";
+        while(!nombreCorrecto){
+            nombreJugador = JOptionPane.showInputDialog(this, "Ingrese el nombre del jugador #"+numjugador);//origen.getName();        
+            if (!nombreJugador.isEmpty()){
+                nombreCorrecto = true;
+            }else{
+                JOptionPane.showMessageDialog(this, "El nombre no debe estar vacío");
+            }
+        }
         indiceHeroe = Integer.parseInt(origen.getName());
         //Héroe seleccionado
         selectHeroes[indiceHeroe]=1;

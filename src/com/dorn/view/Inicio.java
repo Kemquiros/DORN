@@ -146,15 +146,15 @@ public class Inicio extends javax.swing.JFrame {
         int widthScreen = Toolkit.getDefaultToolkit().getScreenSize().width;
         int heightScreen = Toolkit.getDefaultToolkit().getScreenSize().height;
         this.dispose();
-        this.setPreferredSize(new Dimension(widthScreen,heightScreen));
+        //this.setPreferredSize(new Dimension(widthScreen,heightScreen));
         setExtendedState(JFrame.MAXIMIZED_BOTH); 
         setUndecorated(true);
+        //setVisible(true);
         //jPanel2.setLayout(new );
         //Graphics g = new 
         //jPanel2.paint(g);
         jLabel1.setBounds(0, 0, widthScreen, heightScreen);
-        jLabel1.setIcon(escalarImagen(widthScreen,heightScreen, "/com/dorn/assets/front.jpg"));
-        
+        jLabel1.setIcon(escalarImagen(widthScreen,heightScreen, "/com/dorn/assets/front.jpg"));        
     }
     public ImageIcon escalarImagen(int w,int h, String url){
         ImageIcon ic = new ImageIcon(getClass().getResource(url));
