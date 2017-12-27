@@ -6,6 +6,7 @@
 package com.dorn.view;
 
 import com.dorn.controller.Principal;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -19,18 +20,21 @@ import javax.swing.JOptionPane;
  * @author t30r3m4
  */
 public class Inicio extends javax.swing.JFrame {
+
     Principal parent;
+
     /**
      * Creates new form Inicio
      */
     public Inicio(Principal p) {
-        parent=p;
+        parent = p;
     }
+
     public void start() {
         initComponents();
         initComponents2();
         setVisible(true);
-    }    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,20 +46,33 @@ public class Inicio extends javax.swing.JFrame {
     private void initComponents() {
 
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        jLabel1 = new javax.swing.JLabel();
+        jPanelButton = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabelFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLayeredPane1.setBackground(new java.awt.Color(1, 1, 1));
+        jLayeredPane1.setLayout(new javax.swing.BoxLayout(jLayeredPane1, javax.swing.BoxLayout.Y_AXIS));
 
-        jLabel1.setText(" ");
+        jPanelButton.setBackground(new java.awt.Color(1, 1, 1));
 
-        jPanel1.setBackground(new java.awt.Color(1, 1, 1));
-        jPanel1.setLayout(new java.awt.GridLayout(1, 3));
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 496, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 99, Short.MAX_VALUE)
+        );
+
+        jPanel1.setLayout(new java.awt.GridLayout(1, 3, 10, 5));
 
         jButton3.setText("Salir");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -81,36 +98,35 @@ public class Inicio extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1);
 
-        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        javax.swing.GroupLayout jPanelButtonLayout = new javax.swing.GroupLayout(jPanelButton);
+        jPanelButton.setLayout(jPanelButtonLayout);
+        jPanelButtonLayout.setHorizontalGroup(
+            jPanelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanelButtonLayout.setVerticalGroup(
+            jPanelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelButtonLayout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
-        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
-        jLayeredPane1.setLayout(jLayeredPane1Layout);
-        jLayeredPane1Layout.setHorizontalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-        );
-        jLayeredPane1Layout.setVerticalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 85, Short.MAX_VALUE))
-        );
+        jLayeredPane1.add(jPanelButton);
+
+        jLabelFondo.setText(" ");
+        jLayeredPane1.add(jLabelFondo);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLayeredPane1)
+            .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLayeredPane1)
+            .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -131,46 +147,58 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelFondo;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelButton;
     // End of variables declaration//GEN-END:variables
 
     private void initComponents2() {
-        int w,h;
+        int w, h;
         int widthScreen = Toolkit.getDefaultToolkit().getScreenSize().width;
         int heightScreen = Toolkit.getDefaultToolkit().getScreenSize().height;
-        this.dispose();
-        //this.setPreferredSize(new Dimension(widthScreen,heightScreen));
-        setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        this.dispose();               
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setUndecorated(true);
-        //setVisible(true);
-        //jPanel2.setLayout(new );
-        //Graphics g = new 
-        //jPanel2.paint(g);
-        jLabel1.setBounds(0, 0, widthScreen, heightScreen);
-        jLabel1.setIcon(escalarImagen(widthScreen,heightScreen, "/com/dorn/assets/front.jpg"));        
+
+        //Set layers
+        this.add(jPanelButton, 0);
+        this.add(jLabelFondo, 1);
+
+        jLabelFondo.setBounds(0, 0, widthScreen, heightScreen);
+        jPanelButton.setBounds(0, 0, widthScreen, heightScreen);
+
+        jPanel2.setPreferredSize(new Dimension(widthScreen, (int)((heightScreen*8)/10)));
+        jPanel1.setPreferredSize(new Dimension(widthScreen, (int)((heightScreen*1)/10)));
+        
+
+        jLabelFondo.setIcon(escalarImagen(widthScreen, heightScreen, "/com/dorn/assets/front.jpg"));
+
+        jPanelButton.setOpaque(false);
+        jPanel1.setOpaque(false);
+        jPanel2.setOpaque(false);
+        pack();        
     }
-    public ImageIcon escalarImagen(int w,int h, String url){
+
+    public ImageIcon escalarImagen(int w, int h, String url) {
         ImageIcon ic = new ImageIcon(getClass().getResource(url));
-        Image icRes = ic.getImage().getScaledInstance(w, ((h*9)/10), Image.SCALE_SMOOTH);
+        Image icRes = ic.getImage().getScaledInstance(w, ((h * 10) / 10), Image.SCALE_SMOOTH);
         ic = new ImageIcon(icRes);
         return ic;
-    }    
+    }
 
     public void ajustarPantalla() {
         this.dispose();
         int widthScreen = Toolkit.getDefaultToolkit().getScreenSize().width;
         int heightScreen = Toolkit.getDefaultToolkit().getScreenSize().height;
-        this.setPreferredSize(new Dimension(widthScreen,heightScreen));
-        setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        this.setPreferredSize(new Dimension(widthScreen, heightScreen));
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         pack();
     }
-
 
 }
