@@ -1587,7 +1587,7 @@ public void efectuarMovimiento(){
  -------------------------  
  ------------------ */    
     private void dibujarAtacarCriatura() {
-        Criatura c = (Criatura)personajeActual;
+        Avatar c = personajeActual;
         limpiarContenedores();
         jpAccion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Habilidades", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N        
         jpAccion.setLayout(new GridLayout(1, 2));
@@ -1623,7 +1623,7 @@ public void efectuarMovimiento(){
         }     
         
         //-------Panel de acciones
-        JButton terminar = new JButton("Terminar Ataque");
+        JButton terminar = new JButton("Finalizar Ataque");
         jpBoton.add(terminar);
         
         terminar.addActionListener(new java.awt.event.ActionListener() {
@@ -1875,42 +1875,42 @@ public void efectuarMovimiento(){
            br_right.setEnabled(false);
            br_down.setEnabled(false);
        }else{ 
-        if((casillaTemp.getArriba() == null) || (casillaTemp.getArriba().esOcupada())){
+        if((casillaTemp.getArriba() == null) ){
             br_up.setEnabled(false);
         }else{
             br_up.setEnabled(true);
         }
-        if(casillaTemp.getDerecha() == null || (casillaTemp.getDerecha().esOcupada())){
+        if(casillaTemp.getDerecha() == null ){
             br_right.setEnabled(false);
         }else{
             br_right.setEnabled(true);
         }  
-        if(casillaTemp.getAbajo() == null || (casillaTemp.getAbajo().esOcupada())){
+        if(casillaTemp.getAbajo() == null ){
             br_down.setEnabled(false);
         }else{
             br_down.setEnabled(true);
         }  
-        if(casillaTemp.getIzquierda()== null || (casillaTemp.getIzquierda().esOcupada())){
+        if(casillaTemp.getIzquierda()== null ){
             br_left.setEnabled(false);
         }else{
             br_left.setEnabled(true);
         } 
-        if(casillaTemp.getC1()== null || (casillaTemp.getC1().esOcupada())){
+        if(casillaTemp.getC1()== null ){
             br_1.setEnabled(false);
         }else{
             br_1.setEnabled(true);
         }  
-        if(casillaTemp.getC2()== null || (casillaTemp.getC2().esOcupada())){
+        if(casillaTemp.getC2()== null ){
             br_2.setEnabled(false);
         }else{
             br_2.setEnabled(true);
         }       
-        if(casillaTemp.getC3()== null || (casillaTemp.getC3().esOcupada())){
+        if(casillaTemp.getC3()== null ){
             br_3.setEnabled(false);
         }else{
             br_3.setEnabled(true);
         }   
-        if(casillaTemp.getC4()== null || (casillaTemp.getC4().esOcupada())){
+        if(casillaTemp.getC4()== null ){
             br_4.setEnabled(false);
         }else{
             br_4.setEnabled(true);
@@ -2130,6 +2130,7 @@ public void efectuarMovimiento(){
         ficha.getIcon().getIconHeight());        
         
         jpMapa.add(ficha,1,0);
+        principal.power.resolverHabilidad();
     }
 
 

@@ -65,6 +65,7 @@ public class Principal {
         sonido = new SoundController();
         cursor = new CursorController();        
         power = new PowerController(mapa,tablero);
+        spell = new SpellsController();
         fichas = new ArrayList<>();
         iniciarHeroes();
         sonido.sonidoInicio();

@@ -37,10 +37,16 @@ public class PowerController {
     private int alcanceMax;
     private int alcance;
     private Casilla casillaOrigen,casillaObjetivo;
+    private Avatar cliente;
+    private Habilidad habilidad;
 
     PowerController(Mapa _mapa,Tablero _tablero) {
         this.mapa = _mapa;
         this.tablero = _tablero;
+    }
+    
+    public void resolverHabilidad(){
+        tablero.dibujarAtacarHabilidad(getCliente(),getHabilidad());
     }
 
     public void resolverHabilidad(Avatar cliente, Habilidad hab){
@@ -51,9 +57,12 @@ public class PowerController {
         2.1.Se determina el rango
         */
         if(hab.isCuestaAtaque()){
+            setCliente(cliente);
+            setHabilidad(hab);
             setAlcance(hab.getDistancia());
             setAlcanceMax(hab.getDistancia()); 
-            setCasillaOrigen(cliente.getFicha().getCasilla());                
+            setCasillaOrigen(cliente.getFicha().getCasilla());     
+            setCasillaObjetivo(getCasillaOrigen());
             tablero.dibujarAtacarHabilidad(cliente,hab);
         }else{
             tablero.mostrarMensajeHabilidad(hab);
@@ -142,5 +151,22 @@ public class PowerController {
         setAlcance(0);
         setAlcanceMax(0);
     }
+
+    public Avatar getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Avatar cliente) {
+        this.cliente = cliente;
+    }
+
+    public Habilidad getHabilidad() {
+        return habilidad;
+    }
+
+    public void setHabilidad(Habilidad habilidad) {
+        this.habilidad = habilidad;
+    }
+    
 
 }
