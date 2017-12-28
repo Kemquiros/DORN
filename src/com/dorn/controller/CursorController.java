@@ -31,8 +31,10 @@ public class CursorController {
     public void  setNormal(JFrame tablero){
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image image = toolkit.getImage(getClass().getResource("/com/dorn/assets/cursor/hit.png"));
-        Cursor c = toolkit.createCustomCursor(image , new Point(tablero.getX(), 
-        tablero.getY()), "img");
+        
+        Cursor c = toolkit.createCustomCursor(image , 
+                new Point(0,0),
+                "customCursor");
         tablero.setCursor (c);
     }
 }
