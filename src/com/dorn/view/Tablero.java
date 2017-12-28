@@ -1460,10 +1460,7 @@ public void efectuarMovimiento(){
                 ((JButton)jpBoton.getComponent(0)).setEnabled(false);
             }
         }            
-        
-        
-
-        efectuarMovimiento();
+        efectuarMovimientoAtaque();
 
     }  
 /*----------------------
@@ -1750,6 +1747,63 @@ public void efectuarMovimiento(){
        } 
     }
     
+    public void verificarAlcanceDisponible(){
+       int movimientosDisponibles = principal.power.getAlcance();
+       Casilla casillaTemp = personajeActual.getFicha().getCasilla();
+       if(movimientosDisponibles==0){//No puede mover
+           br_0.setEnabled(false);
+           br_1.setEnabled(false);
+           br_2.setEnabled(false);
+           br_3.setEnabled(false);
+           br_4.setEnabled(false);
+           br_up.setEnabled(false);
+           br_left.setEnabled(false);
+           br_right.setEnabled(false);
+           br_down.setEnabled(false);
+       }else{ 
+        if((casillaTemp.getArriba() == null) || (casillaTemp.getArriba().esOcupada())){
+            br_up.setEnabled(false);
+        }else{
+            br_up.setEnabled(true);
+        }
+        if(casillaTemp.getDerecha() == null || (casillaTemp.getDerecha().esOcupada())){
+            br_right.setEnabled(false);
+        }else{
+            br_right.setEnabled(true);
+        }  
+        if(casillaTemp.getAbajo() == null || (casillaTemp.getAbajo().esOcupada())){
+            br_down.setEnabled(false);
+        }else{
+            br_down.setEnabled(true);
+        }  
+        if(casillaTemp.getIzquierda()== null || (casillaTemp.getIzquierda().esOcupada())){
+            br_left.setEnabled(false);
+        }else{
+            br_left.setEnabled(true);
+        } 
+        if(casillaTemp.getC1()== null || (casillaTemp.getC1().esOcupada())){
+            br_1.setEnabled(false);
+        }else{
+            br_1.setEnabled(true);
+        }  
+        if(casillaTemp.getC2()== null || (casillaTemp.getC2().esOcupada())){
+            br_2.setEnabled(false);
+        }else{
+            br_2.setEnabled(true);
+        }       
+        if(casillaTemp.getC3()== null || (casillaTemp.getC3().esOcupada())){
+            br_3.setEnabled(false);
+        }else{
+            br_3.setEnabled(true);
+        }   
+        if(casillaTemp.getC4()== null || (casillaTemp.getC4().esOcupada())){
+            br_4.setEnabled(false);
+        }else{
+            br_4.setEnabled(true);
+        }    
+       }         
+    }
+    
     public void dibujarBendicion() {
         Heroe heroe =jugadores.get(jugadorActual).getHeroe();
         limpiarContenedores();
@@ -1917,7 +1971,7 @@ public void efectuarMovimiento(){
         //Dibujar mover
         dibujarMoverCriatura();
     }
-    public void setPersonajeActual(Object per){
+    public void setPersonajeActual(Avatar per){
         this.personajeActual = per;
     }
 
