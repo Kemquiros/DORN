@@ -112,6 +112,23 @@ public class PowerController {
 //            }
 //        }
     }
+    
+    public void atacar(){
+        int daño = habilidad.getDaño();
+        Avatar objetivo = getCasillaObjetivo().getFicha().getOcupante();
+        //if(objetivo.isIsHeroe()){
+        if(cliente.getAtaque() > 0 ){
+            cliente.atacar();
+            while(daño > 0){
+                objetivo.bajarVida();
+                daño--;
+            }
+        }
+        //Comprobar que sigue con vida
+        if(objetivo.getVida()<=0){
+            objetivo.setVida(0);
+        }
+    }
 
     public int getAlcanceMax() {
         return alcanceMax;

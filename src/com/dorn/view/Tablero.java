@@ -1774,11 +1774,23 @@ public void efectuarMovimiento(){
         
         JButton jbotonCancelar = new JButton("Cancelar");
         JButton jbotonAtacar = new JButton("Atacar");
+        
+        jbotonAtacar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                principal.sonido.sonidoClick();
+                principal.power.atacar();
+            }
+        });
       
         jbotonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 principal.sonido.sonidoClick();
-                dibujarAtacarCriatura();
+                if(personajeActual.isIsHeroe()){
+                    dibujarAtacar();
+                }else{
+                    dibujarAtacarCriatura();
+                }
+                
             }
         });
         jbotonAtacar.setEnabled(false);
