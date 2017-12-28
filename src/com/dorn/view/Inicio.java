@@ -181,7 +181,7 @@ public class Inicio extends javax.swing.JFrame {
 
         jPanelButton.setOpaque(false);
         jPanel1.setOpaque(false);
-        jPanel2.setOpaque(false);
+        jPanel2.setOpaque(false);        
         pack();        
     }
 

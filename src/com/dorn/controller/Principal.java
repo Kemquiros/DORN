@@ -54,7 +54,9 @@ public class Principal {
     
 
 
-    
+//-----------------------------------------
+// ------- PRINCIPAL'S BUILDER ------------
+//-----------------------------------------    
     public Principal(){  
         inicio = new Inicio(this); 
         mapa = new Mapa();
@@ -73,10 +75,6 @@ public class Principal {
         hiloInicio= new Thread(){
              public void run() {
                  inicio.start();  
-                 
-                 /*Tablero3 t3 = new Tablero3();
-                 t3.dibujarTablero(rutaMapa);
-                 t3.setVisible(true);*/
              }
         };
         hiloInicio.start();
@@ -97,7 +95,7 @@ public class Principal {
              }
         };    
         hiloSeleccion.start();
-        
+        cursor.setNormal(seleccion);
     }  
     public void cancelarSeleccion() {
        seleccion.setVisible(false);
@@ -115,7 +113,7 @@ public class Principal {
         hiloSeleccion.stop();
         //Kill menu window
         hiloInicio.stop();
-        //Reciclar Elementos
+        //Reciclar Elementos        
         System.gc();
         
         //Iniciar parametros del juego
@@ -199,7 +197,8 @@ public class Principal {
                 
             }        
         };
-        hiloTablero.start();        
+        hiloTablero.start();   
+        cursor.setNormal(tablero);
     }    
     public void jugar(){
         /*
@@ -296,8 +295,7 @@ public class Principal {
         //tablero.dibujarAtacarCriaturas();
         //if(isZorkalLibre){
             tablero.dibujarAtacarZorkal();
-        //}
-        
+        //}        
     }
     public void finalizarTurnoZorkal(){
         alternarDiaNoche();
@@ -342,16 +340,7 @@ public class Principal {
         tablero.setCamaraGlobal();
         //Genera retraso
         ImageIcon ic = new ImageIcon(getClass().getResource("/com/dorn/assets/other/party.png"));
-        /*JOptionPane jop = new JOptionPane("HÉROES",JOptionPane.INFORMATION_MESSAGE,JOptionPane.DEFAULT_OPTION,ic);
-        //jop = new JOptionPane
-        JDialog jd = jop.createDialog(null,"Cambio de turno");
-        new Timer(2000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    jd.dispose();
-                }
-            }).start();*/
-        //JOptionPane.showMessageDialog(this, "HÉROES", "Cambio de turno",JOptionPane.INFORMATION_MESSAGE, ic);
+
         final JOptionPane optionPane = new JOptionPane("HÉROES", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, ic, new Object[]{}, null);
 
         final JDialog dialog = new JDialog();
