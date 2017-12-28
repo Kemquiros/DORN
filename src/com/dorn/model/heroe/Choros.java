@@ -14,8 +14,9 @@ import java.util.ArrayList;
  */
 public class Choros extends Heroe{
     public Choros(){
-        this.nombre="Choros";
-        this.ataqueFisico=true;
+        setNombre("Choros");
+        isAtaqueFisico(true);
+        
         this.habilidad = new ArrayList();
         this.setRutaImagen("/com/dorn/assets/heroe/img/choros.png");       
         this.setRutaCarta("/com/dorn/assets/heroe/card/choros.png");
@@ -27,20 +28,20 @@ public class Choros extends Heroe{
     public void subirNivelUno() {
         setNivel(1);
         
-        this.movimientoMax=5;
+        setMovimientoMax(5);
         
-        this.vidaMax=6;
-        this.vida=vidaMax;
+        setVidaMax(6);
+        setVida(getVidaMax());
         
-        this.ataqueMax=1;
+        setAtaqueMax(1);                
         //0:Mágico
         //1:Contacto
         //2:Pica
         //3:Arco        
         setTipoAtaque(1);        
         
-        this.experienciaMax=5;
-        this.experiencia=0;
+        setExperienciaMax(5);
+        setExperiencia(0);
         //Habilidades
         //--------------------------------------
         Habilidad h = new Habilidad();
