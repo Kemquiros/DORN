@@ -14,8 +14,9 @@ import java.util.ArrayList;
  */
 public class Eleanor extends Heroe{
     public Eleanor(){
-        this.nombre="Eleanor";
-        this.ataqueFisico=true;
+        setNombre("Eleanor");
+        isAtaqueFisico(true);      
+
         this.habilidad = new ArrayList();
         this.setRutaImagen("/com/dorn/assets/heroe/img/eleanor.png");       
         this.setRutaCarta("/com/dorn/assets/heroe/card/eleanor.png");
@@ -28,20 +29,20 @@ public class Eleanor extends Heroe{
     public void subirNivelUno() {
         setNivel(1);
         
-        this.movimientoMax=7;
+        setMovimientoMax(7);
         
-        this.vidaMax=5;
-        this.vida=vidaMax;
+        setVidaMax(5);
+        setVida(getVidaMax());
         
-        this.ataqueMax=1;
+        setAtaqueMax(1);        
         //0:Mágico
         //1:Contacto
         //2:Pica
         //3:Arco        
         setTipoAtaque(2);        
         
-        this.experienciaMax=5;
-        this.experiencia=0;
+        setExperienciaMax(5);
+        setExperiencia(0);
         //Habilidades
         //--------------------------------------
         Habilidad h = new Habilidad();
