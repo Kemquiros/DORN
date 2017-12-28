@@ -13,9 +13,10 @@ import java.util.ArrayList;
  * @author t30r3m4
  */
 public class Kaerdrak extends Heroe{
-    public Kaerdrak(){
-        this.nombre="Kaerdrak";
-        this.ataqueFisico=true;
+    public Kaerdrak(){      
+        setNombre("Kaerdrak");
+        isAtaqueFisico(true);        
+        
         this.habilidad = new ArrayList();
         this.setRutaImagen("/com/dorn/assets/heroe/img/kaerdrak.png");       
         this.setRutaCarta("/com/dorn/assets/heroe/card/kaerdrak.png");
@@ -27,20 +28,20 @@ public class Kaerdrak extends Heroe{
     public void subirNivelUno() {
         setNivel(1);
         
-        this.movimientoMax=6;
+        setMovimientoMax(6);
         
-        this.vidaMax=5;
-        this.vida=vidaMax;
+        setVidaMax(5);
+        setVida(getVidaMax());
         
-        this.ataqueMax=1;
+        setAtaqueMax(1);
         //0:Mágico
         //1:Contacto
         //2:Pica
         //3:Arco        
         setTipoAtaque(1);        
         
-        this.experienciaMax=5;
-        this.experiencia=0;
+        setExperienciaMax(5);
+        setExperiencia(0);
         //Habilidades
         //--------------------------------------
         Habilidad h = new Habilidad();
