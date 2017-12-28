@@ -14,8 +14,9 @@ import java.util.ArrayList;
  */
 public class Vargen extends Heroe{
     public Vargen(){
-        this.nombre="Vargen";
-        this.ataqueFisico=true;
+        setNombre("Vargen");
+        isAtaqueFisico(true);
+        
         this.habilidad = new ArrayList();
         this.setRutaImagen("/com/dorn/assets/heroe/img/vargen.png");       
         this.setRutaCarta("/com/dorn/assets/heroe/card/vargen.png");
@@ -27,20 +28,20 @@ public class Vargen extends Heroe{
     public void subirNivelUno() {
         setNivel(1);
         
-        this.movimientoMax=7;
+        setMovimientoMax(7);
         
-        this.vidaMax=5;
-        this.vida=vidaMax;
+        setVidaMax(5);
+        setVida(getVidaMax());
         
-        this.ataqueMax=1;
+        setAtaqueMax(1); 
         //0:Mágico
         //1:Contacto
         //2:Pica
         //3:Arco        
         setTipoAtaque(1);        
         
-        this.experienciaMax=5;
-        this.experiencia=0;
+        setExperienciaMax(5);
+        setExperiencia(0);
         //Habilidades
         //--------------------------------------
         Habilidad h = new Habilidad();
