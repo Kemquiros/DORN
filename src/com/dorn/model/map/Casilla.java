@@ -184,25 +184,8 @@ public class Casilla {
         }         
     }
     public void ocupar(Ficha ficha){
-        this.ocupante=ocupante;
-        //String nombreSuperclase = this.ocupante.getClass().getSuperclass().getCanonicalName(); 
+        this.ocupante = ficha; 
         ficha.setCasilla(this);
-        /*
-        if(nombreSuperclase.contains("Heroe")){        
-            try{
-            ((Ficha)((Heroe)this.ocupante).getFicha()).setCasilla(this);
-            }catch(Exception e){
-                System.err.println(e.getStackTrace().toString());
-                System.err.println("-----> ficha"+((Ficha)((Heroe)this.ocupante).getFicha()));
-                System.err.println("-----> casilla"+this);
-                System.err.println("-----> ocupante"+this.ocupante);
-            }
-            
-            
-        }else if(nombreSuperclase.contains("Criatura")){
-            ((Ficha)((Criatura)this.ocupante).getFicha()).setCasilla(this);
-        }
-        */
         esOcupada=true;
     }
     public void desocupar(){
@@ -214,6 +197,13 @@ public class Casilla {
 
     public boolean esOcupada() {
         return esOcupada;
+    }
+    
+    public Ficha getFicha(){
+        return (Ficha)this.ocupante;
+    }
+    public Object getOcupante(){
+        return ((Ficha)this.ocupante).getOcupante();
     }
     public void desconectar(Casilla objetivo){
         Casilla temp;

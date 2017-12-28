@@ -14,9 +14,9 @@ import java.util.ArrayList;
  */
 public class Almanor extends Heroe{
     public Almanor(){
-        this.nombre="Almanor";
-        this.ataqueFisico=false;
-        this.habilidad = new ArrayList();
+        setNombre("Almanor");
+        isAtaqueFisico(false);        
+       
         this.setRutaImagen("/com/dorn/assets/heroe/img/almanor.png");       
         this.setRutaCarta("/com/dorn/assets/heroe/card/almanor.png");
         this.setRutaRostro("/com/dorn/assets/heroe/face/almanor.png");
@@ -27,20 +27,21 @@ public class Almanor extends Heroe{
     public void subirNivelUno() {
         setNivel(1);
         
-        this.movimientoMax=6;
+        setMovimientoMax(6);
         
-        this.vidaMax=3;
-        this.vida=vidaMax;
+        setVidaMax(3);
+        setVida(getVidaMax());
         
-        this.ataqueMax=1;
+        setAtaqueMax(1);        
         //0:Mágico
         //1:Contacto
         //2:Pica
         //3:Arco        
         setTipoAtaque(0);
         
-        this.experienciaMax=5;
-        this.experiencia=0;
+        setExperienciaMax(5);
+        setExperiencia(0);
+        
         //Habilidades
         //--------------------------------------
         Habilidad h = new Habilidad();
@@ -62,11 +63,11 @@ public class Almanor extends Heroe{
         setNivel(2);
         
         int nuevaVida=4;
-        if(nuevaVida>this.vidaMax){
-            this.vida+=1;
+        if(nuevaVida > getVidaMax()){
+            setVida(getVida()+1);            
         }
-        this.vidaMax=nuevaVida;    
-        this.experienciaMax=7;
+        setVidaMax(nuevaVida);  
+        setExperienciaMax(7);        
         //Habilidades
         //--------------------------------------
         Habilidad h = new Habilidad();
@@ -88,12 +89,13 @@ public class Almanor extends Heroe{
         setNivel(3);
         
         int nuevaVida=5;
-        if(nuevaVida>this.vidaMax){
-            this.vida+=1;
+        if(nuevaVida > getVidaMax()){
+            setVida(getVida()+1);            
         }
-        this.vidaMax=nuevaVida;  
+        setVidaMax(nuevaVida);  
         
-        this.experienciaMax=0;
+        setExperienciaMax(0);
+        
         //Habilidades
         //--------------------------------------
         Habilidad h = new Habilidad();

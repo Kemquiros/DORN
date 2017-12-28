@@ -34,8 +34,7 @@ public class Esqueleto extends Criatura{
         setLugarInvocacion("Cripta");
         setCriaturaMayor(false);
         setRutaCarta("/com/dorn/assets/monster/card/esqueleto.png");
-        setRutaSprite("/com/dorn/assets/monster/sprite/esqueleto.png");
-        this.habilidad = new ArrayList();
+        setRutaSprite("/com/dorn/assets/monster/sprite/esqueleto.png");        
         
         //Habilidades
         //--------------------------------------

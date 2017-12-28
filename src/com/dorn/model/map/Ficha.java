@@ -16,6 +16,8 @@
  */
 package com.dorn.model.map;
 
+import com.dorn.model.Avatar;
+
 /**
  *
  * @author t30r3m4
@@ -23,7 +25,7 @@ package com.dorn.model.map;
 public class Ficha {
     private Object figuraOriginal,figuraEscalada;
     private Casilla casilla;
-
+    private Avatar ocupante;
 
 
     public Casilla getCasilla() {
@@ -48,6 +50,14 @@ public class Ficha {
 
     public void setFiguraEscalada(Object figuraEscalada) {
         this.figuraEscalada = figuraEscalada;
+    }
+
+    public Avatar getOcupante() {
+        return ocupante;
+    }
+
+    public void setOcupante(Avatar ocupante) {
+        this.ocupante = ocupante;
     }
 
     

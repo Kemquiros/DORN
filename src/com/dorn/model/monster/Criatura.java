@@ -16,86 +16,19 @@
  */
 package com.dorn.model.monster;
 
-import com.dorn.model.power.Habilidad;
-import java.util.ArrayList;
+import com.dorn.model.Avatar;
+
 
 /**
  *
  * @author t30r3m4
  */
-public class Criatura {
-    private String nombre;
-    private int movimiento;
-    private int movimientoMax;
-    private int vida;
-    private int vidaMax;
-    private int ataque;
-    private int ataqueMax;
+public class Criatura extends Avatar{    
+
     private String lugarInvocacion;
     private String descripcion;
-    private String rutaCarta;
-    private String rutaSprite;
-    private boolean criaturaMayor;    
-    private int tipoAtaque;
-    private Object ficha;
-    ArrayList<Habilidad> habilidad;
+    private boolean criaturaMayor;               
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public int getMovimiento() {
-        return movimiento;
-    }
-
-    public void setMovimiento(int movimiento) {
-        this.movimiento = movimiento;
-    }
-    
-
-    public int getMovimientoMax() {
-        return movimientoMax;
-    }
-
-    public void setMovimientoMax(int movimientoMax) {
-        this.movimientoMax = movimientoMax;
-    }
-
-    public int getVida() {
-        return vida;
-    }
-
-    public void setVida(int vida) {
-        this.vida = vida;
-    }
-
-    public int getVidaMax() {
-        return vidaMax;
-    }
-
-    public void setVidaMax(int vidaMax) {
-        this.vidaMax = vidaMax;
-    }
-
-    public int getAtaque() {
-        return ataque;
-    }
-
-    public void setAtaque(int ataque) {
-        this.ataque = ataque;
-    }
-
-    public int getAtaqueMax() {
-        return ataqueMax;
-    }
-
-    public void setAtaqueMax(int ataqueMax) {
-        this.ataqueMax = ataqueMax;
-    }
 
     public String getLugarInvocacion() {
         return lugarInvocacion;
@@ -120,59 +53,5 @@ public class Criatura {
     public void setCriaturaMayor(boolean criaturaMayor) {
         this.criaturaMayor = criaturaMayor;
     }
-
-    public String getRutaCarta() {
-        return rutaCarta;
-    }
-
-    public void setRutaCarta(String rutaCarta) {
-        this.rutaCarta = rutaCarta;
-    }
-
-    public String getRutaSprite() {
-        return rutaSprite;
-    }
-
-    public void setRutaSprite(String rutaSprite) {
-        this.rutaSprite = rutaSprite;
-    }
-
-    public int getTipoAtaque() {
-        return tipoAtaque;
-    }
-
-    public void setTipoAtaque(int tipoAtaque) {
-        //0:Mágico
-        //1:Contacto
-        //2:Pica
-        //3:Arco
-        this.tipoAtaque = tipoAtaque;
-    }
-
-    public Object getFicha() {
-        return ficha;
-    }
-
-    public void setFicha(Object ficha) {
-        
-        this.ficha = ficha;
-        
-    }
-    public void atacar(){
-        ataque-=1;
-    };
-    public void mover(){
-        movimiento-=1;
-    }
-    public void establecerTodoMovimiento(){
-        movimiento=this.movimientoMax;
-    }    
-    public void establecerTodoAtaque(){
-        ataque=this.ataqueMax;
-    }      
-    public ArrayList<Habilidad> getHabilidad() {
-        return habilidad;
-    }    
-    
-    
+       
 }

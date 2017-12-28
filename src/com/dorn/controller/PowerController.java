@@ -16,6 +16,7 @@
  */
 package com.dorn.controller;
 
+import com.dorn.model.heroe.Heroe;
 import com.dorn.model.map.Casilla;
 import com.dorn.model.map.Ficha;
 import com.dorn.model.map.Mapa;
@@ -23,6 +24,7 @@ import com.dorn.model.monster.Criatura;
 import com.dorn.model.power.Habilidad;
 import com.dorn.view.Tablero;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,6 +33,9 @@ import java.util.ArrayList;
 public class PowerController {
     private Mapa mapa;
     private Tablero tablero;
+    private int alcanceMax;
+    private int alcance;
+    private Casilla casillaOrigen,casillaObjetivo;
 
     PowerController(Mapa _mapa,Tablero _tablero) {
         this.mapa = _mapa;
@@ -38,42 +43,94 @@ public class PowerController {
     }
 
     public void resolverHabilidad(Object cliente, Habilidad hab){
+        limpiarVariables();
         /*
         1.Primero se determina si es Heroe o Criatura
         2.Se determina si es un ataque
         2.1.Se determina el rango
         */
         if(cliente.getClass().getSuperclass().getCanonicalName().contains("Heroe")){
+            Heroe h = (Heroe) cliente;
             //Es un ataque
             if(hab.isCuestaAtaque()){
-                
+                setAlcanceMax(hab.getDistancia());
+                setAlcanceMax(hab.getDistancia());  
+                setCasillaOrigen(((Ficha)h.getFicha()).getCasilla());
+                tablero.dibujarAtacarHabilidad(cliente,hab);
+            }else{
+                tablero.mostrarMensajeHabilidad(hab);
             }
         }else if(cliente.getClass().getSuperclass().getCanonicalName().contains("Criatura")){
             Criatura c = (Criatura)cliente;
             //Es un ataque
             if(hab.isCuestaAtaque()){
+                setAlcanceMax(hab.getDistancia());
+                setAlcanceMax(hab.getDistancia());  
+                setCasillaOrigen(((Ficha)c.getFicha()).getCasilla());                
+                tablero.dibujarAtacarHabilidad(cliente,hab);
                 //Casilla actual del sujeto
-                Casilla casillaAct = ((Ficha)c.getFicha()).getCasilla();
+               // Casilla casillaAct = ((Ficha)c.getFicha()).getCasilla();
                 //Distancia
-                hab.getDistancia();
+                //hab.getDistancia();
                 
                 //Establecer posibles caminos
-                ArrayList posiblesCaminos = new ArrayList();
-                for(int nivel=0;nivel < hab.getDistancia();nivel++){
-                    if(casillaAct.getArriba() != null){
-                        posiblesCaminos.add(casillaAct.getArriba());
-                    }
-                }
+//                ArrayList posiblesCaminos = new ArrayList();
+//                for(int nivel=0;nivel < hab.getDistancia();nivel++){
+//                    if(casillaAct.getArriba() != null){
+//                        posiblesCaminos.add(casillaAct.getArriba());
+//                    }
+//                }
                 //Graficar posibles enemigos
                 
                 //Obtener enemigo seleccionado
                 
                 //Resolver ataque
-                hab.getDaño();
+                //hab.getDaño();
                 
                 
+            }else{
+                tablero.mostrarMensajeHabilidad(hab);
             }
         }
+    }
+
+    public int getAlcanceMax() {
+        return alcanceMax;
+    }
+
+    public void setAlcanceMax(int alcanceMax) {
+        this.alcanceMax = alcanceMax;
+    }
+
+    public int getAlcance() {
+        return alcance;
+    }
+
+    public void setAlcance(int alcance) {
+        this.alcance = alcance;
+    }
+
+    public Casilla getCasillaOrigen() {
+        return casillaOrigen;
+    }
+
+    public void setCasillaOrigen(Casilla casillaOrigen) {
+        this.casillaOrigen = casillaOrigen;
+    }
+
+    public Casilla getCasillaObjetivo() {
+        return casillaObjetivo;
+    }
+
+    public void setCasillaObjetivo(Casilla casillaObjetivo) {
+        this.casillaObjetivo = casillaObjetivo;
+    }
+
+    private void limpiarVariables() {
+        casillaObjetivo = null;
+        casillaOrigen = null;
+        setAlcance(0);
+        setAlcanceMax(0);
     }
 
 }
