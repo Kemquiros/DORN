@@ -16,6 +16,7 @@
  */
 package com.dorn.controller;
 
+import com.dorn.model.Avatar;
 import com.dorn.model.heroe.Heroe;
 import com.dorn.model.map.Casilla;
 import com.dorn.model.map.Ficha;
@@ -42,56 +43,65 @@ public class PowerController {
         this.tablero = _tablero;
     }
 
-    public void resolverHabilidad(Object cliente, Habilidad hab){
+    public void resolverHabilidad(Avatar cliente, Habilidad hab){
         limpiarVariables();
         /*
         1.Primero se determina si es Heroe o Criatura
         2.Se determina si es un ataque
         2.1.Se determina el rango
         */
-        if(cliente.getClass().getSuperclass().getCanonicalName().contains("Heroe")){
-            Heroe h = (Heroe) cliente;
-            //Es un ataque
-            if(hab.isCuestaAtaque()){
-                setAlcanceMax(hab.getDistancia());
-                setAlcanceMax(hab.getDistancia());  
-                setCasillaOrigen(((Ficha)h.getFicha()).getCasilla());
-                tablero.dibujarAtacarHabilidad(cliente,hab);
-            }else{
-                tablero.mostrarMensajeHabilidad(hab);
-            }
-        }else if(cliente.getClass().getSuperclass().getCanonicalName().contains("Criatura")){
-            Criatura c = (Criatura)cliente;
-            //Es un ataque
-            if(hab.isCuestaAtaque()){
-                setAlcanceMax(hab.getDistancia());
-                setAlcanceMax(hab.getDistancia());  
-                setCasillaOrigen(((Ficha)c.getFicha()).getCasilla());                
-                tablero.dibujarAtacarHabilidad(cliente,hab);
-                //Casilla actual del sujeto
-               // Casilla casillaAct = ((Ficha)c.getFicha()).getCasilla();
-                //Distancia
-                //hab.getDistancia();
-                
-                //Establecer posibles caminos
-//                ArrayList posiblesCaminos = new ArrayList();
-//                for(int nivel=0;nivel < hab.getDistancia();nivel++){
-//                    if(casillaAct.getArriba() != null){
-//                        posiblesCaminos.add(casillaAct.getArriba());
-//                    }
-//                }
-                //Graficar posibles enemigos
-                
-                //Obtener enemigo seleccionado
-                
-                //Resolver ataque
-                //hab.getDaño();
-                
-                
-            }else{
-                tablero.mostrarMensajeHabilidad(hab);
-            }
-        }
+        if(hab.isCuestaAtaque()){
+            setAlcanceMax(hab.getDistancia());
+            setAlcanceMax(hab.getDistancia()); 
+            setCasillaOrigen(cliente.getFicha().getCasilla());                
+            tablero.dibujarAtacarHabilidad(cliente,hab);
+        }else{
+            tablero.mostrarMensajeHabilidad(hab);
+        }        
+        
+//        if(cliente.getClass().getSuperclass().getCanonicalName().contains("Heroe")){
+//            Heroe h = (Heroe) cliente;
+//            //Es un ataque
+//            if(hab.isCuestaAtaque()){
+//                setAlcanceMax(hab.getDistancia());
+//                setAlcanceMax(hab.getDistancia()); 
+//                setCasillaOrigen(cliente.getFicha().getCasilla());                
+//                tablero.dibujarAtacarHabilidad(cliente,hab);
+//            }else{
+//                tablero.mostrarMensajeHabilidad(hab);
+//            }
+//        }else if(cliente.getClass().getSuperclass().getCanonicalName().contains("Criatura")){
+//            Criatura c = (Criatura)cliente;
+//            //Es un ataque
+//            if(hab.isCuestaAtaque()){
+//                setAlcanceMax(hab.getDistancia());
+//                setAlcanceMax(hab.getDistancia());  
+//                setCasillaOrigen(((Ficha)c.getFicha()).getCasilla());                
+//                tablero.dibujarAtacarHabilidad(cliente,hab);
+//                //Casilla actual del sujeto
+//               // Casilla casillaAct = ((Ficha)c.getFicha()).getCasilla();
+//                //Distancia
+//                //hab.getDistancia();
+//                
+//                //Establecer posibles caminos
+////                ArrayList posiblesCaminos = new ArrayList();
+////                for(int nivel=0;nivel < hab.getDistancia();nivel++){
+////                    if(casillaAct.getArriba() != null){
+////                        posiblesCaminos.add(casillaAct.getArriba());
+////                    }
+////                }
+//                //Graficar posibles enemigos
+//                
+//                //Obtener enemigo seleccionado
+//                
+//                //Resolver ataque
+//                //hab.getDaño();
+//                
+//                
+//            }else{
+//                tablero.mostrarMensajeHabilidad(hab);
+//            }
+//        }
     }
 
     public int getAlcanceMax() {

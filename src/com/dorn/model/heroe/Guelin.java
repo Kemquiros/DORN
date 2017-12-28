@@ -23,6 +23,7 @@ public class Guelin extends Heroe{
         
         this.setRutaRostro("/com/dorn/assets/heroe/face/guelin.png");
         this.setRutaSprite("/com/dorn/assets/heroe/sprite/guelin1.png");
+        setIsHeroe(true);
     }  
     @Override
     public void subirNivelUno() {

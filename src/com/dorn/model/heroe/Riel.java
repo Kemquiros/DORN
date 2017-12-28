@@ -23,6 +23,7 @@ public class Riel extends Heroe{
         
         this.setRutaRostro("/com/dorn/assets/heroe/face/riel.png");
         this.setRutaSprite("/com/dorn/assets/heroe/sprite/riel1.png");
+        setIsHeroe(true);
     }     
     @Override
     public void subirNivelUno() {

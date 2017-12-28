@@ -34,6 +34,7 @@ public class Avatar {
     private int tipoAtaque;
     private Ficha ficha;
     public ArrayList<Habilidad> habilidad;
+    private boolean isHeroe = false;
 
     public Avatar() {
         this.habilidad = new ArrayList<>();
@@ -161,6 +162,14 @@ public class Avatar {
     public void setFicha(Ficha ficha) {
         this.ficha = ficha;
     }    
+
+    public boolean isIsHeroe() {
+        return isHeroe;
+    }
+
+    public void setIsHeroe(boolean isHeroe) {
+        this.isHeroe = isHeroe;
+    }
     
     
 }

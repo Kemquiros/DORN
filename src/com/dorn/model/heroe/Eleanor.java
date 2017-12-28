@@ -23,6 +23,7 @@ public class Eleanor extends Heroe{
         
         this.setRutaRostro("/com/dorn/assets/heroe/face/eleanor.png");
         this.setRutaSprite("/com/dorn/assets/heroe/sprite/eleanor1.png");
+        setIsHeroe(true);
     }       
     
     @Override

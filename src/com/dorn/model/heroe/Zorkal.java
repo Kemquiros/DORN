@@ -29,6 +29,7 @@ public class Zorkal extends Heroe{
         
         this.setRutaRostro("/com/dorn/assets/heroe/face/zorkal.png");
         this.setRutaSprite("/com/dorn/assets/heroe/sprite/zorkal1.png");
+        setIsHeroe(false);
     }    
     
     @Override

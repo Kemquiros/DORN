@@ -21,6 +21,7 @@ public class Almanor extends Heroe{
         this.setRutaCarta("/com/dorn/assets/heroe/card/almanor.png");
         this.setRutaRostro("/com/dorn/assets/heroe/face/almanor.png");
         this.setRutaSprite("/com/dorn/assets/heroe/sprite/almanor1.png");
+        setIsHeroe(true);
     }
 
     @Override

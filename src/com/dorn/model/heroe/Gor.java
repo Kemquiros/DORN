@@ -23,6 +23,7 @@ public class Gor extends Heroe{
         
         this.setRutaRostro("/com/dorn/assets/heroe/face/gor.png");
         this.setRutaSprite("/com/dorn/assets/heroe/sprite/gor1.png");
+        setIsHeroe(true);
     }     
     @Override
     public void subirNivelUno() {

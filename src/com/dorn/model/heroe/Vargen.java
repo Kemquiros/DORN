@@ -23,6 +23,7 @@ public class Vargen extends Heroe{
         
         this.setRutaRostro("/com/dorn/assets/heroe/face/vargen.png");
         this.setRutaSprite("/com/dorn/assets/heroe/sprite/vargen1.png");
+        setIsHeroe(true);
     }   
     @Override
     public void subirNivelUno() {

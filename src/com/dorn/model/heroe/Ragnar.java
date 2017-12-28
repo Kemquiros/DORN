@@ -23,6 +23,7 @@ public class Ragnar extends Heroe{
         
         this.setRutaRostro("/com/dorn/assets/heroe/face/ragnar.png");
         this.setRutaSprite("/com/dorn/assets/heroe/sprite/ragnar1.png");
+        setIsHeroe(true);
     }        
     @Override
     public void subirNivelUno() {

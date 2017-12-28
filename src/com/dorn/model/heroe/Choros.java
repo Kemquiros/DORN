@@ -23,6 +23,7 @@ public class Choros extends Heroe{
         
         this.setRutaRostro("/com/dorn/assets/heroe/face/choros.png");
         this.setRutaSprite("/com/dorn/assets/heroe/sprite/choros1.png");
+        setIsHeroe(true);
     }     
     @Override
     public void subirNivelUno() {

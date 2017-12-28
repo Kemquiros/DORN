@@ -23,6 +23,7 @@ public class Kaerdrak extends Heroe{
         
         this.setRutaRostro("/com/dorn/assets/heroe/face/kaerdrak.png");
         this.setRutaSprite("/com/dorn/assets/heroe/sprite/kaerdrak1.png");
+        setIsHeroe(true);
     }    
     @Override
     public void subirNivelUno() {

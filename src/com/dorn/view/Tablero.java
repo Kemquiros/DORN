@@ -7,6 +7,7 @@ package com.dorn.view;
 
 
 import com.dorn.controller.Principal;
+import com.dorn.model.Avatar;
 import com.dorn.model.Jugador;
 import com.dorn.model.power.Habilidad;
 import com.dorn.model.heroe.Heroe;
@@ -1570,7 +1571,7 @@ public void efectuarMovimiento(){
         this.show();
     }
     
-    public void dibujarAtacarHabilidad(Object cliente, Habilidad hab) {
+    public void dibujarAtacarHabilidad(Avatar cliente, Habilidad hab) {
         limpiarContenedores();
         jpMovimiento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Alcance", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bitstream Charter", 1, 14), new java.awt.Color(254, 254, 254))); // NOI18N
         actualizarAlcanceAtaque();        
@@ -1643,17 +1644,17 @@ public void efectuarMovimiento(){
         JButton jbotonCancelar = new JButton("Cancelar");
         JButton jbotonAtacar = new JButton("Atacar");
       
-        jboton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                principal.sonido.sonidoClick();
-                if(jugadorActual==0){
-                    jugarAtacarActionPerformed(evt);
-                }else{
-                    principal.jugarMoverHeroes(jugadorActual+1);
-                }
-                
-            }
-        });
+//        jboton.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent evt) {
+//                principal.sonido.sonidoClick();
+//                if(jugadorActual==0){
+//                    jugarAtacarActionPerformed(evt);
+//                }else{
+//                    principal.jugarMoverHeroes(jugadorActual+1);
+//                }
+//                
+//            }
+//        });
         jpBoton.add(jbotonAtacar);   
         jpBoton.add(jbotonCancelar);   
         
