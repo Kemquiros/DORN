@@ -42,6 +42,7 @@ public class Vargen extends Heroe{
         
         setExperienciaMax(5);
         setExperiencia(0);
+                
         //Habilidades
         //--------------------------------------
         Habilidad h = new Habilidad();

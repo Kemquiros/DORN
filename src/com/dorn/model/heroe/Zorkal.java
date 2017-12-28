@@ -18,9 +18,11 @@ public class Zorkal extends Heroe{
     ArrayList<Ritual> ritual = new ArrayList<Ritual>();
     ArrayList<Criatura> criatura = new ArrayList<Criatura>();
     private ArrayList<Criatura> criaturaInvocada = new ArrayList<Criatura>();
+    
     public Zorkal(){
-        this.nombre="Zorkal";
-        this.ataqueFisico=true;
+        setNombre("Zorkal");
+        isAtaqueFisico(true);        
+
         this.habilidad = new ArrayList();
         this.setRutaImagen("/com/dorn/assets/heroe/img/zorkal.png");       
         this.setRutaCarta("/com/dorn/assets/heroe/card/zorkal.png");
@@ -32,17 +34,19 @@ public class Zorkal extends Heroe{
     @Override
     public void subirNivelUno() {
         setNivel(1);
+        setMovimientoMax(6);
         
-        this.movimientoMax=6;
+        setVidaMax(4);
+        setVida(getVidaMax());
         
-        this.vidaMax=4;
-        this.vida=vidaMax;
+        setAtaqueMax(2);         
         
-        this.ataqueMax=2;
+
         this.setTipoAtaque(1);//Contacto
         
-        this.experienciaMax=7;
-        this.experiencia=0;
+        setExperienciaMax(7);
+        setExperiencia(0);
+        
         //Habilidades
         //--------------------------------------
         Habilidad h = new Habilidad();
