@@ -950,7 +950,7 @@ public void efectuarMovimiento(){
         
         for(int i=1;i<jugadores.size();i++){   
                 Ficha fichaHeroe = new Ficha();
-                jugadores.get(i).getHeroe().setFicha(fichaHeroe);
+                jugadores.get(i).getHeroe().setFicha(fichaHeroe);                
                 fichaHeroe.setOcupante(jugadores.get(i).getHeroe());
                 argos[i-1].ocupar(fichaHeroe);
                 
@@ -966,6 +966,12 @@ public void efectuarMovimiento(){
                 fichaHeroe.setFiguraOriginal(jlOriginal);
                 fichaHeroe.setFiguraEscalada(jl);
                 
+                if(fichaHeroe == null){
+                    System.out.println("Ficha heroe es NULL");
+                }
+                if(principal == null){
+                    System.out.println("Principal es NULL");
+                }
 
                 principal.addFicha(fichaHeroe);
                 //dibujarFichaEnTablero(jl, argos[i-1].getX(), argos[i-1].getY());
@@ -1400,22 +1406,22 @@ public void efectuarMovimiento(){
         });
         br_up.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ar_upActionPerformed(evt);
+//                ar_upActionPerformed(evt);
             }
         });  
         br_right.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ar_rightActionPerformed(evt);
+//                ar_rightActionPerformed(evt);
             }
         });   
         br_down.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ar_downActionPerformed(evt);
+//                ar_downActionPerformed(evt);
             }
         });  
         br_left.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ar_leftActionPerformed(evt);
+//                ar_leftActionPerformed(evt);
             }
         });        
     }  
@@ -1461,8 +1467,121 @@ public void efectuarMovimiento(){
             }
         }            
         efectuarMovimientoAtaque();
-
     }  
+    private void ar_2ActionPerformed(ActionEvent evt) {
+        Casilla oldCasilla = principal.power.getCasillaObjetivo();
+        
+        if( !oldCasilla.getC2().esOcupada() ){
+            principal.power.setCasillaObjetivo(oldCasilla.getC2());                
+            principal.power.setAlcance(
+            principal.power.getAlcance()-1
+            );   
+            ((JButton)jpBoton.getComponent(0)).setEnabled(false);
+        }else{
+
+            if(oldCasilla.getC2().getFicha().getOcupante().isIsHeroe()
+                    ^
+                    personajeActual.isIsHeroe()){
+                //Casilla origen: Héroe
+                //Casilla destino: Criatura
+                //Debe atacar a la criatura  
+                principal.power.setCasillaObjetivo(oldCasilla.getC2());                
+                principal.power.setAlcance(
+                    0
+                );
+                //Get atacar button
+                ((JButton)jpBoton.getComponent(0)).setEnabled(true);                
+
+            }else{                
+                //Casilla origen: Héroe
+                //Casilla destino: Héroe
+                //Puede atacar a través de un héroe
+                principal.power.setCasillaObjetivo(oldCasilla.getC2());                
+                principal.power.setAlcance(
+                    principal.power.getAlcance()-1
+                );    
+                //Get atacar button
+                ((JButton)jpBoton.getComponent(0)).setEnabled(false);
+            }
+        }            
+        efectuarMovimientoAtaque();
+    }   
+    private void ar_3ActionPerformed(ActionEvent evt) {
+        Casilla oldCasilla = principal.power.getCasillaObjetivo();
+        
+        if( !oldCasilla.getC3().esOcupada() ){
+            principal.power.setCasillaObjetivo(oldCasilla.getC3());                
+            principal.power.setAlcance(
+            principal.power.getAlcance()-1
+            );   
+            ((JButton)jpBoton.getComponent(0)).setEnabled(false);
+        }else{
+
+            if(oldCasilla.getC3().getFicha().getOcupante().isIsHeroe()
+                    ^
+                    personajeActual.isIsHeroe()){
+                //Casilla origen: Héroe
+                //Casilla destino: Criatura
+                //Debe atacar a la criatura  
+                principal.power.setCasillaObjetivo(oldCasilla.getC3());                
+                principal.power.setAlcance(
+                    0
+                );
+                //Get atacar button
+                ((JButton)jpBoton.getComponent(0)).setEnabled(true);                
+
+            }else{                
+                //Casilla origen: Héroe
+                //Casilla destino: Héroe
+                //Puede atacar a través de un héroe
+                principal.power.setCasillaObjetivo(oldCasilla.getC3());                
+                principal.power.setAlcance(
+                    principal.power.getAlcance()-1
+                );    
+                //Get atacar button
+                ((JButton)jpBoton.getComponent(0)).setEnabled(false);
+            }
+        }            
+        efectuarMovimientoAtaque();
+    }
+    private void ar_4ActionPerformed(ActionEvent evt) {
+        Casilla oldCasilla = principal.power.getCasillaObjetivo();
+        
+        if( !oldCasilla.getC4().esOcupada() ){
+            principal.power.setCasillaObjetivo(oldCasilla.getC4());                
+            principal.power.setAlcance(
+            principal.power.getAlcance()-1
+            );   
+            ((JButton)jpBoton.getComponent(0)).setEnabled(false);
+        }else{
+
+            if(oldCasilla.getC4().getFicha().getOcupante().isIsHeroe()
+                    ^
+                    personajeActual.isIsHeroe()){
+                //Casilla origen: Héroe
+                //Casilla destino: Criatura
+                //Debe atacar a la criatura  
+                principal.power.setCasillaObjetivo(oldCasilla.getC4());                
+                principal.power.setAlcance(
+                    0
+                );
+                //Get atacar button
+                ((JButton)jpBoton.getComponent(0)).setEnabled(true);                
+
+            }else{                
+                //Casilla origen: Héroe
+                //Casilla destino: Héroe
+                //Puede atacar a través de un héroe
+                principal.power.setCasillaObjetivo(oldCasilla.getC4());                
+                principal.power.setAlcance(
+                    principal.power.getAlcance()-1
+                );    
+                //Get atacar button
+                ((JButton)jpBoton.getComponent(0)).setEnabled(false);
+            }
+        }            
+        efectuarMovimientoAtaque();
+    }     
 /*----------------------
  -------------------------  
  -------------------------  
@@ -1651,22 +1770,17 @@ public void efectuarMovimiento(){
         //---------Se establecen los Listener
         establecerListenerAtaque();
 
-        verificarCasillas();
+        verificarAlcanceDisponible();
         
         JButton jbotonCancelar = new JButton("Cancelar");
         JButton jbotonAtacar = new JButton("Atacar");
       
-//        jboton.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                principal.sonido.sonidoClick();
-//                if(jugadorActual==0){
-//                    jugarAtacarActionPerformed(evt);
-//                }else{
-//                    principal.jugarMoverHeroes(jugadorActual+1);
-//                }
-//                
-//            }
-//        });
+        jbotonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                principal.sonido.sonidoClick();
+                dibujarAtacarCriatura();
+            }
+        });
         jbotonAtacar.setEnabled(false);
         jpBoton.add(jbotonAtacar);   
         jpBoton.add(jbotonCancelar);   
@@ -2003,6 +2117,19 @@ public void efectuarMovimiento(){
         for(Component comp:jpBoton.getComponents()){
             jpBoton.remove(comp);
         }               
+    }
+
+    private void efectuarMovimientoAtaque() {
+        JLabel ficha = principal.spell.getSpell1();
+        Casilla casilla = principal.power.getCasillaObjetivo();
+        int x, y;
+        x = casilla.getX();
+        y = casilla.getY();
+        ficha.setBounds((x-(ficha.getIcon().getIconWidth()/2)), (y-((ficha.getIcon().getIconHeight())/2)),
+        ficha.getIcon().getIconWidth(),
+        ficha.getIcon().getIconHeight());        
+        
+        jpMapa.add(ficha,1,0);
     }
 
 

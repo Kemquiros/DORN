@@ -51,6 +51,7 @@ public class Principal {
     public SoundController sonido;
     public CursorController cursor;
     public PowerController power;
+    public SpellsController spell;
     
 
 
@@ -151,8 +152,9 @@ public class Principal {
         //Primer turno de Zorkal es de día
         esNoche=false;
         
-        this.iniciaTablero();  
         tablero.setParent(this);
+        this.iniciaTablero();  
+        
     }
 //-----------------------------------------
 // --------------- TABLERO ----------------
@@ -192,12 +194,15 @@ public class Principal {
             tablero.dibujarFichaZorkal();
             tablero.show();
             tablero.setVisible(true);
+                        
             
             jugar();
                 
             }        
         };
         hiloTablero.start();   
+        spell.setH(tablero.getHeight());
+        spell.setW(tablero.getWidth());
         cursor.setNormal(tablero);
     }    
     public void jugar(){

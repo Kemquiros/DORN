@@ -51,7 +51,7 @@ public class PowerController {
         2.1.Se determina el rango
         */
         if(hab.isCuestaAtaque()){
-            setAlcanceMax(hab.getDistancia());
+            setAlcance(hab.getDistancia());
             setAlcanceMax(hab.getDistancia()); 
             setCasillaOrigen(cliente.getFicha().getCasilla());                
             tablero.dibujarAtacarHabilidad(cliente,hab);
