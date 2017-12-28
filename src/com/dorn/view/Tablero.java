@@ -53,7 +53,7 @@ public class Tablero extends javax.swing.JFrame {
     boolean esEscalado;
     int indiceCriaturaInicial;
     int indiceCriaturaActual;
-    Object personajeActual;
+    Avatar personajeActual;
     
     ImageIcon icMapaOriginal,icMapaEscalado;
 
@@ -1425,29 +1425,44 @@ public void efectuarMovimiento(){
  ------------------ */ 
     //Programar el alcance del ataque
     private void ar_1ActionPerformed(ActionEvent evt) {
-        if(personajeActual.getClass().getSuperclass().getName().contains("Heroe")){
-            Heroe heroe =(Heroe)personajeActual;
-            Casilla oldCasilla = ((Ficha)heroe.getFicha()).getCasilla();
-            if( !oldCasilla.getC1().esOcupada() ){
+        Casilla oldCasilla = principal.power.getCasillaObjetivo();
+        
+        if( !oldCasilla.getC1().esOcupada() ){
+            principal.power.setCasillaObjetivo(oldCasilla.getC1());                
+            principal.power.setAlcance(
+            principal.power.getAlcance()-1
+            );   
+            ((JButton)jpBoton.getComponent(0)).setEnabled(false);
+        }else{
+
+            if(oldCasilla.getC1().getFicha().getOcupante().isIsHeroe()
+                    ^
+                    personajeActual.isIsHeroe()){
+                //Casilla origen: Héroe
+                //Casilla destino: Criatura
+                //Debe atacar a la criatura  
                 principal.power.setCasillaObjetivo(oldCasilla.getC1());                
                 principal.power.setAlcance(
-                principal.power.getAlcance()-1
+                    0
                 );
-                
-            }else{
-                Ficha ocupante = oldCasilla.getC1().getOcupante();
-                ocupante.
+                //Get atacar button
+                ((JButton)jpBoton.getComponent(0)).setEnabled(true);                
+
+            }else{                
+                //Casilla origen: Héroe
+                //Casilla destino: Héroe
+                //Puede atacar a través de un héroe
+                principal.power.setCasillaObjetivo(oldCasilla.getC1());                
+                principal.power.setAlcance(
+                    principal.power.getAlcance()-1
+                );    
+                //Get atacar button
+                ((JButton)jpBoton.getComponent(0)).setEnabled(false);
             }
-            
-        }else if(personajeActual.getClass().getSuperclass().getName().contains("Criatura")){
-            Criatura criatura =(Criatura)personajeActual;
-            Casilla oldCasilla = ((Ficha)criatura.getFicha()).getCasilla();
-            if(!oldCasilla.getC1().esOcupada()){
-                oldCasilla.desocupar();
-                oldCasilla.getC1().ocupar((Ficha)criatura.getFicha());
-                criatura.mover();
-            }            
-        }
+        }            
+        
+        
+
         efectuarMovimiento();
 
     }  
@@ -1655,6 +1670,7 @@ public void efectuarMovimiento(){
 //                
 //            }
 //        });
+        jbotonAtacar.setEnabled(false);
         jpBoton.add(jbotonAtacar);   
         jpBoton.add(jbotonCancelar);   
         

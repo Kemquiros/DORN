@@ -16,6 +16,7 @@
  */
 package com.dorn.model.map;
 
+import com.dorn.model.Avatar;
 import com.dorn.model.heroe.Heroe;
 import com.dorn.model.monster.Criatura;
 
@@ -37,7 +38,7 @@ public class Casilla {
     private Casilla c3;
     private Casilla c4;
     private boolean esOcupada;
-    Object ocupante;
+    private Ficha ficha;
     /*
     -----TIPO DE CASILLA-----
     0:Normal
@@ -184,15 +185,14 @@ public class Casilla {
         }         
     }
     public void ocupar(Ficha ficha){
-        this.ocupante = ficha; 
-        ficha.setCasilla(this);
+        this.ficha = ficha; 
+        this.ficha.setCasilla(this);
         esOcupada=true;
     }
-    public void desocupar(){
+    public void desocupar(){                
+        this.ficha.setCasilla(null);
+        this.ficha = null;        
         esOcupada=false;
-        //Object temp = ocupante;
-        this.ocupante=null;
-        //return temp;
     }
 
     public boolean esOcupada() {
@@ -200,11 +200,9 @@ public class Casilla {
     }
     
     public Ficha getFicha(){
-        return (Ficha)this.ocupante;
+        return this.ficha;
     }
-    public Object getOcupante(){
-        return ((Ficha)this.ocupante).getOcupante();
-    }
+
     public void desconectar(Casilla objetivo){
         Casilla temp;
         if(this.arriba.equals(objetivo)){
