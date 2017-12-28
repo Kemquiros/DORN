@@ -14,8 +14,9 @@ import java.util.ArrayList;
  */
 public class Riel extends Heroe{
     public Riel(){
-        this.nombre="Riel";
-        this.ataqueFisico=true;
+        setNombre("Riel");
+        isAtaqueFisico(true);        
+
         this.habilidad = new ArrayList();
         this.setRutaImagen("/com/dorn/assets/heroe/img/riel.png");       
         this.setRutaCarta("/com/dorn/assets/heroe/card/riel.png");
@@ -27,20 +28,21 @@ public class Riel extends Heroe{
     public void subirNivelUno() {
         setNivel(1);
         
-        this.movimientoMax=6;
+        setMovimientoMax(6);
         
-        this.vidaMax=4;
-        this.vida=vidaMax;
+        setVidaMax(4);
+        setVida(getVidaMax());
         
-        this.ataqueMax=1;
+        setAtaqueMax(1);
         //0:Mágico
         //1:Contacto
         //2:Pica
         //3:Arco        
         setTipoAtaque(3);        
         
-        this.experienciaMax=5;
-        this.experiencia=0;
+        setExperienciaMax(5);
+        setExperiencia(0);
+        
         //Habilidades
         //--------------------------------------
         Habilidad h = new Habilidad();
